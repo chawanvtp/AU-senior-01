@@ -7,15 +7,15 @@ This project is contributed for Assumption University's course "[CS3200] - Senio
 -Runner(client) : 
 -	registeration
 	```
-		-	"activate + check point" Tag
-		-	update DB
-		-	display client's information.
+		-	Activate(bind) tag to client's DB.
+		-	Update part of DB.
+		-	Display client's information.
 	```
-Adminstartor(admin)	:	
+-	Adminstartor(admin)	:	
 	```
-		-	all as client but "Less condition".
+		-	All as client but "Less condition".
 	```
-Public(everyone) : 
+-	Public(everyone) : 
 	```
 		-	display records
 	```
