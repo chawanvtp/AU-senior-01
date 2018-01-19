@@ -4,20 +4,20 @@
 This project is contributed for Assumption University's course "[CS3200] - Senior Project I" to be used in "AU Running Campaign".
 
 ##	Primary functions
--Runner(client) : 
--	registeration
+-	Runner (client) :
 	```
+		-	Registeration by "Google Auth, and etc..".
 		-	Activate(bind) tag to client's DB.
 		-	Update part of DB.
 		-	Display client's information.
 	```
--	Adminstartor(admin)	:	
+-	Adminstartor (admin)	:	
 	```
 		-	All as client but "Less condition".
 	```
--	Public(everyone) : 
+-	Public (everyone) : 
 	```
-		-	display records
+		-	Display records.
 	```
 ## Getting Started
 
