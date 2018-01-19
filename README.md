@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # AU-senior-01
 
 This project is contributed for Assumption University's course "[CS3200] - Senior Project I" to be used in "AU Running Campaign".
