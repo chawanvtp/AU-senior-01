@@ -3,10 +3,17 @@
 
 This project is contributed for Assumption University's course "[CS3200] - Senior Project I" to be used in "AU Running Campaign".
 
-*Primary functions
--	Runner(client) : registeration,	"activate + check point" Tag,	update DB,	display client's information.
--	Adminstartor(admin)	:	all as client but "Less condition".
--	Public(everyone) : display records
+##Primary functions
+-	Runner(client) : 
+		-registeration
+		-"activate + check point" Tag
+		-update DB
+		-display client's information.
+		
+-	Adminstartor(admin)	:	
+		-all as client but "Less condition".
+-	Public(everyone) : 
+		-display records
 
 ## Getting Started
 
