@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AU-senior-01
 
 This project is contributed for Assumption University's course "[CS3200] - Senior Project I" to be used in "AU Running Campaign".
@@ -87,3 +88,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Hat tip to anyone who's code was used
 * Inspiration
 * etc
+=======
+* AU-senior-01 
+     This
+>>>>>>> 1da1ac3dbc5e43b9f91602d4b6a88bf5c41fb0c6
