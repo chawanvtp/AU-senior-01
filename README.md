@@ -1,7 +1,31 @@
+<<<<<<< HEAD
 # Project Title
 
 One Paragraph of project description goes here
 
+=======
+
+# AU-senior-01
+
+This project is contributed for Assumption University's course "[CS3200] - Senior Project I" to be used in "AU Running Campaign".
+
+##	Primary functions
+-	Runner (client) :
+	```
+		-	Registeration by "Google Auth, and etc..".
+		-	Activate(bind) tag to client's DB.
+		-	Update part of DB.
+		-	Display client's information.
+	```
+-	Adminstartor (admin)	:	
+	```
+		-	All as client but "Less condition".
+	```
+-	Public (everyone) : 
+	```
+		-	Display records.
+	```
+>>>>>>> demo
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -85,3 +109,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Hat tip to anyone who's code was used
 * Inspiration
 * etc
+<<<<<<< HEAD
+=======
+=======
+* AU-senior-01 
+     This
+>>>>>>> 1da1ac3dbc5e43b9f91602d4b6a88bf5c41fb0c6
+>>>>>>> demo

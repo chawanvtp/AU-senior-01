@@ -1,312 +1,226 @@
 <!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Stacked - Free CSS Template</title>
 <!--
-  Copyright 2016 Google Inc. All rights reserved.
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-      https://www.apache.org/licenses/LICENSE-2.0
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License
+Stacked Template
+http://www.templatemo.com/tm-505-stacked
 -->
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Demonstrates the use of Google Cloud Database with a Firebase DB">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AU Runner Board</title>
+<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<link rel="stylesheet" type="text/css" href="css/button.css">
+<!--============================================================================-->
+        <script src="scripts/tableDB.js"></script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Disable tap highlight on IE -->
-  <meta name="msapplication-tap-highlight" content="no">
+        <style>
+            .datagrid table { border-collapse: collapse; text-align: left; width: 100%; } .datagrid {font: normal 12px/150% Verdana, Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 10px solid #006699; }.datagrid table td, .datagrid table th { padding: 3px 10px; text-align: center; }.datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; color:#FFFFFF; font-size: 15px; font-weight: normal; border-left: 1px solid #0070A8; } .datagrid table thead th:first-child { border: none; }.datagrid table tbody td { color: #00496B; border-left: 1px solid #E1EEF4;font-size: 18px;font-weight: bold; }.datagrid table tbody .alt td { background: #E1EEF4; color: #00496B; }.datagrid table tbody td:first-child { border-left: none; }.datagrid table tbody tr:last-child td { border-bottom: none; }.datagrid table tfoot td div { border-top: 1px solid #006699;background: #E1EEF4;} .datagrid table tfoot td { padding: 0; font-size: 12px } .datagrid table tfoot td div{ padding: 2px; }.datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }.datagrid table tfoot  li { display: inline; }.datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; }.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #006699; color: #FFFFFF; background: none; background-color:#00557F;}div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
+        </style>
+    </head>
+    <body>
+        <header style="background-color:#006699; text-align: center; color: white; height: 30px;">
+         </header>
+      <header style="background-color:#006699; font-size: 2em; font-weight: bold; text-align: center; color: white; height: 50px;">
+        Today Records
+      </header>
+      <!-- Table ID = users-table -->
+      <div class="datagrid"><table id="daily-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Round</th>
+            <th>avg.time</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr><td colspan="4">
+              <div id="paging">
+                <ul>
+                  <li><a href="#"><span>Previous</span></a></li>
+                  <li><a href="#" class="active"><span>1</span></a></li>
+                  <li><a href="#"><span>2</span></a></li>
+                  <li><a href="#"><span>3</span></a></li>
+                  <li><a href="#"><span>4</span></a></li>
+                  <li><a href="#"><span>5</span></a></li>
+                  <li><a href="#"><span>Next</span></a></li>
+                </ul>
+              </div>
+            </tr>
+          </tfoot>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>xxx</td>
+            <td>xxx</td>
+            <td>xxx</td>
+          </tr>
+        <tr class="alt">
+          <td>2</td>
+          <td>xxx</td>
+          <td>xxx</td>
+          <td>xxx</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>xxx</td>
+          <td>xxx</td>
+          <td>xxx</td>
+        </tr>
+        <tr class="alt">
+          <td>4</td>
+          <td>xxx</td>
+          <td>xxx</td>
+          <td>xxx</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>xxx</td>
+          <td>xxx</td>
+          <td>xxx</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>xxx</td>
+            <td>xxx</td>
+            <td>xxx</td>
+          </tr>
+        <tr class="alt">
+          <td>7</td>
+          <td>xxx</td>
+          <td>xxx</td>
+          <td>xxx</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>xxx</td>
+          <td>xxx</td>
+          <td>xxx</td>
+        </tr>
+        <tr class="alt">
+          <td>9</td>
+          <td>xxx</td>
+          <td>xxx</td>
+          <td>xxx</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>xxx</td>
+          <td>xxx</td>
+          <td>xxx</td>
+        </tr>
+        </tbody>
+        </table></div>
 
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Firebase Database Quickstart">
-  <meta name="theme-color" content="#303F9F">
-
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Firebase Database Quickstart">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
-
-  <!-- Tile icon for Win8 -->
-  <meta name="msapplication-TileColor" content="#3372DF">
-  <meta name="msapplication-navbutton-color" content="#303F9F">
-
-  <!-- Material Design Lite -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
-  <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-
-  <link rel="stylesheet" href="main.css">
-
-</head>
-<body>
-<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
-
-  <!-- Splash screen -->
-  <section id="page-splash">
-    <h3 class="logo">AU Running Challenge</h3>
-    <div>
-      <button id="sign-in-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign in with Google</button>
-    </div>
-  </section>
-
-  <!-- Header section containing logo and menu -->
-  <header class="header mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
-
-    <div class="mdl-layout__header-row titlebar">
-      <h3 class="logo">AU Running Challenge</h3>
-      <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
-    </div>
-
-    <!-- Navigation Bar -->
-    <div class="tab mdl-layout__header-row mdl-color--light-blue-600">
-      <div class="mdl-tab">
-        <div id="menu-recent" class="mdl-layout__tab is-active mdl-button mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">new_releases</i> Recent
-        </div>
-        <div id="menu-my-posts" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">home</i> My posts
-        </div>
-        <div id="menu-my-top-posts" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">trending_up</i> My top posts
-        </div>
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect" id="add">
-          <i class="material-icons">mode_edit</i>
-        </button>
-      </div>
-    </div>
+<!-- TO display the one who get the lastest round -->
+<header style="background-color:black; text-align: center; color: white; height: 30px;">
   </header>
+<header id="announce-bar" style="background-color:black; text-align: center; color: white; height: 50px;">
+ Display one who just get "the Lastest Round".
+</header>
 
-  <main class="mdl-layout__content mdl-color--grey-100">
+ <!-- Table ID = daily-table -->
+ <header style="background-color:#006699; text-align: center; color: white; height: 30px;">
+  </header>
+<header style="background-color:#006699; font-size: 2em; font-weight: bold; text-align: center; color: white; height: 60px;">
+ All-Time Records
+</header>
 
-    <!-- Show the add post form -->
-    <section class="mdl-grid content" id="add-post" style="display:none">
-      <div class="mdl-cell mdl-cell--12-col mdl-grid">
-
-          <!-- Card containing the inputs to add a new messages -->
-          <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet
-                  mdl-cell--6-col-desktop">
-            <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-              <h2 class="mdl-card__title-text">New Post</h2>
-            </div>
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-              <form id="message-form" action="#">
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="new-post-title">
-                  <label class="mdl-textfield__label" for="new-post-title">Post title...</label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <textarea class="mdl-textfield__input" rows="3" id="new-post-message"></textarea>
-                  <label class="mdl-textfield__label" for="new-post-message">Post message...</label>
-                </div>
-                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                  Add post
-                </button>
-              </form>
-            </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Show a list of recent posts -->
-    <section class="mdl-grid content" id="recent-posts-list" style="display:none">
-      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
-      </div>
-    </section>
-
-    <!-- Show the list of user's posts -->
-    <section class="mdl-grid content" id="user-posts-list" style="display:none">
-      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
-      </div>
-    </section>
-
-    <!-- Show the list of top user's posts -->
-    <section class="mdl-grid content" id="top-user-posts-list" style="display:none">
-      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
-      </div>
-    </section>
-
-    <!-- Show the list of top user's posts -->
-    <section class="mdl-grid content" id="records-list" style="display:none">
-      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
-      </div>
-    </section>
-
-
-    <style>
-      table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 20%;
-    position: relative;
-    border: 1px solid #ddd;
-}
-
-th,td {
-    text-align: center;
-    padding: 8px;
-}
-
-tr:nth-child(even){background-color: #f2f2f2}
-
-/*
-*   table , th + td ADDED
-*/
-    </style>
-
-    <!-- Records List -->
-    <!--
-    <table style="overflow-x:auto; width: 60%; position: left;" id="users-table">
-      <thead>
-      <tr style="background-color: ">
-        <th>: Rank :</th> 
-        <th>: ID : </th>
-        <th>: Round :</th>
+ <div class="datagrid"><table id="users-table">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th>round</th>
+        <th>avg.time</th>
       </tr>
     </thead>
-        <tr>
-          <th>1</th>
-          <th id="r01id">xxx</th>
-          <th id="r01r">xxx</th>
+    <tfoot>
+      <tr><td colspan="4">
+          <div id="paging">
+            <ul>
+              <li><a href="#"><span>Previous</span></a></li>
+              <li><a href="#" class="active"><span>1</span></a></li>
+              <li><a href="#"><span>2</span></a></li>
+              <li><a href="#"><span>3</span></a></li>
+              <li><a href="#"><span>4</span></a></li>
+              <li><a href="#"><span>5</span></a></li>
+              <li><a href="#"><span>Next</span></a></li>
+            </ul>
+          </div>
         </tr>
-        <tr>
-          <th> 2</th>
-          <th id="r02id">xxx</th>
-          <th id="r02r">xxx</th>
-        </tr>
-        <tr>
-          <th>3</th>
-          <th id="r02id">xxx</th>
-          <th id="r03r">xxx</th>
-        </tr>
-        <tr>
-          <th>4</th>
-          <th id="r04id">xxx</th>
-          <th id="r04r">xxx</th>
-        </tr>
-        <tr>
-          <th>5</th>
-          <th id="r05id">xxx</th>
-          <th id="r05r">xxx</th>
-        </tr>
-     </table>
-    -->
-     <!-- New Table -->
-     <!-- Records List -->
-     <!--
-    <table style="overflow-x:auto; position: right;" id="daily-table">
-        <thead>
-        <tr>
-          <th>: Rank :</th> 
-          <th>: ID : </th>
-          <th>: Round :</th>
-        </tr>
-      </thead>
-          <tr>
-            <th>1</th>
-            <th id="r01id">xxx</th>
-            <th id="r01r">xxx</th>
-          </tr>
-          <tr>
-            <th> 2</th>
-            <th id="r02id">xxx</th>
-            <th id="r02r">xxx</th>
-          </tr>
-          <tr>
-            <th>3</th>
-            <th id="r02id">xxx</th>
-            <th id="r03r">xxx</th>
-          </tr>
-          <tr>
-            <th>4</th>
-            <th id="r04id">xxx</th>
-            <th id="r04r">xxx</th>
-          </tr>
-          <tr>
-            <th>5</th>
-            <th id="r05id">xxx</th>
-            <th id="r05r">xxx</th>
-          </tr>
-       </table>
-      -->
-
-     <a href="records.html" class="button">!! Records !!</a>
-     <a href="counter.html" class="button">!! Couunter !!</a>
-     
-<fb:login-button 
-scope="public_profile,email"
-onlogin="checkLoginState();">
-</fb:login-button>
-
-  </main>
-</div>
-
-<!-- Import and configure the Firebase SDK -->
-<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
-<!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
-<script src="/__/firebase/3.9.0/firebase-app.js"></script>
-<script src="/__/firebase/3.9.0/firebase-auth.js"></script>
-<script src="/__/firebase/3.9.0/firebase-database.js"></script>
-<script src="/__/firebase/init.js"></script>
-
-<script src="scripts/main.js"></script>
-
-
-<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBcUB-V6cnmKH2mI-xGwo3on4nNyJqU7h4",
-    authDomain: "au-senior01.firebaseapp.com",
-    databaseURL: "https://au-senior01.firebaseio.com",
-    projectId: "au-senior01",
-    storageBucket: "au-senior01.appspot.com",
-    messagingSenderId: "575402049306"
-  };
-  firebase.initializeApp(config);
-</script>
-
-
-<script>
-/*  window.fbAsyncInit = function() {
-    FB.init({
-      appId            : '153562308762508',
-      autoLogAppEvents : true,
-      xfbml            : true,
-      version          : 'v2.11'
-    });
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-
-   
-FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-    console.log(response.userID);
-});
-
-
-function checkLoginState() {
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-    console.log(response.userID);
-  });
-}
-*/
-</script>
-
-</body>
+      </tfoot>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>xxx</td>
+        <td>xxx</td>
+        <td>xxx</td>
+      </tr>
+    <tr class="alt">
+      <td>2</td>
+      <td>xxx</td>
+      <td>xxx</td>
+      <td>xxx</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>xxx</td>
+      <td>xxx</td>
+      <td>xxx</td>
+    </tr>
+    <tr class="alt">
+      <td>4</td>
+      <td>xxx</td>
+      <td>xxx</td>
+      <td>xxx</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>xxx</td>
+      <td>xxx</td>
+      <td>xxx</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>xxx</td>
+        <td>xxx</td>
+        <td>xxx</td>
+      </tr>
+    <tr class="alt">
+      <td>7</td>
+      <td>xxx</td>
+      <td>xxx</td>
+      <td>xxx</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>xxx</td>
+      <td>xxx</td>
+      <td>xxx</td>
+    </tr>
+    <tr class="alt">
+      <td>9</td>
+      <td>xxx</td>
+      <td>xxx</td>
+      <td>xxx</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>xxx</td>
+      <td>xxx</td>
+      <td>xxx</td>
+    </tr>
+    </tbody>
+    </table></div>
+    <form>
+        <input class="MyButton" type="button" value="Join us !!" onclick="window.location.href='login.html'" />
+    </form>
+    </body>
 </html>

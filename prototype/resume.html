@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Personal Information</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="vendor/devicons/css/devicons.min.css" rel="stylesheet">
+    <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/resume.min.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">Start Bootstrap</span>
+        <span class="d-none d-lg-block">
+          <!-- Picture Profile -->
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="img/profile.jpg" alt=""> 
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#about">Personal Information</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#Record">Record</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#edit">Edit Information</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Personal Info. -->
+    <div class="container-fluid p-0">
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
+        <div class="my-auto">
+          <!-- Name and Surname of runner-->
+          <h1 class="mb-0">Name
+            <span class="text-primary">Surname</span>
+          </h1>
+          <div class="subheading mb-5">Show ID, status(student or instructor), faculty, email
+            <a href="mailto:name@email.com">name@email.com</a>
+          </div>
+          <!-- Show running's details of runner -->
+          <div class="container">
+              <table class="table">
+                <thead>
+                  <tr class="text-primary">
+                    <th>Total time (min)</th>
+                    <th>Total distance (km)</th>
+                    <th>Total round</th>
+                    <th>Average speed (km/hr)</th>
+                  </tr>
+                </thead>
+                <tbody>                 
+                  <tr class="text-primary">
+                    <td>90</td>
+                    <td>21</td>
+                    <td>50</td>
+                    <td>11</td>
+                  </tr>      
+                </tbody>
+              </table>
+            </div>
+                    
+        </div>     
+      </section>
+      
+
+      <!-- Show record of runner in each day -->
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="Record">
+        <div class="my-auto">
+          <div class="container">
+              <h2>Runner's record</h2>        
+              <table class="table table-striped">
+                <thead>
+                  <tr class="text-primary">
+                    <th>Date</th>
+                    <th>Time (min)</th>
+                    <th>Distance (km)</th>
+                    <th>Speed (km/hr)</th>
+                    <th>Burn Calories</th>                   
+                  </tr>
+                </thead>
+                <tbody class="text-primary">
+                  <tr>
+                    <td>29/01/2017</td>
+                    <td>30</td>
+                    <td>5</td>
+                    <td>10</td>
+                    <td>300</td>
+                  </tr>
+                  <tr>
+                    <td>30/01/2017</td>
+                    <td>30</td>
+                    <td>7</td>
+                    <td>12</td>
+                    <td>300</td>
+                  </tr>
+                  <tr>
+                    <td>31/01/2017</td>
+                    <td>30</td>
+                    <td>9</td>
+                    <td>11</td>
+                    <td>300</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+      </section>
+
+      <!-- Edit Info. -->
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="edit">
+        <div class="my-auto">
+          <h2 class="mb-5">Edit Information</h2>
+          <div class="container">           
+              <form class="form-horizontal" action="/action_page.php">
+                <div class="form-group">
+                  <!-- Email -->
+                  <label class="control-label col-sm-2" for="email">Email:</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                  </div>
+                </div>
+                <!-- Name -->
+                <label class="control-label col-sm-2" for="name">Name:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+                  </div>
+                <!-- Surname -->
+                <label class="control-label col-sm-2" for="surname">Surname:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="surname" placeholder="Enter Surname" name="surname">
+                  </div>
+                <!-- ID -->
+                <label class="control-label col-sm-2" for="id">ID:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="userID" placeholder="Enter ID" name="userID">
+                  </div>  
+                <!-- Weight -->
+                <label class="control-label col-sm-2" for="weight">Weight:</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" id="weight" placeholder="Enter Weight" name="weight">
+                  </div>
+                <!-- Height -->
+                <label class="control-label col-sm-2" for="height">Height:</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" id="height" placeholder="Enter height" name="height">
+                  </div>
+                <!-- Faculty or None for instructor -->
+                <div class="form-group">
+                  <label for="faculty">Faculty:</label>
+                  <select class="form-control" id="faculty">
+                    <option>None</option>
+                    <option>School of Management and Economics</option>
+                    <option>School of Art</option>
+                    <option>School of Nursing Science</option>
+                    <option>School of Science and Technology</option>
+                    <option>School of Engineering</option>
+                    <option>School of Communication Arts</option>
+                    <option>School of Laws</option>
+                    <option>School of Biotechnology</option>
+                    <option>School of Architecture and Design</option>
+                    <option>School of Music</option>                
+                  </select>
+                </div>
+                <!-- Status -->
+                <div class="form-group">
+                  <lable for="status">Status:</lable>
+                  <select class="form-control" id="status">
+                    <option>Student</option>
+                    <option>Instructor</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">        
+                  <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/resume.min.js"></script>
+
+  </body>
+
+</html>

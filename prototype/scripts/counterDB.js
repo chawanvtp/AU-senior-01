@@ -18,21 +18,20 @@
   *     ---------------------- Events TO-DO on LOAD !! -----------------------
   *     ----------------------------------------------------------------------
   */   
+  
 window.addEventListener('load', function() {
     // TO trigger the input box
     document.getElementById("tagID-Box").focus();
 
-
-
-
-
-  })
+  });
 
   /*    ----------------------------------------------------------------------
   *     ---------------------- Events TO-DO on LOAD !! -----------------------
   *     ----------------------------------------------------------------------
   */ 
-var updateButton = document.getElementById("updateButton");
+
+  
+//var updateButton = document.getElementById("updateButton");
 var tagID = document.getElementById("tagID-Box");
   //document.getElementById("tagID-Box")
   window.addEventListener("keyup", function(event) {
@@ -50,25 +49,27 @@ var delay = 1000*10;
 function tagChecked(tagId){
     console.log(" * tagChecked(tagId) * called * ");
     var clock = new Date();
-    var month = clock.getUTCMonth() + 1; //months from 1-12
+    var month = clock.getUTCMonth()+1; //months from 1-12
     var day = clock.getUTCDate();
     var year = clock.getUTCFullYear();
     var dayMonthYear = day+'d'+month+'m'+year+'y';
     var newDate = clock.getTime();
 
     console.log(dayMonthYear);
+    console.log(tagId);
   var dailyTagDB = firebase.database().ref('daily/tags/'+dayMonthYear+'/'+ tagId);
   dailyTagDB.once('value',function(superSnapshot){
       if(superSnapshot.val()!=null)
       {
           //updateUsersDB(superSnapshot.val().id,newTime);
-          updateDailyDB(superSnapshot.val().id,newDate,dayMonthYear);
-          
+          updateDailyDB(superSnapshot.val().tel,tagId,newDate,dayMonthYear);
+          console.log("Tag is found..");
       }else{
-           console.log("Tag is NOT activated !!");
+        console.log("Tag is NOT found..");console.log("Tag is NOT found..");
+          // console.log("Tag is NOT activated !!");
         }
 
-  })
+  });
 
 }
 
@@ -79,33 +80,23 @@ function tagChecked(tagId){
   */ 
 
   
-  function updateDailyDB(id,newDate,dayMonthYear){
+  function updateDailyDB(tel,tagId,newDate,dayMonthYear){
     console.log(" * updateDailyDB(tagId) * called * ");
-/*
-    var clock = new Date();
-    var month = clock.getUTCMonth() + 1; //months from 1-12
-    var day = clock.getUTCDate();
-    var year = clock.getUTCFullYear();
-    var dayMonthYear = 'd'+day+'m'+month+'y'+year;
-*/
-    var userDB = firebase.database().ref('daily/records/'+ dayMonthYear +'/'+ id);
+    
+    var dailyDB = firebase.database().ref('daily/records/'+ dayMonthYear +'/'+ tel);
 
 
-    userDB.once('value',function(snapshot){
+    dailyDB.once('value',function(snapshot){
     console.log(snapshot.val());
     if(snapshot.val()==null){
         // Tag is Inactivated.
         console.log('-- YOU !! have not activated your TAG in yet xx');
     }else{
-        //console.log(snapshot.val());
-        //console.log(snapshot.val().lastCheck);
-        // TO check time interval
-        //console.log(newDate);
+
         var prevClock = snapshot.val().lastCheck;
         if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
     
         var newTime = parseInt((newDate-prevClock)/1000);
-       // var time = snapshot.val().time;
         var round = snapshot.val().round;
           if(round<0)
             {  
@@ -113,26 +104,21 @@ function tagChecked(tagId){
               console.log("Start Running - CHECKED");  
               
             }else{
-              updateUsersDB(id,newTime);
+              updateUsersDB(tel,newTime);
             }
-     //   var prevClock = snapshot.val().lastCheck;
-      //    var clock = new Date();
-     //   if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
 
         console.log('Daily is updating...');
-        firebase.database().ref('daily/records/'+ dayMonthYear +'/'+ id).set({
+        firebase.database().ref('daily/records/'+ dayMonthYear +'/'+ tel).set({
         lastCheck: newDate,
         round: snapshot.val().round+1,
         time: snapshot.val().time+newTime,
         username: snapshot.val().username,
-        tagId: snapshot.val().tagId
+        tagId: tagId
     });
 
-         //updateUsersDB(id,newTime);
         }
         
-  //console.log(snapshot.val());
-     })  
+     });
 }
 
 
@@ -150,7 +136,8 @@ function updateUsersDB(id,newTime){
     if(snapshot.val()==null){
         // Write User DB
         console.log('xx NO !! USERs DB xx');
-    }else{              var clock = new Date();
+    }else{              
+        var clock = new Date();
         firebase.database().ref('users/' + snapshot.key).set({
         username: snapshot.val().username,
         email: snapshot.val().email,
@@ -160,8 +147,7 @@ function updateUsersDB(id,newTime){
     });
         }
         
-  //console.log(snapshot.val());
-     })        
+     });
 }
 
 
