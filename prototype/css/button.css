@@ -11,6 +11,8 @@ input.MyButton {
     -moz-box-shadow:: 6px 6px 5px #999;
     -webkit-box-shadow:: 6px 6px 5px #999;
     box-shadow:: 6px 6px 5px #999;
+    position: fixed;
+    bottom: 10px;
     }
     input.MyButton:hover {
     color: #fff;

@@ -13,9 +13,8 @@ http://www.templatemo.com/tm-505-stacked
 -->
 <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
 <!--<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">-->
-<link rel="stylesheet" type="text/css" href="css/button.css">
 <!--============================================================================-->
-        <script src="scripts/tableDB.js"></script>
+        <script src="scripts/monitor.js"></script>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -30,7 +29,7 @@ http://www.templatemo.com/tm-505-stacked
         Today Records
       </header>
       <!-- Table ID = users-table -->
-      <div class="datagrid"><table id="daily-table">
+      <div class="datagrid"><table id="dailyMonitor-table">
         <thead>
           <tr>
             <th>Rank</th>
@@ -132,7 +131,7 @@ http://www.templatemo.com/tm-505-stacked
  All-Time Records
 </header>
 
- <div class="datagrid"><table id="users-table">
+ <div class="datagrid"><table id="usersMonitor-table">
     <thead>
       <tr>
         <th>Rank</th>
@@ -141,22 +140,22 @@ http://www.templatemo.com/tm-505-stacked
         <th>avg.time</th>
       </tr>
     </thead>
-    <tfoot>
-      <tr><td colspan="4">
-          <div id="paging">
-            <ul>
-              <li><a href="#"><span>Previous</span></a></li>
-              <li><a href="#" class="active"><span>1</span></a></li>
-              <li><a href="#"><span>2</span></a></li>
-              <li><a href="#"><span>3</span></a></li>
-              <li><a href="#"><span>4</span></a></li>
-              <li><a href="#"><span>5</span></a></li>
-              <li><a href="#"><span>Next</span></a></li>
-            </ul>
-          </div>
-        </tr>
-      </tfoot>
     <tbody>
+            <tfoot>
+                    <tr><td colspan="4">
+                        <div id="paging">
+                          <ul>
+                            <li><a href="#"><span>Previous</span></a></li>
+                            <li><a href="#" class="active"><span>1</span></a></li>
+                            <li><a href="#"><span>2</span></a></li>
+                            <li><a href="#"><span>3</span></a></li>
+                            <li><a href="#"><span>4</span></a></li>
+                            <li><a href="#"><span>5</span></a></li>
+                            <li><a href="#"><span>Next</span></a></li>
+                          </ul>
+                        </div>
+                      </tr>
+                    </tfoot>
       <tr>
         <td>1</td>
         <td>xxx</td>
@@ -219,6 +218,5 @@ http://www.templatemo.com/tm-505-stacked
     </tr>
     </tbody>
     </table></div>
-        <input class="MyButton" type="button" value="Join us !!" onclick="window.location.href='login.html'" />
     </body>
 </html>

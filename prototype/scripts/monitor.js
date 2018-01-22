@@ -107,7 +107,7 @@
         if(total<1){total=limit;}
         */
         console.log("recordsRef - on - child_ADDED");
-        rewriteTable(recordsRef, "daily-table", 10);
+        rewriteTable(recordsRef, "dailyMonitor-table", 10);
         
   })
 
@@ -116,7 +116,7 @@
   recordsRef.on('child_changed', function(snapshot){
       
         console.log("child_CHANGED");
-        rewriteTable(recordsRef, "daily-table", 10);
+        rewriteTable(recordsRef, "dailyMonitor-table", 10);
     /*
         console.log(snapshot.numChildren());
         console.log(snapshot.val());
@@ -131,7 +131,7 @@
       })
       recordsRef.on('child_removed', function(snapshot){
             console.log("child_REMOVED");
-            rewriteTable(recordsRef, "daily-table", 10);
+            rewriteTable(recordsRef, "dailyMonitor-table", 10);
           })
 
  // console.log(total);
@@ -160,13 +160,13 @@
  
   usersRef.on('child_added', function(snapshot){
     console.log("child_ADDED");
-    rewriteTable(usersRef, "users-table", 10);
+    rewriteTable(usersRef, "usersMonitor-table", 10);
   })
 
   usersRef.on('child_changed', function(snapshot){
       
         console.log("child_CHANGED");
-        rewriteTable(usersRef, "users-table", 10);
+        rewriteTable(usersRef, "usersMonitor-table", 10);
     /*
         console.log(snapshot.numChildren());
         console.log(snapshot.val());
@@ -181,7 +181,7 @@
       })
       recordsRef.on('child_removed', function(snapshot){
             console.log("child_REMOVED");
-            rewriteTable(usersRef, "users-table", 10);
+            rewriteTable(usersRef, "usersMonitor-table", 10);
           })
 
 
