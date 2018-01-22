@@ -34,7 +34,8 @@ window.addEventListener('load', function() {
     event.preventDefault();
     if (event.keyCode === 13) {
      // tagChecked(document.getElementById("tagID-Box").value);
-      //document.getElementById("tagID-Box").value = ""; 
+     //document.getElementById("telReg").value = ""; 
+     //document.getElementById("tagReg").value = ""; 
     }
   });
   
@@ -57,13 +58,17 @@ window.addEventListener('load', function() {
     var userDB = firebase.database().ref('users/'+tel);
     userDB.once('value',function(udb){
         if(udb.val()==null){    console.log("Wrong Telephone Number XXX"); return;}
-        console.log(udb.val().username);
+        console.log(udb.val().displayname);
         //console.log(udb.val().email);
-        updateDailyDB(tel,tagId,udb.val().username,dayMonthYear,newDate);
+        console.log(udb.val());
+        updateDailyTags(tel,tagId,dayMonthYear);
+        updateDailyRecords(tel,udb.val().displayname,dayMonthYear,newDate);
         //udbUsername = udb.val().username;
     });
     console.log("DBBB");
     
+    document.getElementById("telAct").value = ""; 
+    document.getElementById("tagAct").value = ""; 
     
   }
 
@@ -71,11 +76,11 @@ window.addEventListener('load', function() {
   /**
    * Update Daily DB
    */ 
-function updateDailyDB(tel,tagId,udbUsername,dayMonthYear,newDate){
+function updateDailyTags(tel,tagId,dayMonthYear){
   // var dailyTagDB = firebase.database().ref('daily/tags/'+dayMonthYear+'/'+ tagId);
   var dailyTagDB = firebase.database().ref('daily/tags/'+dayMonthYear);
-  dailyTagDB.once('value',function(superSnapshot){
-      if(superSnapshot.val()!=null)
+  dailyTagDB.once('value',function(snapshot){
+      if(snapshot.val()!=null)
       {
           //updateUsersDB(superSnapshot.val().id,newTime);
          // updateDailyDB(tel,tagId,dayMonthYear);
@@ -90,16 +95,7 @@ function updateDailyDB(tel,tagId,udbUsername,dayMonthYear,newDate){
               tel: tel
           });
 
-         // firebase.database().ref('daily/records').push().setValue(dayMonthYear);
-          firebase.database().ref('daily/records/'+ dayMonthYear +'/'+ tel).set({
-              lastCheck: newDate,
-              round: -1,
-              tagId: tagId,
-              time: 0,
-              username: udbUsername
-          });
-
-           console.log("* Daily DB just created !!");
+           console.log("* daily/tags - just created -> /dayMonth/Year!!");
 
         }
 
@@ -125,16 +121,48 @@ function updateDailyDB(tel,tagId,udbUsername,dayMonthYear,newDate){
     }
   });
 
+  /*    ----------------------------------------------------------------------------------------------------------
+  *     ---------------------- TO Update Firebase - daily/records/dayMonthYear/(newData) ] -----------------------
+  *     ----------------------------------------------------------------------------------------------------------
+  */ 
 
+  function updateDailyRecords(tel,udbDisplayName,dayMonthYear,newDate){
+    
 
+        var dailyTagDB = firebase.database().ref('daily/records/'+dayMonthYear+'/'+tel);
+        dailyTagDB.once('value',function(snapshot){
+            if(snapshot.val()!=null)
+            {
+                firebase.database().ref('daily/records/'+ dayMonthYear +'/'+ tel).set({
+                    lastCheck: newDate,
+                    round: snapshot.val().round,
+                    time: snapshot.val().time,
+                    displayname: udbDisplayName
+                });    
+            }else{
+               // firebase.database().ref().child('daily').child('tags').setValue(dayMonthYear);
+               firebase.database().ref('daily/records/'+ dayMonthYear +'/'+ tel).set({
+                lastCheck: newDate,
+                round: -1,
+                time: 0,
+                displayname: udbDisplayName
+            });
+                 console.log("* daily/records - just created -> /dayMonthYear/userRecords !!");
+      
+              }
+      
+        });
+
+  }
+
+  /*    ----------------------------------------------------------------------
+  *     ---------------------- XXXXXX !! -----------------------
+  *     ----------------------------------------------------------------------
+  */ 
 
   function updateTagActivate(tel,tagId,dayMonthYear){
 
     
- /*    ----------------------------------------------------------------------
-  *     ---------------------- 1 round update to DAILY-db !! -----------------------
-  *     ----------------------------------------------------------------------
-  */ 
     console.log(" * updateDailyDB(tagId) * called * ");
 /*
     var clock = new Date();

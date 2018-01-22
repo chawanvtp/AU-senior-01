@@ -61,7 +61,6 @@ function tagChecked(tagId){
   dailyTagDB.once('value',function(superSnapshot){
       if(superSnapshot.val()!=null)
       {
-          //updateUsersDB(superSnapshot.val().id,newTime);
           updateDailyDB(superSnapshot.val().tel,tagId,newDate,dayMonthYear);
           console.log("Tag is found..");
       }else{
@@ -95,7 +94,7 @@ function tagChecked(tagId){
 
         var prevClock = snapshot.val().lastCheck;
         if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
-    
+        
         var newTime = parseInt((newDate-prevClock)/1000);
         var round = snapshot.val().round;
           if(round<0)
@@ -109,11 +108,10 @@ function tagChecked(tagId){
 
         console.log('Daily is updating...');
         firebase.database().ref('daily/records/'+ dayMonthYear +'/'+ tel).set({
+        displayname: snapshot.val().displayname,
         lastCheck: newDate,
         round: snapshot.val().round+1,
-        time: snapshot.val().time+newTime,
-        username: snapshot.val().username,
-        tagId: tagId
+        time: snapshot.val().time+newTime
     });
 
         }
@@ -129,7 +127,7 @@ function tagChecked(tagId){
   */ 
 
 function updateUsersDB(id,newTime){
-    console.log(" * updateUsersDB(id) * called * ");
+    console.log(" * updateUsersDB(id,newTime) * called * ");
 
     var userDB = firebase.database().ref('users/'+ id);
     userDB.once('value',function(snapshot){
@@ -139,11 +137,13 @@ function updateUsersDB(id,newTime){
     }else{              
         var clock = new Date();
         firebase.database().ref('users/' + snapshot.key).set({
-        username: snapshot.val().username,
-        email: snapshot.val().email,
-        profile_picture : snapshot.val().profile_picture,
+        birthday: snapshot.val().birthday,
+        displayname: snapshot.val().displayname,
+        height: snapshot.val().height,
+        id: snapshot.val().id,
         round: snapshot.val().round+1,
-        time: snapshot.val().time+newTime
+        time: snapshot.val().time+newTime,
+        weight: snapshot.val().weight
     });
         }
         
