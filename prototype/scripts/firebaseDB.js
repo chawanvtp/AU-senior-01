@@ -17,18 +17,17 @@
   *     ---------------------- Records DB Section !! -----------------------
   *     ------------------------------------------------------------------
   */    
-  
 
   var clock = new Date();
   var month = clock.getUTCMonth() + 1; //months from 1-12
   var day = clock.getUTCDate();
   var year = clock.getUTCFullYear();
-  var dayMonthYear = day+'d'+month+'m'+year+'y';
+  var dayMonthYear = day+'d'+month+'m'+year+'y'
 
   var recordsRef = database.ref('daily/records/'+dayMonthYear).orderByChild('round').limitToLast(10);
   var limit = 10;
   var total = limit;
- // console.log(limit);
+
   function rewriteTable(dbRef, tableName, rankRange){
       console.log(dbRef);
  // console.log(recordsRef.once(numChildren()));
@@ -55,7 +54,7 @@
       var recTab = document.getElementById(tableName);
     //    if(tableName=='users-table'){
             console.log("xxx USERs table xxx");
-            recTab.rows[rankRange].cells[1].innerHTML = item.val().displayname;
+            recTab.rows[rankRange].cells[1].innerHTML = item.val().username;
     //    }else{
     //       recTab.rows[rankRange].cells[1].innerHTML = item.val().id;
     //    }
@@ -68,7 +67,7 @@
        // if(total<1){    total = limit};
 
         
-    });
+    })
 /*
     if(tableName=='daily-table')
     {
@@ -88,13 +87,12 @@
         }    
         
     }*/
-    console.log("AAA");
+
     limit = snapshot.numChildren();
-  });
+  })
 
 }
 
-    //console.log("AAA");
   recordsRef.on('child_added', function(snapshot){
       /*
     console.log("child_ADDED");
@@ -111,7 +109,7 @@
         console.log("recordsRef - on - child_ADDED");
         rewriteTable(recordsRef, "daily-table", 10);
         
-  });
+  })
 
   
 
@@ -130,11 +128,11 @@
         
             console.log(total);
         */
-      });
+      })
       recordsRef.on('child_removed', function(snapshot){
             console.log("child_REMOVED");
             rewriteTable(recordsRef, "daily-table", 10);
-          });
+          })
 
  // console.log(total);
 
@@ -143,8 +141,7 @@
   *     ------------------------------------------------------------------
   */    
 
- // var usersRef = database.ref().child('users').orderByChild('round').limitToLast(10);
-     var usersRef = database.ref('users').orderByChild('round').limitToLast(10);
+  var usersRef = database.ref().child('users').orderByChild('round').limitToLast(10);
   // temporary used to limit table indexing
   //--------------------------
   /*
@@ -181,13 +178,14 @@
         
             console.log(total);
         */
-      });
+      })
       recordsRef.on('child_removed', function(snapshot){
             console.log("child_REMOVED");
             rewriteTable(usersRef, "users-table", 10);
-          });
+          })
 
-        
+
+  
 
 
 
