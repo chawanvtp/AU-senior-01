@@ -83,7 +83,10 @@
       
         console.log("child_CHANGED");
         rewriteTable(recordsRef, "daily-table", 10);
-   
+        console.log(snapshot.val());
+        var rec = snapshot.val();
+        var announceMessage = rec.displayName + ' take ' + rec.lastRunningTime + ' for round : '+ rec.runningDistance +' - Today Avg.time = '+ parseInt(rec.runningTime/rec.runningDistance);
+        document.getElementById('announce-bar').innerHTML = announceMessage;
       });
       recordsRef.on('child_removed', function(snapshot){
             console.log("child_REMOVED");
@@ -104,9 +107,8 @@
       
         console.log("child_CHANGED");
         rewriteTable(usersRef, "users-table", 10);
-   
       });
-      recordsRef.on('child_removed', function(snapshot){
+      usersRef.on('child_removed', function(snapshot){
             console.log("child_REMOVED");
             rewriteTable(usersRef, "users-table", 10);
           });

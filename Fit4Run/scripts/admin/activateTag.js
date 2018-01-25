@@ -59,11 +59,10 @@ window.addEventListener('load', function() {
     var userDB = firebase.database().ref('users/'+tel);
     userDB.once('value',function(udb){
         if(udb.val()==null){    console.log("Wrong Telephone Number XXX"); return;}
-        console.log(udb.val().displayname);
-        //console.log(udb.val().email);
+        
         console.log(udb.val());
         updateDailyTags(tel,tagId,dayMonthYear);
-        updateDailyRecords(tel,udb.val().displayName,dayMonthYear,newDate);
+        updateDailyRecords(tel,dayMonthYear,newDate,udb.val());
         //udbUsername = udb.val().username;
     });
    // console.log("DBBB");
@@ -127,9 +126,10 @@ function updateDailyTags(tel,tagId,dayMonthYear){
   *     ----------------------------------------------------------------------------------------------------------
   */ 
 
-  function updateDailyRecords(tel,udbDisplayName,dayMonthYear,newDate){
+  function updateDailyRecords(tel,dayMonthYear,newDate,udb){
     
-
+   // console.log(udb);
+    
         var dailyTagDB = firebase.database().ref('dailyUsersRecords/'+dayMonthYear+'/'+ tel);
         dailyTagDB.once('value',function(snapshot){
             if(snapshot.val()!=null)
@@ -139,7 +139,9 @@ function updateDailyTags(tel,tagId,dayMonthYear){
                     lastRunningTime: 0,
                     runningDistance: snapshot.val().runningDistance,
                     runningTime: snapshot.val().runningTime,
-                    displayName: udbDisplayName
+                    displayName: udb.displayName,
+                    gender: udb.gender,
+                    faculty: udb.faculty
                 });    
             }else{
                // firebase.database().ref().child('daily').child('tags').setValue(dayMonthYear);
@@ -148,7 +150,9 @@ function updateDailyTags(tel,tagId,dayMonthYear){
                 lastRunningTime: 0,
                 runningDistance: -1,
                 runningTime: 0,
-                displayName: udbDisplayName
+                displayName: udb.displayName,
+                gender: udb.gender,
+                faculty: udb.faculty
             });
                  console.log("* dailyUsersRecords - just created -> /dayMonthYear/(new record) !!");
       

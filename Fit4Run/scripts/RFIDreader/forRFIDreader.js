@@ -96,8 +96,8 @@ function tagChecked(tagId){
         if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
         
         var newTime = parseInt((newDate-prevClock)/1000);
-        var round = snapshot.val().round;
-          if(round<0)
+        var runningDistance = snapshot.val().runningDistance;
+          if(runningDistance<0)
             {  
               newTime = 0; 
               console.log("Start Running - CHECKED");  
@@ -113,7 +113,9 @@ function tagChecked(tagId){
         lastCheck: newDate,
         runningDistance: snapshot.val().runningDistance+1,
         runningTime: snapshot.val().runningTime+newTime,
-        lastRunningTime: newTime
+        lastRunningTime: newTime,
+        gender: snapshot.val().gender,
+        faculty: snapshot.val().faculty
     });
 
     /*
@@ -159,7 +161,6 @@ function updateUsersDB(id,newTime){
         faculty: snapshot.val().faculty
     });
 
-  
       /*
           firebase.database().ref('users/' + id).update({
           totalDistance: snapshot.val().totalDistance+1,
