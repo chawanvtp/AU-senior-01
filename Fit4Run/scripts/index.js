@@ -77,7 +77,7 @@
         
   });
 
-  
+  var queue = 1;
 
   recordsRef.on('child_changed', function(snapshot){
       
@@ -86,7 +86,11 @@
         console.log(snapshot.val());
         var rec = snapshot.val();
         var announceMessage = rec.displayName + ' take ' + rec.lastRunningTime + ' for round : '+ rec.runningDistance +' - Today Avg.time = '+ parseInt(rec.runningTime/rec.runningDistance);
-        document.getElementById('announce-bar').innerHTML = announceMessage;
+        document.getElementById("indexBarText"+queue).innerHTML = announceMessage;
+        queue++;
+        if(queue>2){queue=1;}
+       // else{queue=1;}
+        //document.getElementById('announce-bar').innerHTML = announceMessage;
       });
       recordsRef.on('child_removed', function(snapshot){
             console.log("child_REMOVED");
@@ -115,5 +119,23 @@
 
 
   
+
+          window.addEventListener('load', function() {
+            console.log("load EVENT");
+            var activityLogsRef = firebase.database().ref('activityLogs/visitIndex/'+dayMonthYear);
+            activityLogsRef.once('value',function(data){
+              if(data.val()==null){
+                firebase.database().ref('activityLogs/visitIndex/'+dayMonthYear).set({
+                  visitor: 1
+                });
+              }else{
+                firebase.database().ref('activityLogs/visitIndex/'+dayMonthYear).set({
+                  visitor: data.val().visitor+1
+                });
+              }
+          
+            });
+          
+          });
 
 

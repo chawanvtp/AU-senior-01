@@ -47,7 +47,7 @@ window.addEventListener('load', function() {
         //udbUsername = udb.val().username;
         */
 
-        if(udb.val()!=null){ alert("Telephone No. is already used. !!"); return; }
+        if(udb.val()!=null){ alert("Telephone No. is already used / Invalid. !!"); return; }
 
 
         var genderReg = "male";
@@ -74,7 +74,7 @@ window.addEventListener('load', function() {
         });
         window.location.replace("login.html");
     });
-    console.log("DBBB");
+    
     
     
   }

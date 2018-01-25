@@ -19,24 +19,18 @@ var config = {
   */
 
 function loginButtonClicked (){
-    username = document.getElementById("usernameLogin").value;
-    password = document.getElementById("passwordLogin").value;
-    console.log(username+' - '+password);
+    var username = document.getElementById("usernameLogin").value;
+    var password = document.getElementById("passwordLogin").value;
+    console.log('Username: '+username+'\nPassword: '+password);
+
     if(username == "" || password == ""){ alert("Empty username OR password !!"); return; }
     
-    var userDB = firebase.database().ref("users/"+username);
-    userDB.once('value', function(snapshot){
-        
-        if(snapshot.val()==null){ alert("Tel. Number is NOT found. XXX"); return; }
-        var userBirthday = snapshot.val().birthday;
-        var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
-        console.log(userPassword);
-        if(password == userPassword){
-            alert("Correct Password !!");
-        }
-        
-    });
 
+    if(username.substr(0,5)!="admin"){
+        userLogin(username,password);
+    }else{
+        adminLogin(username,password);
+    }
 
     //alert(username+" : "+password);
 }
@@ -45,4 +39,37 @@ function loginButtonClicked (){
   *     ---------------------- Login Button Clicked !! -----------------------
   *     ----------------------------------------------------------------------
   */
-  
+
+
+function userLogin(username,password){
+    var userDB = firebase.database().ref("users/"+username);
+    userDB.once('value', function(snapshot){
+        
+        if(snapshot.val()==null){ alert("Tel. Number is NOT found. XXX"); return; }
+        var userBirthday = snapshot.val().birthday;
+        var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
+        
+        if(password != userPassword){ alert("Hacker ? Incorrect password !!"); return;}
+
+        alert("Welcome to Fit 4 Run ..");
+        
+    });
+
+}
+
+function adminLogin(username,password){
+    var adminDB = firebase.database().ref("admin/"+username);
+    adminDB.once('value', function(snapshot){
+        
+        if(snapshot.val()==null){ alert("Tel. Number is NOT found. XXX"); return; }
+        //var userBirthday = snapshot.val().birthday;
+        //var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
+        //console.log(userPassword);
+        
+        if(password != snapshot.val().password){ alert("Hacker ? Incorrect password !!"); return;}
+
+        window.location.href="admin.html";
+        
+    });
+
+}
