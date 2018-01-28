@@ -19,28 +19,19 @@ var config = {
   */
 
 function loginButtonClicked (){
-    var username = document.getElementById("usernameLogin").value;
-    var password = document.getElementById("passwordLogin").value;
-    console.log('Username: '+username+'\nPassword: '+password);
-
+    username = $('#usernameLogin').val();
+    password = $('#passwordLogin').val();
+    console.log(username+' - '+password);
     if(username == "" || password == ""){ alert("Empty username OR password !!"); return; }
-    
 
     if(username.substr(0,5)!="admin"){
         userLogin(username,password);
     }else{
         adminLogin(username,password);
     }
-
-    //alert(username+" : "+password);
+    
+    localStorage.setItem("username", $('#usernameLogin').val());            //send username to other js file
 }
-
-/*    ----------------------------------------------------------------------
-  *     ---------------------- Login Button Clicked !! -----------------------
-  *     ----------------------------------------------------------------------
-  */
-
-
 function userLogin(username,password){
     var userDB = firebase.database().ref("users/"+username);
     userDB.once('value', function(snapshot){
@@ -50,13 +41,12 @@ function userLogin(username,password){
         var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
         
         if(password != userPassword){ alert("Hacker ? Incorrect password !!"); return;}
-
+        window.location.replace("user.html");
         alert("Welcome to Fit 4 Run ..");
         
     });
 
 }
-
 function adminLogin(username,password){
     var adminDB = firebase.database().ref("admin/"+username);
     adminDB.once('value', function(snapshot){
@@ -68,7 +58,7 @@ function adminLogin(username,password){
         
         if(password != snapshot.val().password){ alert("Hacker ? Incorrect password !!"); return;}
 
-        window.location.href="admin.html";
+        window.location.replace("admin.html");
         
     });
 

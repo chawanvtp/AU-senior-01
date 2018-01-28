@@ -78,6 +78,10 @@ window.addEventListener('load', function() {
    */ 
 function updateDailyTags(tel,tagId,dayMonthYear){
   // var dailyTagDB = firebase.database().ref('daily/tags/'+dayMonthYear+'/'+ tagId);
+        localStorage.setItem(tagId, tel);
+        //var test = localStorage.getItem(tagId);
+        //console.log(test);
+
   var dailyTagDB = firebase.database().ref('dailyTagsMapUsers/'+dayMonthYear);
   dailyTagDB.once('value',function(snapshot){
       if(snapshot.val()!=null)
@@ -129,7 +133,23 @@ function updateDailyTags(tel,tagId,dayMonthYear){
   function updateDailyRecords(tel,dayMonthYear,newDate,udb){
     
    // console.log(udb);
-    
+        var displayName = udb.displayName;
+        var gender = udb.gender;
+        var faculty = udb.faculty;
+        //var temp = 0;
+        //var temp1 = -1;
+
+        var userLocal = JSON.parse(localStorage.getItem(tel));
+        if(userLocal==null){
+            var userData = {lastCheck:newDate, lastRunningTime:-1 , runningDistance:0, runningTime:0, displayName, gender, faculty};
+            localStorage.setItem(tel, JSON.stringify(userData));
+        }else{
+            var userData = {lastCheck:newDate, lastRunningTime:userLocal.lastRunningTime, runningDistance:userLocal.runningDistance, runningTime:userLocal.runningTime, displayName, gender, faculty};
+            localStorage.setItem(tel, JSON.stringify(userData));
+        }
+        //var userLocal = JSON.parse(localStorage.getItem(tel));
+        console.log(userLocal);
+
         var dailyTagDB = firebase.database().ref('dailyUsersRecords/'+dayMonthYear+'/'+ tel);
         dailyTagDB.once('value',function(snapshot){
             if(snapshot.val()!=null)
@@ -147,8 +167,8 @@ function updateDailyTags(tel,tagId,dayMonthYear){
                // firebase.database().ref().child('daily').child('tags').setValue(dayMonthYear);
                firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).set({
                 lastCheck: newDate,
-                lastRunningTime: 0,
-                runningDistance: -1,
+                lastRunningTime: -1,
+                runningDistance: 0,
                 runningTime: 0,
                 displayName: udb.displayName,
                 gender: udb.gender,

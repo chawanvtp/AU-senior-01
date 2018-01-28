@@ -82,9 +82,21 @@ function tagChecked(tagId){
   function updateDailyDB(tel,tagId,newDate,dayMonthYear){
     console.log(" * updateDailyDB(tagId) * called * ");
     
+    var userID = localStorage.getItem(tagId);
+    //console.log(userData.displayName);
+    var userLocal = JSON.parse(localStorage.getItem(userID));
+    if(userLocal!=null){
+      var prevClock = userLocal.lastCheck;
+      var newTime = parseInt((newDate-prevClock)/1000);
+      if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
+      
+      var userData = {lastCheck:newDate, lastRunningTime:userLocal.newTime, runningDistance:userLocal.runningDistance+1, runningTime:userLocal.runningTime+newTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};
+      localStorage.setItem(userID, JSON.stringify(userData));
+    }
+  //var test = JSON.parse(localStorage.getItem(userID));
+    console.log(userLocal);
+
     var dailyDB = firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel);
-
-
     dailyDB.once('value',function(snapshot){
     console.log(snapshot.val());
     if(snapshot.val()==null){
@@ -92,14 +104,14 @@ function tagChecked(tagId){
         console.log('-- YOU !! have not activated your TAG in yet xx');
     }else{
 
-        var prevClock = snapshot.val().lastCheck;
+        //var prevClock = userData.lastCheck;
         if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
         
-        var newTime = parseInt((newDate-prevClock)/1000);
-        var runningDistance = snapshot.val().runningDistance;
-          if(runningDistance<0)
+        //var newTime = parseInt((newDate-prevClock)/1000);
+        var lastRunningTime = userLocal.lastRunningTime;
+          if(lastRunningTime<0)
             {  
-              newTime = 0; 
+              newTime = 0;
               console.log("Start Running - CHECKED");  
               
             }else{
@@ -111,8 +123,8 @@ function tagChecked(tagId){
         firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).set({
         displayName: snapshot.val().displayName,
         lastCheck: newDate,
-        runningDistance: snapshot.val().runningDistance+1,
-        runningTime: snapshot.val().runningTime+newTime,
+        runningDistance: userData.runningDistance+1,
+        runningTime: userData.runningTime+newTime,
         lastRunningTime: newTime,
         gender: snapshot.val().gender,
         faculty: snapshot.val().faculty
