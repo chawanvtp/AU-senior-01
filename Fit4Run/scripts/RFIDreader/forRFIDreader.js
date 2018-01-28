@@ -97,7 +97,7 @@ function tagChecked(tagId){
         var userData = {lastCheck:newDate, lastRunningTime:newTime, runningDistance:userLocal.runningDistance+1, runningTime:userLocal.runningTime+newTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};
       }
        localStorage.setItem(userID, JSON.stringify(userData));
-       var announce =  userLocal.displayName+'   ' +':  Round '+ userLocal.runningDistance +' - ' + userLocal.lastRunningTime + ' seconds.';
+       var announce =  userData.displayName+'   ' +':  Round '+ userData.runningDistance +' - ' + userData.lastRunningTime + ' seconds.';
        for(var i=1;i<=4;i++){
           if(i<4){
             //console.log(announce);
@@ -122,28 +122,39 @@ function tagChecked(tagId){
         //var prevClock = userData.lastCheck;
         if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
         
+        var newDistance = 1;
         //var newTime = parseInt((newDate-prevClock)/1000);
         var lastRunningTime = userLocal.lastRunningTime;
           if(lastRunningTime<0)
             {  
               newTime = 0;
+              firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).set({
+                displayName: snapshot.val().displayName,
+                lastCheck: newDate,
+                runningDistance: 0,
+                runningTime: userData.runningTime,
+                lastRunningTime: newTime,
+                gender: snapshot.val().gender,
+                faculty: snapshot.val().faculty
+            });
               console.log("Start Running - CHECKED");  
               
             }else{
+              firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).set({
+                displayName: snapshot.val().displayName,
+                lastCheck: newDate,
+                runningDistance: userData.runningDistance,
+                runningTime: userData.runningTime,
+                lastRunningTime: newTime,
+                gender: snapshot.val().gender,
+                faculty: snapshot.val().faculty
+            });
               updateUsersDB(tel,newTime);
             }
 
         console.log('Daily is updating...');
         
-        firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).set({
-        displayName: snapshot.val().displayName,
-        lastCheck: newDate,
-        runningDistance: userData.runningDistance+1,
-        runningTime: userData.runningTime+newTime,
-        lastRunningTime: newTime,
-        gender: snapshot.val().gender,
-        faculty: snapshot.val().faculty
-    });
+        
 
     /*
     firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).update({
@@ -195,6 +206,7 @@ function updateUsersDB(id,newTime){
           });
         }
         **/
+      
       }
       });
 }

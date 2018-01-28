@@ -32,26 +32,28 @@ function loginButtonClicked (){
     
     localStorage.setItem("username", $('#usernameLogin').val());            //send username to other js file
 }
+
 function userLogin(username,password){
     var userDB = firebase.database().ref("users/"+username);
     userDB.once('value', function(snapshot){
         
-        if(snapshot.val()==null){ alert("Tel. Number is NOT found. XXX"); return; }
+        if(snapshot.val()==null){ alert("Username is NOT found. XXX"); return; }
         var userBirthday = snapshot.val().birthday;
         var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
         
-        if(password != userPassword){ alert("Hacker ? Incorrect password !!"); return;}
+        if(password != userPassword){ alert("Incorrect password XXX"); return;}
         window.location.replace("user.html");
         alert("Welcome to Fit 4 Run ..");
         
     });
 
 }
+
 function adminLogin(username,password){
     var adminDB = firebase.database().ref("admin/"+username);
     adminDB.once('value', function(snapshot){
         
-        if(snapshot.val()==null){ alert("Tel. Number is NOT found. XXX"); return; }
+        if(snapshot.val()==null){ alert("Username is NOT found. XXX"); return; }
         //var userBirthday = snapshot.val().birthday;
         //var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
         //console.log(userPassword);

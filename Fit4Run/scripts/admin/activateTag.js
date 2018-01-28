@@ -18,7 +18,7 @@ var config = {
   */   
 window.addEventListener('load', function() {
     // TO trigger the input box
-    document.getElementById("telAct").focus();
+    document.getElementById("usernameAct").focus();
 
 })
 
@@ -43,9 +43,9 @@ window.addEventListener('load', function() {
   var delay = 1000*10;
   
   
-  function activateButtonClicked(tel,tagId){
+  function activateButtonClicked(username,tagId){
       //alert(tagId);
-      alert(tel+" - "+tagId);
+      //alert(tel+" - "+tagId);
       console.log(" * activateButtonClicked !! ");
       var clock = new Date();
       var month = clock.getUTCMonth() + 1; //months from 1-12
@@ -56,18 +56,19 @@ window.addEventListener('load', function() {
       console.log(dayMonthYear);
       
       //var udbUsername = "";
-    var userDB = firebase.database().ref('users/'+tel);
+    var userDB = firebase.database().ref('users/'+username);
     userDB.once('value',function(udb){
-        if(udb.val()==null){    console.log("Wrong Telephone Number XXX"); return;}
+        if(udb.val()==null){    console.log("Incorrect Username XXX"); return;}
         
         console.log(udb.val());
-        updateDailyTags(tel,tagId,dayMonthYear);
-        updateDailyRecords(tel,dayMonthYear,newDate,udb.val());
+        updateDailyTags(username,tagId,dayMonthYear);
+        updateDailyRecords(username,dayMonthYear,newDate,udb.val());
         //udbUsername = udb.val().username;
+        alert("Success !!");
     });
    // console.log("DBBB");
     
-    document.getElementById("telAct").value = ""; 
+    document.getElementById("usernameAct").value = ""; 
     document.getElementById("tagAct").value = ""; 
     
   }
@@ -76,9 +77,9 @@ window.addEventListener('load', function() {
   /**
    * Update Daily DB
    */ 
-function updateDailyTags(tel,tagId,dayMonthYear){
+function updateDailyTags(username,tagId,dayMonthYear){
   // var dailyTagDB = firebase.database().ref('daily/tags/'+dayMonthYear+'/'+ tagId);
-        localStorage.setItem(tagId, tel);
+        localStorage.setItem(tagId, username);
         //var test = localStorage.getItem(tagId);
         //console.log(test);
 
@@ -89,14 +90,14 @@ function updateDailyTags(tel,tagId,dayMonthYear){
           //updateUsersDB(superSnapshot.val().id,newTime);
          // updateDailyDB(tel,tagId,dayMonthYear);
          firebase.database().ref('dailyTagsMapUsers/'+ dayMonthYear +'/'+ tagId).set({
-          userID: tel
+          userID: username
       });
           
           
       }else{
          // firebase.database().ref().child('daily').child('tags').setValue(dayMonthYear);
           firebase.database().ref('dailyTagsMapUsers/'+ dayMonthYear +'/'+ tagId).set({
-              userID: tel
+              userID: username
           });
 
            console.log("* daily/tags - just created -> /dayMonth/Year!!");
@@ -118,10 +119,10 @@ function updateDailyTags(tel,tagId,dayMonthYear){
      //var tagActBox = document.getElementById("tagAct");
 
      //alert(document.getElementById("telAct").value);
-      activateButtonClicked(document.getElementById("telAct").value,document.getElementById("tagAct").value);
-      document.getElementById("telAct").value = "";
+      activateButtonClicked(document.getElementById("usernameAct").value,document.getElementById("tagAct").value);
+      document.getElementById("usernameAct").value = "";
       document.getElementById("tagAct").value = "";
-      document.getElementById("telAct").focus();
+      document.getElementById("usernameAct").focus();
     }
   });
 
@@ -130,7 +131,7 @@ function updateDailyTags(tel,tagId,dayMonthYear){
   *     ----------------------------------------------------------------------------------------------------------
   */ 
 
-  function updateDailyRecords(tel,dayMonthYear,newDate,udb){
+  function updateDailyRecords(username,dayMonthYear,newDate,udb){
     
    // console.log(udb);
         var displayName = udb.displayName;
@@ -139,22 +140,22 @@ function updateDailyTags(tel,tagId,dayMonthYear){
         //var temp = 0;
         //var temp1 = -1;
         
-        var userLocal = JSON.parse(localStorage.getItem(tel));
+        var userLocal = JSON.parse(localStorage.getItem(username));
         if(userLocal==null){
             var userData = {lastCheck:newDate, lastRunningTime:-1 , runningDistance:0, runningTime:0, displayName:displayName, gender:gender, faculty:faculty};
-            localStorage.setItem(tel, JSON.stringify(userData));
+            localStorage.setItem(username, JSON.stringify(userData));
         }else{
             var userData = {lastCheck:newDate, lastRunningTime:userLocal.lastRunningTime, runningDistance:userLocal.runningDistance, runningTime:userLocal.runningTime, displayName:displayName, gender:gender, faculty:faculty};
-            localStorage.setItem(tel, JSON.stringify(userData));
+            localStorage.setItem(username, JSON.stringify(userData));
         }
         //var userLocal = JSON.parse(localStorage.getItem(tel));
         console.log(userLocal);
 
-        var dailyTagDB = firebase.database().ref('dailyUsersRecords/'+dayMonthYear+'/'+ tel);
+        var dailyTagDB = firebase.database().ref('dailyUsersRecords/'+dayMonthYear+'/'+ username);
         dailyTagDB.once('value',function(snapshot){
             if(snapshot.val()!=null)
             {
-                firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).set({
+                firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ username).set({
                     lastCheck: newDate,
                     lastRunningTime: 0,
                     runningDistance: snapshot.val().runningDistance,
@@ -164,11 +165,11 @@ function updateDailyTags(tel,tagId,dayMonthYear){
                     faculty: udb.faculty
                 });    
             }else{
-                localStorage.removeItem(tel);
+                localStorage.removeItem(username);
                 var userData = {lastCheck:newDate, lastRunningTime:-1 , runningDistance:0, runningTime:0, displayName:displayName, gender:gender, faculty:faculty};
-                localStorage.setItem(tel, JSON.stringify(userData));
+                localStorage.setItem(username, JSON.stringify(userData));
                // firebase.database().ref().child('daily').child('tags').setValue(dayMonthYear);
-               firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).set({
+               firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ username).set({
                 lastCheck: newDate,
                 lastRunningTime: -1,
                 runningDistance: 0,
@@ -178,10 +179,14 @@ function updateDailyTags(tel,tagId,dayMonthYear){
                 faculty: udb.faculty
             });
                  console.log("* dailyUsersRecords - just created -> /dayMonthYear/(new record) !!");
-      
+                 
+              
               }
       
         });
+
+
+        
 
   }
 

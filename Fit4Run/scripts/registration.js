@@ -37,7 +37,7 @@ window.addEventListener('load', function() {
       console.log(dayMonthYear);
       */
       //var udbUsername = "";
-    var userDB = firebase.database().ref('users/'+document.getElementById('telReg').value);
+    var userDB = firebase.database().ref('users/'+document.getElementById('usernameReg').value);
     userDB.once('value',function(udb){
         /*
         if(udb.val()==null){    console.log("Wrong Telephone Number XXX"); return;}
@@ -47,7 +47,7 @@ window.addEventListener('load', function() {
         //udbUsername = udb.val().username;
         */
 
-        if(udb.val()!=null){ alert("Telephone No. is already used / Invalid. !!"); return; }
+        if(udb.val()!=null){ alert("Username is already used / Invalid. !!"); return; }
 
 
         var genderReg = "male";
@@ -55,14 +55,14 @@ window.addEventListener('load', function() {
 
         var displaynameReg = document.getElementById('displayNameReg').value;
         var facultyReg = document.getElementById('facultyReg').value;   
-        var telReg = document.getElementById('telReg').value;
+        var usernameReg = document.getElementById('usernameReg').value;
         var heightReg = document.getElementById('heightReg').value;
         var weightReg = document.getElementById('weightReg').value;
         var bdReg = document.getElementById('bdReg').value;
         
         
 
-        firebase.database().ref('users/'+ telReg).set({
+        firebase.database().ref('users/'+ usernameReg).set({
             displayName: displaynameReg,
             totalDistance: 0,
             gender: genderReg,

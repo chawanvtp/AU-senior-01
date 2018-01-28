@@ -18,13 +18,13 @@ function dispInfo(){
     var dayMonthYear = day+'d'+month+'m'+year+'y';
     var newDate = clock.getTime();
     //console.log(dayMonthYear); 
-    var telNo = localStorage.getItem("username");  
-    var uDB = firebase.database().ref("users/"+telNo);
-    var dailyUserDB = firebase.database().ref("dailyUsersRecords/"+dayMonthYear+'/'+telNo);
+    var username = localStorage.getItem("username");  
+    var uDB = firebase.database().ref("users/"+username);
+    var dailyUserDB = firebase.database().ref("dailyUsersRecords/"+dayMonthYear+'/'+username);
     var ref = firebase.database().ref("dailyUsersRecords");
     uDB.on('value', function(snapshot){
         console.log(snapshot.key);
-        if(snapshot.val()==null){ alert("Tel Number not FOUND"); return;}
+        if(snapshot.val()==null){ alert("Username is not FOUND"); return;}
             var nameDisp = snapshot.val().displayName;
             var facultyDisp = snapshot.val().faculty;
             var genderDisp = snapshot.val().gender;
@@ -45,7 +45,7 @@ function dispInfo(){
 
             date.forEach(function(user){           //Refer to every user in dailyUserRecords in firebase
 
-                if (user.key == telNo){            //Select only user that exist on that date
+                if (user.key == username){            //Select only user that exist on that date
     
                     var runningRound = user.val().runningDistance;
                     var runningDist = runningRound*0.51;
