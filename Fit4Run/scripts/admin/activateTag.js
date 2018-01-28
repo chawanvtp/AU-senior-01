@@ -49,7 +49,7 @@ window.addEventListener('load', function() {
       console.log(" * activateButtonClicked !! ");
       var clock = new Date();
       var month = clock.getUTCMonth() + 1; //months from 1-12
-      var day = clock.getUTCDate();
+      var day = clock.getUTCDate()+1;
       var year = clock.getUTCFullYear();
       var dayMonthYear = day+'d'+month+'m'+year+'y';
       var newDate = clock.getTime();
@@ -138,13 +138,13 @@ function updateDailyTags(tel,tagId,dayMonthYear){
         var faculty = udb.faculty;
         //var temp = 0;
         //var temp1 = -1;
-
+        
         var userLocal = JSON.parse(localStorage.getItem(tel));
         if(userLocal==null){
-            var userData = {lastCheck:newDate, lastRunningTime:-1 , runningDistance:0, runningTime:0, displayName, gender, faculty};
+            var userData = {lastCheck:newDate, lastRunningTime:-1 , runningDistance:0, runningTime:0, displayName:displayName, gender:gender, faculty:faculty};
             localStorage.setItem(tel, JSON.stringify(userData));
         }else{
-            var userData = {lastCheck:newDate, lastRunningTime:userLocal.lastRunningTime, runningDistance:userLocal.runningDistance, runningTime:userLocal.runningTime, displayName, gender, faculty};
+            var userData = {lastCheck:newDate, lastRunningTime:userLocal.lastRunningTime, runningDistance:userLocal.runningDistance, runningTime:userLocal.runningTime, displayName:displayName, gender:gender, faculty:faculty};
             localStorage.setItem(tel, JSON.stringify(userData));
         }
         //var userLocal = JSON.parse(localStorage.getItem(tel));
@@ -164,6 +164,9 @@ function updateDailyTags(tel,tagId,dayMonthYear){
                     faculty: udb.faculty
                 });    
             }else{
+                localStorage.removeItem(tel);
+                var userData = {lastCheck:newDate, lastRunningTime:-1 , runningDistance:0, runningTime:0, displayName:displayName, gender:gender, faculty:faculty};
+                localStorage.setItem(tel, JSON.stringify(userData));
                // firebase.database().ref().child('daily').child('tags').setValue(dayMonthYear);
                firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).set({
                 lastCheck: newDate,

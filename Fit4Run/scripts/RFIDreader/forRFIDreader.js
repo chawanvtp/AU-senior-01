@@ -89,9 +89,24 @@ function tagChecked(tagId){
       var prevClock = userLocal.lastCheck;
       var newTime = parseInt((newDate-prevClock)/1000);
       if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
-      
-      var userData = {lastCheck:newDate, lastRunningTime:userLocal.newTime, runningDistance:userLocal.runningDistance+1, runningTime:userLocal.runningTime+newTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};
-      localStorage.setItem(userID, JSON.stringify(userData));
+      if(userLocal.lastRunningTime<0){
+        var userData = {lastCheck:newDate, lastRunningTime:userLocal.lastRunningTime+1, runningDistance:userLocal.runningDistance, runningTime:userLocal.runningTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};   
+        console.log("IF");
+      }else{
+        console.log("ELSE");
+        var userData = {lastCheck:newDate, lastRunningTime:newTime, runningDistance:userLocal.runningDistance+1, runningTime:userLocal.runningTime+newTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};
+      }
+       localStorage.setItem(userID, JSON.stringify(userData));
+       var announce =  userLocal.displayName+'   ' +':  Round '+ userLocal.runningDistance +' - ' + userLocal.lastRunningTime + ' seconds.';
+       for(var i=1;i<=4;i++){
+          if(i<4){
+            //console.log(announce);
+              document.getElementById('localAnnounce-bar'+i).innerText = document.getElementById('localAnnounce-bar'+(i+1)).innerText;
+           // console.log(document.getElementById('announce-bar'+(i+1)).innerText);
+          }else{
+              document.getElementById('localAnnounce-bar'+i).innerText = announce;
+          }
+        }
     }
   //var test = JSON.parse(localStorage.getItem(userID));
     console.log(userLocal);

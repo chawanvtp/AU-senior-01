@@ -79,6 +79,7 @@ window.addEventListener('load', function() {
    * Update Daily DB
    */ 
 function deleteDailyTags(tagId,dayMonthYear){
+  localStorage.removeItem(tagId);
   // var dailyTagDB = firebase.database().ref('daily/tags/'+dayMonthYear+'/'+ tagId);
   var dailyTagDB = firebase.database().ref('dailyTagsMapUsers/'+dayMonthYear+'/'+tagId);
   dailyTagDB.once('value',function(snapshot){
