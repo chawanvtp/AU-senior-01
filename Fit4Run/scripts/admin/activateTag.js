@@ -49,7 +49,7 @@ window.addEventListener('load', function() {
       console.log(" * activateButtonClicked !! ");
       var clock = new Date();
       var month = clock.getUTCMonth() + 1; //months from 1-12
-      var day = clock.getUTCDate()+1;
+      var day = clock.getUTCDate();
       var year = clock.getUTCFullYear();
       var dayMonthYear = day+'d'+month+'m'+year+'y';
       var newDate = clock.getTime();
