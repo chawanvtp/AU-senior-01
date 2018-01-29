@@ -55,8 +55,8 @@ function tagChecked(tagId){
     var dayMonthYear = day+'d'+month+'m'+year+'y';
     var newDate = clock.getTime();
 
-    console.log(dayMonthYear);
-    console.log(tagId);
+    console.log(newDate);
+    //console.log(tagId);
   var dailyTagDB = firebase.database().ref('dailyTagsMapUsers/'+dayMonthYear+'/'+ tagId);
   dailyTagDB.once('value',function(superSnapshot){
       if(superSnapshot.val()!=null)
@@ -88,7 +88,7 @@ function tagChecked(tagId){
     if(userLocal!=null){
       var prevClock = userLocal.lastCheck;
       var newTime = parseInt((newDate-prevClock)/1000);
-      if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
+      if((prevClock+delay)>newDate&&userLocal.lastRunningTime!=-1){  console.log("$$ Delaying .. "); return;   }
       if(userLocal.lastRunningTime<0){
         var userData = {lastCheck:newDate, lastRunningTime:userLocal.lastRunningTime+1, runningDistance:userLocal.runningDistance, runningTime:userLocal.runningTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};   
         console.log("IF");
@@ -97,14 +97,20 @@ function tagChecked(tagId){
         var userData = {lastCheck:newDate, lastRunningTime:newTime, runningDistance:userLocal.runningDistance+1, runningTime:userLocal.runningTime+newTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};
       }
        localStorage.setItem(userID, JSON.stringify(userData));
-       var announce =  userData.displayName+'   ' +':  Round '+ userData.runningDistance +' - ' + userData.lastRunningTime + ' seconds.';
-       for(var i=1;i<=4;i++){
-          if(i<4){
+       var name = userData.displayName;
+       var announce =  'Round: '+ userData.runningDistance +' - '+ parseInt(userData.lastRunningTime/60) + ' minute(s) ' + (userData.lastRunningTime%60) + ' seconds.';
+       if(userData.lastRunningTime<=0){
+         announce = 'Start Running at Round: '+ userData.runningDistance;
+       }
+       for(var i=1;i<=3;i++){
+          if(i<3){
             //console.log(announce);
               document.getElementById('localAnnounce-bar'+i).innerText = document.getElementById('localAnnounce-bar'+(i+1)).innerText;
-           // console.log(document.getElementById('announce-bar'+(i+1)).innerText);
+             document.getElementById('localAnnounceDetail-bar'+i).innerText = document.getElementById('localAnnounceDetail-bar'+(i+1)).innerText;
+              // console.log(document.getElementById('announce-bar'+(i+1)).innerText);
           }else{
-              document.getElementById('localAnnounce-bar'+i).innerText = announce;
+            document.getElementById('localAnnounce-bar'+i).innerText = name;
+              document.getElementById('localAnnounceDetail-bar'+i).innerText = announce;
           }
         }
     }
@@ -120,7 +126,7 @@ function tagChecked(tagId){
     }else{
 
         //var prevClock = userData.lastCheck;
-        if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
+        if((prevClock+delay)>newDate&&userLocal>=0){  console.log("$$ Delaying .. "); return;   }
         
         var newDistance = 1;
         //var newTime = parseInt((newDate-prevClock)/1000);
@@ -131,7 +137,7 @@ function tagChecked(tagId){
               firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).set({
                 displayName: snapshot.val().displayName,
                 lastCheck: newDate,
-                runningDistance: 0,
+                runningDistance: userData.runningDistance,
                 runningTime: userData.runningTime,
                 lastRunningTime: newTime,
                 gender: snapshot.val().gender,
@@ -211,6 +217,79 @@ function updateUsersDB(id,newTime){
       });
 }
 
+var clock = new Date();
+var month = clock.getUTCMonth()+1; //months from 1-12
+var day = clock.getUTCDate();
+var year = clock.getUTCFullYear();
+var dayMonthYear = day+'d'+month+'m'+year+'y';
+var newDate = clock.getTime();
+
+var dailyTagsList = firebase.database().ref("dailyTagsMapUsers/"+dayMonthYear);
+dailyTagsList.on('child_added', function(snapshot){
+      //var data = snapshot.val();
+     //console.log(data.runningDistance);
+   // console.log(snapshot.key);
+    setLocalTag(snapshot.key,snapshot.val());
+/*
+     var userData = {lastCheck:snapshot.val().lastCheck, lastRunningTime:snapshot.val().lastRunningTime, runningDistance:snapshot.val().runningDistance, runningTime:snapshot.val().runningTime, displayName:snapshot.val().displayName, gender:snapshot.val().gender, faculty:snapshot.val().faculty};
+     localStorage.setItem(userID, JSON.stringify(userData));
+*/
+
+});
+dailyTagsList.on('child_changed', function(snapshot){
+    setLocalTag(snapshot.key,snapshot.val());
+
+});
+
+dailyTagsList.on('child_removed', function(snapshot){
+  localStorage.removeItem(snapshot.key);
+  console.log("Local Tag: "+snapshot.key+" DELETED !!");
+//setLocalTag(snapshot.key,snapshot.val());
+
+});
+
+
+var dailyUsersList = firebase.database().ref("dailyUsersRecords/"+dayMonthYear);
+dailyUsersList.on('child_added', function(snapshot){
+      //var data = snapshot.val();
+     //console.log(data.runningDistance);
+   // console.log(snapshot.key);
+    setLocalUser(snapshot.key,snapshot.val());
+/*
+     var userData = {lastCheck:snapshot.val().lastCheck, lastRunningTime:snapshot.val().lastRunningTime, runningDistance:snapshot.val().runningDistance, runningTime:snapshot.val().runningTime, displayName:snapshot.val().displayName, gender:snapshot.val().gender, faculty:snapshot.val().faculty};
+     localStorage.setItem(userID, JSON.stringify(userData));
+*/
+
+});
+dailyUsersList.on('child_changed', function(snapshot){
+    setLocalUser(snapshot.key,snapshot.val());
+
+});
+
+dailyUsersList.on('child_removed', function(snapshot){
+  localStorage.removeItem(snapshot.key);
+  console.log("Local Users: "+snapshot.key+" DELETED !!");
+//setLocalTag(snapshot.key,snapshot.val());
+
+});
 
 
 
+
+
+function setLocalTag(key,data){
+  console.log(newDate);
+  console.log("Local ADD (Tag) -> Tag: "+key+" , userID: "+data.userID);
+  localStorage.setItem(key, data.userID);
+  //console.log(data.runningDistance);
+}
+
+
+
+function setLocalUser(key,data){
+  console.log(newDate);
+  var userData = {lastCheck:data.lastCheck, lastRunningTime:data.lastRunningTime, runningDistance:data.runningDistance, runningTime:data.runningTime, displayName:data.displayName, gender:data.gender, faculty:data.faculty};
+  localStorage.setItem(key, JSON.stringify(userData));
+  console.log("Local ADD (User) -> ID: "+key);
+  //console.log(userData);
+}

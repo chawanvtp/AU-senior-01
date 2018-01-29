@@ -30,6 +30,7 @@ window.addEventListener('load', function() {
   //var updateButton = document.getElementById("updateButton");
   //var tagID = document.getElementById("tagID-Box");
     //document.getElementById("tagID-Box")
+    /*
     window.addEventListener("keyup", function(event) {
     event.preventDefault();
     if (event.keyCode === 13) {
@@ -38,7 +39,7 @@ window.addEventListener('load', function() {
      //document.getElementById("tagReg").value = ""; 
     }
   });
-  
+  */
   // interval delay for 10 second(s)
   var delay = 1000*10;
   
@@ -145,7 +146,7 @@ function updateDailyTags(username,tagId,dayMonthYear){
             var userData = {lastCheck:newDate, lastRunningTime:-1 , runningDistance:0, runningTime:0, displayName:displayName, gender:gender, faculty:faculty};
             localStorage.setItem(username, JSON.stringify(userData));
         }else{
-            var userData = {lastCheck:newDate, lastRunningTime:userLocal.lastRunningTime, runningDistance:userLocal.runningDistance, runningTime:userLocal.runningTime, displayName:displayName, gender:gender, faculty:faculty};
+            var userData = {lastCheck:newDate, lastRunningTime:-1, runningDistance:userLocal.runningDistance, runningTime:userLocal.runningTime, displayName:displayName, gender:gender, faculty:faculty};
             localStorage.setItem(username, JSON.stringify(userData));
         }
         //var userLocal = JSON.parse(localStorage.getItem(tel));
@@ -157,7 +158,7 @@ function updateDailyTags(username,tagId,dayMonthYear){
             {
                 firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ username).set({
                     lastCheck: newDate,
-                    lastRunningTime: 0,
+                    lastRunningTime: -1,
                     runningDistance: snapshot.val().runningDistance,
                     runningTime: snapshot.val().runningTime,
                     displayName: udb.displayName,

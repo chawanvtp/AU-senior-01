@@ -30,15 +30,20 @@ window.addEventListener('load', function() {
   //var updateButton = document.getElementById("updateButton");
   //var tagID = document.getElementById("tagID-Box");
     //document.getElementById("tagID-Box")
+   
     window.addEventListener("keyup", function(event) {
-    event.preventDefault();
-    if (event.keyCode === 13) {
-     // tagChecked(document.getElementById("tagID-Box").value);
-     //document.getElementById("telReg").value = ""; 
-     //document.getElementById("tagReg").value = ""; 
-    }
-  });
+      event.preventDefault();
+      if (event.keyCode === 13) {
+        
+        //console.log(document.getElementById("tagReturn").value);
+
+        
+        
+        returnButtonClicked(document.getElementById('tagReturn').value);
+      }
+    });
   
+
   // interval delay for 10 second(s)
   var delay = 1000*10;
   var clock = new Date();
@@ -71,7 +76,7 @@ window.addEventListener('load', function() {
    // console.log("DBBB");
    deleteDailyTags(tagId,dayMonthYear);
     //document.getElementById("telReturn").value = ""; 
-    document.getElementById("tagReturn").value = ""; 
+   
     
   }
 
@@ -132,26 +137,10 @@ function deleteDailyTags(tagId,dayMonthYear){
 
   });
 
+  document.getElementById("tagReturn").value = ""; 
+
 }
 
-
-
-
-  window.addEventListener("keyup", function(event) {
-    event.preventDefault();
-    if (event.keyCode === 13) {
-      alert("Do NOT use ENTER !!");
-     // tagChecked(document.getElementById("tagID-Box").value);
-     //var telActBox = document.getElementById("telAct");
-     //var tagActBox = document.getElementById("tagAct");
-      console.log(document.getElementById("tagReturn").value);
-     //alert(document.getElementById("telAct").value);
-      //returnButtonClicked(document.getElementById("tagReturn").value);
-     // document.getElementById("telAct").value = "";
-      //document.getElementById("tagReturn").value = "";
-     // document.getElementById("tagReturn").focus();
-    }
-  });
 
   /*    ----------------------------------------------------------------------------------------------------------
   *     ---------------------- TO Update Firebase - daily/records/dayMonthYear/(newData) ] -----------------------
