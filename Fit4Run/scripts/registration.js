@@ -72,7 +72,8 @@ window.addEventListener('load', function() {
             weight: weightReg,
             birthday: bdReg
         });
-        window.location.replace("login.html");
+        alert("Registration Success !!");
+        window.location.replace("registration.html");
     });
     
     

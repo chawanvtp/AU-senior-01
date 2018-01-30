@@ -1,4 +1,4 @@
-
+//localStorage.clear();
 
   // Initialize Firebase
 var config = {
@@ -26,7 +26,7 @@ window.addEventListener('load', function() {
   });
 
   /*    ----------------------------------------------------------------------
-  *     ---------------------- Events TO-DO on LOAD !! -----------------------
+  *     ---------------------- Events TO-DO on ENTER !! -----------------------
   *     ----------------------------------------------------------------------
   */ 
 
@@ -97,6 +97,16 @@ function tagChecked(tagId){
         var userData = {lastCheck:newDate, lastRunningTime:newTime, runningDistance:userLocal.runningDistance+1, runningTime:userLocal.runningTime+newTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};
       }
        localStorage.setItem(userID, JSON.stringify(userData));
+
+       // User information declare HERE ------------->
+       var userInfo = JSON.parse(localStorage.getItem(userID+'Info'));
+       console.log(userInfo);
+       console.log(userInfo.gender);
+       console.log(userInfo.height);
+       console.log(userInfo.weight);
+       console.log(userInfo.birthday);
+       // ------------------------------------------<
+
        var name = userData.displayName;
        var announce =  'Round: '+ userData.runningDistance +' - '+ parseInt(userData.lastRunningTime/60) + ' minute(s) ' + (userData.lastRunningTime%60) + ' seconds.';
        if(userData.lastRunningTime<=0){
@@ -259,7 +269,25 @@ dailyUsersList.on('child_added', function(snapshot){
      var userData = {lastCheck:snapshot.val().lastCheck, lastRunningTime:snapshot.val().lastRunningTime, runningDistance:snapshot.val().runningDistance, runningTime:snapshot.val().runningTime, displayName:snapshot.val().displayName, gender:snapshot.val().gender, faculty:snapshot.val().faculty};
      localStorage.setItem(userID, JSON.stringify(userData));
 */
-
+  // Users FIREBASE DB called HERE ---->
+  var userDB = firebase.database().ref('users/'+snapshot.key);
+  //var height = 0;
+  //var weight = 0;
+  //var birthday = "";
+  userDB.once('value',function(udb){
+     var userInfo = localStorage.getItem(snapshot.key+'Info');
+     if(userInfo==null){
+       var userInfo = {weight:udb.val().weight , height:udb.val().height , gender:udb.val().gender , birthday:udb.val().birthday};
+     localStorage.setItem(snapshot.key+'Info', JSON.stringify(userInfo));
+   }
+  });
+  var userInfo = localStorage.getItem(snapshot.key+'Info');
+  console.log('Local ADD - (userInfo) as '+snapshot.key+'Info')
+  console.log(userInfo);
+  //height = userInfo.height;
+  //weight = userInfo.weight;
+  //birthday = userInfo.birthday;
+  // --------------------------------------<
 });
 dailyUsersList.on('child_changed', function(snapshot){
     setLocalUser(snapshot.key,snapshot.val());
