@@ -54,10 +54,12 @@
     //    }
             if(tableName=="daily-table"){    
             recTab.rows[rankRange].cells[2].innerHTML = item.val().runningDistance;
-            recTab.rows[rankRange].cells[3].innerHTML = parseInt(item.val().runningTime/item.val().runningDistance);
+            //recTab.rows[rankRange].cells[3].innerHTML = parseInt((item.val().runningTime/item.val().runningDistance)/60)+':'+parseInt((item.val().runningTime/item.val().runningDistance)%60)+' min';
+            recTab.rows[rankRange].cells[3].innerHTML = parseInt(item.val().runningTime/60);//+'.'+parseInt(item.val().runningTime%60);
             }else if(tableName=="users-table"){
                 recTab.rows[rankRange].cells[2].innerHTML = item.val().totalDistance;
-                recTab.rows[rankRange].cells[3].innerHTML = parseInt(item.val().totalTime/item.val().totalDistance);
+                //recTab.rows[rankRange].cells[3].innerHTML = parseInt((item.val().totalTime/item.val().totalDistance)/60)+':'+parseInt((item.val().totalTime/item.val().totalDistance)%60)+' min';
+                recTab.rows[rankRange].cells[3].innerHTML = parseInt(item.val().totalTime/60);//+'.'+parseInt(item.val().totalTime%60);
             }
             
     rankRange--;
