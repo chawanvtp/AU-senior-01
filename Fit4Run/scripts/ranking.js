@@ -24,7 +24,7 @@
   var year = clock.getUTCFullYear();
   var dayMonthYear = day+'d'+month+'m'+year+'y';
 
-  var recordsRef = database.ref('dailyUsersRecords/'+dayMonthYear).orderByChild('round').limitToLast(10);
+  var recordsRef = database.ref('dailyUsersRecords/'+dayMonthYear).orderByChild('runningDistance').limitToLast(10);
   var limit = 10;
   var total = limit;
 
@@ -43,7 +43,7 @@
           
       var recTab = document.getElementById(tableName);
     //    if(tableName=='users-table'){
-            console.log("xxx USERs table xxx");
+            console.log("xxx "+tableName+" table xxx");
             recTab.rows[rankRange].cells[1].innerHTML = item.val().displayName;
     //    }else{
     //       recTab.rows[rankRange].cells[1].innerHTML = item.val().id;
@@ -70,25 +70,31 @@
 
 }
 
+var queue = 1;
+var runnerToday = 0;
+var runnerAllday = 0;
+
   recordsRef.on('child_added', function(snapshot){
      
         console.log("recordsRef - on - child_ADDED");
         rewriteTable(recordsRef, "daily-table", 10);
-        
+        runnerToday++;
   });
 
-  var queue = 1;
+  //var am = runner+" : Runners TODAY.";
+  //document.getElementById("indexBarText").innerHTML = am;
+
 
   recordsRef.on('child_changed', function(snapshot){
       
         console.log("child_CHANGED");
         rewriteTable(recordsRef, "daily-table", 10);
-        console.log(snapshot.val());
-        var rec = snapshot.val();
-        var announceMessage = rec.displayName + ' take ' + rec.lastRunningTime + ' for round : '+ rec.runningDistance +' - Today Avg.time = '+ parseInt(rec.runningTime/rec.runningDistance);
-        document.getElementById("indexBarText"+queue).innerHTML = announceMessage;
-        queue++;
-        if(queue>2){queue=1;}
+        //console.log(snapshot.val());
+        //var rec = snapshot.val();
+        //var announceMessage = rec.displayName + ' take ' + rec.lastRunningTime + ' for round : '+ rec.runningDistance +' - Today Avg.time = '+ parseInt(rec.runningTime/rec.runningDistance);
+        //document.getElementById("indexBarText"+queue).innerHTML = announceMessage;
+        //queue++;
+        //if(queue>2){queue=1;}
        // else{queue=1;}
         //document.getElementById('announce-bar').innerHTML = announceMessage;
       });
@@ -99,12 +105,17 @@
 
  
 
-  var usersRef = database.ref().child('users').orderByChild('round').limitToLast(10);
+  var usersRef = database.ref().child('users').orderByChild('totalDistance').limitToLast(10);
   
  
   usersRef.on('child_added', function(snapshot){
     console.log("child_ADDED");
     rewriteTable(usersRef, "users-table", 10);
+    runnerAllday++;
+    var announceMessage = runnerToday+" : Runners TODAY.";
+    document.getElementById("indexBarText1").innerHTML = announceMessage;
+    announceMessage = runnerAllday+" : Runners All-TIME.";
+    document.getElementById("indexBarText2").innerHTML = announceMessage;
   });
 
   usersRef.on('child_changed', function(snapshot){
@@ -122,14 +133,14 @@
 
           window.addEventListener('load', function() {
             console.log("Visitor ++");
-            var activityLogsRef = firebase.database().ref('activityLogs/visitIndex/'+dayMonthYear);
+            var activityLogsRef = firebase.database().ref('activityLogs/visitRanking/'+dayMonthYear);
             activityLogsRef.once('value',function(data){
               if(data.val()==null){
-                firebase.database().ref('activityLogs/visitIndex/'+dayMonthYear).set({
+                firebase.database().ref('activityLogs/visitRanking/'+dayMonthYear).set({
                   visitor: 1
                 });
               }else{
-                firebase.database().ref('activityLogs/visitIndex/'+dayMonthYear).set({
+                firebase.database().ref('activityLogs/visitRanking/'+dayMonthYear).set({
                   visitor: data.val().visitor+1
                 });
               }
@@ -138,4 +149,5 @@
           
           });
 
+          
 

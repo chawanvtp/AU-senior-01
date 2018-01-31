@@ -105,8 +105,55 @@ function tagChecked(tagId){
        console.log(userInfo.height);
        console.log(userInfo.weight);
        console.log(userInfo.birthday);
+
        // ------------------------------------------<
 
+
+
+      var name = userData.displayName;
+      var speed = (userData.runningDistance*0.5*3600)/userData.runningTime;
+      var temp = speed.toFixed(2);
+      console.log(temp);
+      var height = userInfo.height;
+      var weight = userInfo.weight;
+      var age = (2018 - userInfo.birthday.substr(0,4));
+      var bmr = 0;
+      var gender = userInfo.gender;
+      var calBurn = 0;
+
+      if(gender == "male"){
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5;       
+      }
+      if(gender == 'female'){
+        bmr = 10 * weight + 6.25 * height - 5 * age -161;
+      }
+      if (speed > 10){       
+        calBurn = (userData.runningTime * 11 * bmr)/(24*3600);
+        tempCal = calBurn.toFixed(2);
+        //console.log(calBurn);
+      }
+      if (speed < 10){
+        calBurn = (userData.runningTime * 6 * bmr)/(24*3600);
+        tempCal = calBurn.toFixed(2);
+      }
+      console.log(calBurn);
+      var announce =  parseInt(userData.lastRunningTime/60)+':'+(userData.lastRunningTime%60) + ' minute(s) => Speed : ' + temp + ' | Burned : ' + tempCal + ' calories.';
+     if(userData.lastRunningTime<=0){
+       announce = 'Start Running at Round: '+ userData.runningDistance;
+     }
+     for(var i=1;i<=3;i++){
+        if(i<3){
+          //console.log(announce);
+            document.getElementById('localAnnounce-bar'+i).innerText = document.getElementById('localAnnounce-bar'+(i+1)).innerText;
+           document.getElementById('localAnnounceDetail-bar'+i).innerText = document.getElementById('localAnnounceDetail-bar'+(i+1)).innerText;
+            // console.log(document.getElementById('announce-bar'+(i+1)).innerText);
+        }else{
+          document.getElementById('localAnnounce-bar'+i).innerText = name + " - Round: "+userData.runningDistance;
+            document.getElementById('localAnnounceDetail-bar'+i).innerText = announce;
+        }
+      }
+      
+       /*
        var name = userData.displayName;
        var announce =  'Round: '+ userData.runningDistance +' - '+ parseInt(userData.lastRunningTime/60) + ' minute(s) ' + (userData.lastRunningTime%60) + ' seconds.';
        if(userData.lastRunningTime<=0){
@@ -122,10 +169,15 @@ function tagChecked(tagId){
             document.getElementById('localAnnounce-bar'+i).innerText = name;
               document.getElementById('localAnnounceDetail-bar'+i).innerText = announce;
           }
-        }
+        }*/
+
     }
+    
+    //------------------------------------------------------------------<
+
+
   //var test = JSON.parse(localStorage.getItem(userID));
-    console.log(userLocal);
+    //console.log(userLocal);
 
     var dailyDB = firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel);
     dailyDB.once('value',function(snapshot){
@@ -281,7 +333,7 @@ dailyUsersList.on('child_added', function(snapshot){
      localStorage.setItem(snapshot.key+'Info', JSON.stringify(userInfo));
    }
   });
-  var userInfo = localStorage.getItem(snapshot.key+'Info');
+  var userInfo = JSON.parse(localStorage.getItem(snapshot.key+'Info'));
   console.log('Local ADD - (userInfo) as '+snapshot.key+'Info')
   console.log(userInfo);
   //height = userInfo.height;

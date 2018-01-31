@@ -30,7 +30,7 @@ function dispInfo(){
             var genderDisp = snapshot.val().gender;
             var totalTime = snapshot.val().totalTime;
             var totalDist = snapshot.val().totalDistance;
-            var avgSpeed = (totalDist*0.51*3600)/totalTime;
+            var avgSpeed = (totalDist*0.5*3600)/totalTime;
 
             $("#dispName").append(nameDisp);
             $("#dispGen").html(genderDisp);
@@ -52,6 +52,7 @@ function dispInfo(){
                     var runningTime = (user.val().runningTime)/60;
                     var runningSpeed = (runningDist*60)/runningTime;
                     var count = 0;
+                    /*
                     var temp = date.key;
                     var timeData = {
                         labels: [],
@@ -94,9 +95,9 @@ function dispInfo(){
                     ];
                     var timeChart = Chartist.Bar('#timeChart', timeData, options, responsiveOptions);
                     var distChart = Chartist.Bar('#distChart', distData, options, responsiveOptions);
-                    var speedChart = Chartist.Bar('#speedChart', speedData, options, responsiveOptions);
+                    var speedChart = Chartist.Bar('#speedChart', speedData, options, responsiveOptions); */
 
-                    //$("#runnerRecTab").append('<tr><td>' + date.key + '</td><td>' + runningTime + '</td><td>' + runningDist + '</td><td>' + runningSpeed + '</td></tr>');
+                    $("#runnerRecTab").append('<tr><td>' + date.key + '</td><td>' + runningTime + '</td><td>' + runningDist + '</td><td>' + runningSpeed + '</td></tr>');
                     
                 }        
             })
