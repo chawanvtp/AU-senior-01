@@ -1,4 +1,3 @@
-
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyAXcnK39RpWb-_MokDsGudxyBnmF2tUXYo",
@@ -22,6 +21,7 @@ function dispInfo(){
     var uDB = firebase.database().ref("users/"+username);
     var dailyUserDB = firebase.database().ref("dailyUsersRecords/"+dayMonthYear+'/'+username);
     var ref = firebase.database().ref("dailyUsersRecords");
+
     uDB.on('value', function(snapshot){
         console.log(snapshot.key);
         if(snapshot.val()==null){ alert("Username is not FOUND"); return;}
@@ -31,11 +31,14 @@ function dispInfo(){
             var totalTime = snapshot.val().totalTime;
             var totalDist = snapshot.val().totalDistance;
             var avgSpeed = (totalDist*0.5*3600)/totalTime;
+            avgSpeedTemp = avgSpeed.toFixed(2);
+            //var userID = snapshot.val();
+            
 
             $("#dispName").append(nameDisp);
             $("#dispGen").html(genderDisp);
             $("#dispFacul").append(facultyDisp); 
-            $("#personalInfoTab").append('<tr class="text-primary"><td>'+ totalTime +'</td><td>'+totalDist+'</td><td>'+avgSpeed+'</td></tr>');
+            $("#personalInfoTab").append('<tr class="text-primary"><td>'+ totalTime +'</td><td>'+ totalDist + '</td><td>' + avgSpeedTemp + '</td></tr>');
             console.log("printed");  
                
     });
@@ -48,10 +51,44 @@ function dispInfo(){
                 if (user.key == username){            //Select only user that exist on that date
     
                     var runningRound = user.val().runningDistance;
-                    var runningDist = runningRound*0.51;
+                    var runningDist = runningRound*0.5;
                     var runningTime = (user.val().runningTime)/60;
                     var runningSpeed = (runningDist*60)/runningTime;
                     var count = 0;
+                    runningSpeedTemp = runningSpeed.toFixed(2);
+                    runningTimeTemp = runningTime.toFixed(2);
+
+                    var userInfo = JSON.parse(localStorage.getItem(username+'Info'));
+                    //console.log(userInfo);
+                    console.log(userInfo.gender);
+                    console.log(userInfo.height);
+                    console.log(userInfo.weight);
+                    console.log(userInfo.birthday);
+
+                    var gender = userInfo.gender;
+                    var height = userInfo.height;
+                    var weight = userInfo.weight;
+                    var age = (2018 - userInfo.birthday.substr(0,4));
+                    var bmr = 0;
+                    var calBurn = 0;
+                    var tempCal = 0;
+
+                    if(gender == "male"){
+                        bmr = 10 * weight + 6.25 * height - 5 * age + 5;       
+                    }
+                    if(gender == 'female'){
+                        bmr = 10 * weight + 6.25 * height - 5 * age -161;
+                    }
+                    if (runningSpeed >= 10){       
+                        calBurn = (runningTime * 11 * bmr)/(24*60);
+                        tempCal = calBurn.toFixed(2);
+                        //console.log(calBurn);
+                    }
+                    if (runningSpeed < 10){
+                        calBurn = (runningTime * 6 * bmr)/(24*60);
+                        tempCal = calBurn.toFixed(2);
+                    }
+                    console.log(tempCal);
                     /*
                     var temp = date.key;
                     var timeData = {
@@ -60,21 +97,18 @@ function dispInfo(){
                     };
                     timeData.labels.push(date.key);
                     timeData.series.push([runningTime],[]);
-
                     var distData = {
                         labels: [],
                         series: []
                     };
                     distData.labels.push(date.key);
                     distData.series.push([runningDist],[]);
-
                     var speedData = {
                         labels: [],
                         series: []
                     };
                     speedData.labels.push(date.key);
                     speedData.series.push([runningSpeed],[]);
-
                     var options = {
                         seriesBarDistance: 10,
                         axisX: {
@@ -97,7 +131,7 @@ function dispInfo(){
                     var distChart = Chartist.Bar('#distChart', distData, options, responsiveOptions);
                     var speedChart = Chartist.Bar('#speedChart', speedData, options, responsiveOptions); */
 
-                    $("#runnerRecTab").append('<tr><td>' + date.key + '</td><td>' + runningTime + '</td><td>' + runningDist + '</td><td>' + runningSpeed + '</td></tr>');
+                    $("#runnerRecTab").append('<tr><td>' + date.key + '</td><td>' + runningTimeTemp + '</td><td>' + runningDist + '</td><td>' + runningSpeedTemp + '</td><td>' + tempCal + '</td></tr>');
                     
                 }        
             })
@@ -107,11 +141,30 @@ function dispInfo(){
 
 
 }
-window.onload = function(){dispInfo()};
 
-                   
-                    
-                  
-                    
-                  
-                  
+
+
+window.onload = function(){
+    
+    var clock = new Date();
+    var month = clock.getUTCMonth() + 1; //months from 1-12
+    var day = clock.getUTCDate();
+    var year = clock.getUTCFullYear();
+    var dayMonthYear = day+'d'+month+'m'+year+'y';
+        var activityLogsRef = firebase.database().ref('activityLogs/visitUser/'+dayMonthYear);
+        activityLogsRef.once('value',function(data){
+          if(data.val()==null){
+            firebase.database().ref('activityLogs/visitUser/'+dayMonthYear).set({
+              visitor: 1
+            });
+          }else{
+            firebase.database().ref('activityLogs/visitUser/'+dayMonthYear).set({
+              visitor: data.val().visitor+1
+            });
+          }
+      
+        });
+    
+        dispInfo();
+    };
+    

@@ -15,7 +15,7 @@
 
   var queue = 1;
   var runnerToday = 0;
-  var runnerAllday = 0;
+  //var runnerAllday = 0;
 
   /*    ------------------------------------------------------------------
   *     ---------------------- Records DB Section !! -----------------------
@@ -109,19 +109,20 @@
 
  
 
+  var totalUser = 0;
   var usersRef = database.ref().child('users').orderByChild('totalDistance').limitToLast(10);
   var usersDB = database.ref().child('users');
   usersDB.once('value', function(snapshot){
-      var announceMessage = snapshot.numChildren()+" : Runners All-TIME.";
-      document.getElementById("indexBarText2").innerHTML = announceMessage;
+      var announceMessage = "Runners - All : "+snapshot.numChildren()+" | ";
+      document.getElementById("indexBarText1").innerHTML = announceMessage;
   });
  
   usersRef.on('child_added', function(snapshot){
     console.log("child_ADDED");
     rewriteTable(usersRef, "users-table", 10);
-    runnerAllday++;
-    var announceMessage = runnerToday+" : Runners TODAY.";
-    document.getElementById("indexBarText1").innerHTML = announceMessage;
+    //runnerAllday++;
+    var announceMessage = " Today : "+runnerToday+" runners.";
+    document.getElementById("indexBarText2").innerHTML = announceMessage;
   });
 
   usersRef.on('child_changed', function(snapshot){

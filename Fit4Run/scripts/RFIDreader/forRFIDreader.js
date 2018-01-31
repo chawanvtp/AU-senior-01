@@ -1,6 +1,6 @@
 
 
-  // Initialize Firebase
+ // Initialize Firebase
 var config = {
   apiKey: "AIzaSyAXcnK39RpWb-_MokDsGudxyBnmF2tUXYo",
   authDomain: "fit4run-4d4c5.firebaseapp.com",
@@ -88,6 +88,7 @@ function tagChecked(tagId){
     if(userLocal!=null){
       var prevClock = userLocal.lastCheck;
       var newTime = parseInt((newDate-prevClock)/1000);
+      var oldTime = userLocal.lastRunningTime;
       if((prevClock+delay)>newDate&&userLocal.lastRunningTime!=-1){  console.log("$$ Delaying .. "); return;   }
       if(userLocal.lastRunningTime<0){
         var userData = {lastCheck:newDate, lastRunningTime:userLocal.lastRunningTime+1, runningDistance:userLocal.runningDistance, runningTime:userLocal.runningTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};   
@@ -111,9 +112,9 @@ function tagChecked(tagId){
 
 
       var name = userData.displayName;
-      var speed = (userData.runningDistance*0.5*3600)/userData.runningTime;
-      var temp = speed.toFixed(2);
-      console.log(temp);
+      var speed = (0.5*3600)/newTime //userData.lastRunningTime;
+      var tempSpeed = speed.toFixed(2);
+      console.log(tempSpeed);
       var height = userInfo.height;
       var weight = userInfo.weight;
       var age = (2018 - userInfo.birthday.substr(0,4));
@@ -127,30 +128,40 @@ function tagChecked(tagId){
       if(gender == 'female'){
         bmr = 10 * weight + 6.25 * height - 5 * age -161;
       }
-      if (speed > 10){       
-        calBurn = (userData.runningTime * 11 * bmr)/(24*3600);
+      if (speed >= 10){       
+        calBurn = (newTime * 11 * bmr)/(24*3600);
         tempCal = calBurn.toFixed(2);
         //console.log(calBurn);
       }
       if (speed < 10){
-        calBurn = (userData.runningTime * 6 * bmr)/(24*3600);
+        calBurn = (newTime * 6 * bmr)/(24*3600);
         tempCal = calBurn.toFixed(2);
       }
       console.log(calBurn);
-      var announce =  parseInt(userData.lastRunningTime/60)+':'+(userData.lastRunningTime%60) + ' minute(s) => Speed : ' + temp + ' | Burned : ' + tempCal + ' calories.';
+      var announce =  parseInt(userData.lastRunningTime/60)+':'+(userData.lastRunningTime%60) + ' minute(s) => Burned : ' + tempCal + ' kcal. | Speed: '+ tempSpeed + 'km/hr' ;
      if(userData.lastRunningTime<=0){
        announce = 'Start Running at Round: '+ userData.runningDistance;
+       localStorage.setItem("calBurn", tempCal); //////////////////////////////////////
      }
      for(var i=1;i<=3;i++){
         if(i<3){
           //console.log(announce);
             document.getElementById('localAnnounce-bar'+i).innerText = document.getElementById('localAnnounce-bar'+(i+1)).innerText;
            document.getElementById('localAnnounceDetail-bar'+i).innerText = document.getElementById('localAnnounceDetail-bar'+(i+1)).innerText;
+           
             // console.log(document.getElementById('announce-bar'+(i+1)).innerText);
         }else{
           document.getElementById('localAnnounce-bar'+i).innerText = name + " - Round: "+userData.runningDistance;
-            document.getElementById('localAnnounceDetail-bar'+i).innerText = announce;
+          var oldSpeed = localStorage.getItem("oldSpeed");
+          if (oldTime > newTime){
+            $("#arrow").html("<img src = " + "images/arrow-up-on-a-black-circle-background.png" + ">" );
+          }
+          else{
+            $("#arrow").html("<img src = " + "images/arrow-down-on-black-circular-background.png" + ">" );
+          }
+          document.getElementById('localAnnounceDetail-bar'+i).innerText = announce;
         }
+
       }
       
        /*
@@ -189,7 +200,10 @@ function tagChecked(tagId){
 
         //var prevClock = userData.lastCheck;
         if((prevClock+delay)>newDate&&userLocal>=0){  console.log("$$ Delaying .. "); return;   }
-        
+        var oldTime = snapshot.val().lastRunningTime;
+        var oldSpeed = (0.5*3600)/oldTime;
+        localStorage.setItem("oldSpeed", oldSpeed);
+        console.log("OldTime:" + oldTime);
         var newDistance = 1;
         //var newTime = parseInt((newDate-prevClock)/1000);
         var lastRunningTime = userLocal.lastRunningTime;
@@ -373,3 +387,6 @@ function setLocalUser(key,data){
   console.log("Local ADD (User) -> ID: "+key);
   //console.log(userData);
 }
+
+
+//
