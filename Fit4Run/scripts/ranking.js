@@ -13,6 +13,10 @@
 
   var database = firebase.database();
 
+  var queue = 1;
+  var runnerToday = 0;
+  var runnerAllday = 0;
+
   /*    ------------------------------------------------------------------
   *     ---------------------- Records DB Section !! -----------------------
   *     ------------------------------------------------------------------
@@ -70,9 +74,7 @@
 
 }
 
-var queue = 1;
-var runnerToday = 0;
-var runnerAllday = 0;
+
 
   recordsRef.on('child_added', function(snapshot){
      
@@ -106,7 +108,11 @@ var runnerAllday = 0;
  
 
   var usersRef = database.ref().child('users').orderByChild('totalDistance').limitToLast(10);
-  
+  var usersDB = database.ref().child('users');
+  usersDB.once('value', function(snapshot){
+      var announceMessage = snapshot.numChildren()+" : Runners All-TIME.";
+      document.getElementById("indexBarText2").innerHTML = announceMessage;
+  });
  
   usersRef.on('child_added', function(snapshot){
     console.log("child_ADDED");
@@ -114,8 +120,6 @@ var runnerAllday = 0;
     runnerAllday++;
     var announceMessage = runnerToday+" : Runners TODAY.";
     document.getElementById("indexBarText1").innerHTML = announceMessage;
-    announceMessage = runnerAllday+" : Runners All-TIME.";
-    document.getElementById("indexBarText2").innerHTML = announceMessage;
   });
 
   usersRef.on('child_changed', function(snapshot){
