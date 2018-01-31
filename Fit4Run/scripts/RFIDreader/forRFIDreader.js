@@ -153,11 +153,14 @@ function tagChecked(tagId){
         }else{
           document.getElementById('localAnnounce-bar'+i).innerText = name + " - Round: "+userData.runningDistance;
           var oldSpeed = localStorage.getItem("oldSpeed");
-          if (oldTime > newTime){
-            $("#arrow").html("<img src = " + "images/arrow-up-on-a-black-circle-background.png" + ">" );
+          var arrow = document.getElementById('arrow');
+          if (oldTime < 0){
+            arrow.innerHTML = ("<img src = " + "images/play-button.png" + ">" );
+          }else if(oldTime > newTime||oldTime==0){
+            arrow.innerHTML = ("<img src = " + "images/arrow-up-on-a-black-circle-background.png" + ">" );
           }
-          else{
-            $("#arrow").html("<img src = " + "images/arrow-down-on-black-circular-background.png" + ">" );
+          else if(oldTime < newTime){
+            arrow.innerHTML = ("<img src = " + "images/arrow-down-on-black-circular-background.png" + ">" );
           }
           document.getElementById('localAnnounceDetail-bar'+i).innerText = announce;
         }
