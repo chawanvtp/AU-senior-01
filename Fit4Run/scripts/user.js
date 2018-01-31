@@ -28,17 +28,18 @@ function dispInfo(){
             var nameDisp = snapshot.val().displayName;
             var facultyDisp = snapshot.val().faculty;
             var genderDisp = snapshot.val().gender;
-            var totalTime = snapshot.val().totalTime;
+            var totalTime = snapshot.val().totalTime/60;
             var totalDist = snapshot.val().totalDistance;
-            var avgSpeed = (totalDist*0.5*3600)/totalTime;
+            var avgSpeed = (totalDist*0.5*60)/totalTime;
             avgSpeedTemp = avgSpeed.toFixed(2);
             //var userID = snapshot.val();
+            var tempTime = totalTime.toFixed(2);
             
 
-            $("#dispName").append(nameDisp);
+            $("#dispName").html(nameDisp);
             $("#dispGen").html(genderDisp);
-            $("#dispFacul").append(facultyDisp); 
-            $("#personalInfoTab").append('<tr class="text-primary"><td>'+ totalTime +'</td><td>'+ totalDist + '</td><td>' + avgSpeedTemp + '</td></tr>');
+            $("#dispFacul").html(facultyDisp); 
+            $("#personalInfoTab").html('<tr class="text-primary"><td>'+ tempTime +'</td><td>'+ totalDist + '</td><td>' + avgSpeedTemp + '</td></tr>');
             console.log("printed");  
                
     });
@@ -141,30 +142,4 @@ function dispInfo(){
 
 
 }
-
-
-
-window.onload = function(){
-    
-    var clock = new Date();
-    var month = clock.getUTCMonth() + 1; //months from 1-12
-    var day = clock.getUTCDate();
-    var year = clock.getUTCFullYear();
-    var dayMonthYear = day+'d'+month+'m'+year+'y';
-        var activityLogsRef = firebase.database().ref('activityLogs/visitUser/'+dayMonthYear);
-        activityLogsRef.once('value',function(data){
-          if(data.val()==null){
-            firebase.database().ref('activityLogs/visitUser/'+dayMonthYear).set({
-              visitor: 1
-            });
-          }else{
-            firebase.database().ref('activityLogs/visitUser/'+dayMonthYear).set({
-              visitor: data.val().visitor+1
-            });
-          }
-      
-        });
-    
-        dispInfo();
-    };
-    
+window.onload = function(){dispInfo()};
