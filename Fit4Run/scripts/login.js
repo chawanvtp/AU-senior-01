@@ -13,6 +13,10 @@ var config = {
   var database = firebase.database();
 
 
+  String.prototype.Uncapitalize = function() {
+    return this.charAt(0).toLowerCase() + this.slice(1);
+}
+
   /*    ----------------------------------------------------------------------
   *     ---------------------- Login Button Clicked !! -----------------------
   *     ----------------------------------------------------------------------
@@ -21,6 +25,9 @@ var config = {
 function loginButtonClicked (){
     username = $('#usernameLogin').val();
     password = $('#passwordLogin').val();
+
+    username = username.Uncapitalize();
+    alert(username);
     //console.log(username+' - '+password);
     //if(username == "" || password == ""){ alert("Empty username OR password !!"); return; }
     if(username == ""){ alert("Empty username OR password !!"); return; }
@@ -31,7 +38,7 @@ function loginButtonClicked (){
         adminLogin(username,password);
     }
     
-    localStorage.setItem("username", $('#usernameLogin').val());            //send username to other js file
+    localStorage.setItem("username", username);            //send username to other js file
 }
 
 function userLogin(username,password){
@@ -73,7 +80,7 @@ window.addEventListener("keyup", function(event) {
     event.preventDefault();
     if (event.keyCode === 13) {
         loginButtonClicked();
-        alert("Please Click !!, DON'T use Enter !!.");
+        //alert("Please Click !!, DON'T use Enter !!.");
         
     }
   });

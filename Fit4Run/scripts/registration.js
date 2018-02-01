@@ -43,7 +43,10 @@ var config = {
   
   });
 
-  
+  String.prototype.Uncapitalize = function() {
+    return this.charAt(0).toLowerCase() + this.slice(1);
+}
+
   
   function signUpButtonClicked(){
       //alert(tagId);
@@ -70,7 +73,8 @@ var config = {
         return;
       }
      */
-
+      usernameCheckInput = usernameCheckInput.Uncapitalize();
+      alert(usernameCheckInput);
      // CHECK - is Student ? | IF "Yes" then require 8char(s).
      if(["Science and Technology","Management and Economics","Engineering","Arts","Communication Arts","Architecture and Design","Music"].indexOf(facultyCheckInput)>-1){
          if(usernameCheckInput.substr(0,1)!="u"||usernameCheckInput.length!=8){
@@ -95,8 +99,8 @@ var config = {
         alert("Invalid Birthday XXX - requires 1994 A.D");
         return;
       }
-     // alert("KK");
-      //return;
+      alert("KK");
+      return;
     var userDB = firebase.database().ref('users/'+document.getElementById('usernameReg').value);
     userDB.once('value',function(udb){
         /*
