@@ -73,7 +73,7 @@ var config = {
 
      // CHECK - is Student ? | IF "Yes" then require 8char(s).
      if(["Science and Technology","Management and Economics","Engineering","Arts","Communication Arts","Architecture and Design","Music"].indexOf(facultyCheckInput)>-1){
-         if((usernameCheckInput.substr(0,1)!="u"||usernameCheckInput.substr(0,1)!="U")||usernameCheckInput.length!=8){
+         if(usernameCheckInput.substr(0,1)!="u"||usernameCheckInput.length!=8){
              alert("Invalid ID XXX - Ex. u5737444");
              return;
          }
