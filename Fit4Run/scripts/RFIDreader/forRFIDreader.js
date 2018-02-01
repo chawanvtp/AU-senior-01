@@ -47,7 +47,7 @@ var delay = 1000*10;
 
 
 function tagChecked(tagId){
-    console.log(" * tagChecked(tagId) * called * ");
+    console.log(" ** CALLED ==> tagChecked("+tagId+")");
     var clock = new Date();
     var month = clock.getUTCMonth()+1; //months from 1-12
     var day = clock.getUTCDate();
@@ -55,16 +55,17 @@ function tagChecked(tagId){
     var dayMonthYear = day+'d'+month+'m'+year+'y';
     var newDate = clock.getTime();
 
-    console.log(newDate);
+    //console.log(newDate);
     //console.log(tagId);
+  console.log("CHECKING ... - TAG: "+tagId);
   var dailyTagDB = firebase.database().ref('dailyTagsMapUsers/'+dayMonthYear+'/'+ tagId);
   dailyTagDB.once('value',function(superSnapshot){
       if(superSnapshot.val()!=null)
       {
           updateDailyDB(superSnapshot.val().userID,tagId,newDate,dayMonthYear);
-          console.log("Tag is found..");
+          console.log("Tag is Activated - OOO");
       }else{
-        console.log("Tag is NOT found..");console.log("Tag is NOT found..");
+          console.log("Tag is Inactivated - XXX");
           // console.log("Tag is NOT activated !!");
         }
 
@@ -80,7 +81,7 @@ function tagChecked(tagId){
 
   
   function updateDailyDB(tel,tagId,newDate,dayMonthYear){
-    console.log(" * updateDailyDB(tagId) * called * ");
+    console.log(" ** CALLED ==> updateDailyDB("+tel+","+tagId+","+newDate+","+dayMonthYear+")");
     
     var userID = localStorage.getItem(tagId);
     //console.log(userData.displayName);
@@ -92,20 +93,20 @@ function tagChecked(tagId){
       if((prevClock+delay)>newDate&&userLocal.lastRunningTime!=-1){  console.log("$$ Delaying .. "); return;   }
       if(userLocal.lastRunningTime<0){
         var userData = {lastCheck:newDate, lastRunningTime:userLocal.lastRunningTime+1, runningDistance:userLocal.runningDistance, runningTime:userLocal.runningTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};   
-        console.log("IF");
+        console.log("Start running...");
       }else{
-        console.log("ELSE");
+        console.log("Success !! - counting round.");
         var userData = {lastCheck:newDate, lastRunningTime:newTime, runningDistance:userLocal.runningDistance+1, runningTime:userLocal.runningTime+newTime, displayName:userLocal.displayName, gender:userLocal.gender, faculty:userLocal.faculty};
       }
        localStorage.setItem(userID, JSON.stringify(userData));
 
        // User information declare HERE ------------->
        var userInfo = JSON.parse(localStorage.getItem(userID+'Info'));
-       console.log(userInfo);
-       console.log(userInfo.gender);
-       console.log(userInfo.height);
-       console.log(userInfo.weight);
-       console.log(userInfo.birthday);
+       //console.log(userInfo);
+       //console.log(userInfo.gender);
+       //console.log(userInfo.height);
+       //console.log(userInfo.weight);
+       //console.log(userInfo.birthday);
 
        // ------------------------------------------<
 
@@ -114,14 +115,16 @@ function tagChecked(tagId){
       var name = userData.displayName;
       var speed = (0.5*3600)/newTime //userData.lastRunningTime;
       var tempSpeed = speed.toFixed(2);
-      console.log(tempSpeed);
+     // console.log(tempSpeed);
       var height = userInfo.height;
       var weight = userInfo.weight;
       var age = (2018 - userInfo.birthday.substr(0,4));
       var bmr = 0;
       var gender = userInfo.gender;
       var calBurn = 0;
-
+      if(age>80){
+        age = 20;
+      }
       if(gender == "male"){
         bmr = 10 * weight + 6.25 * height - 5 * age + 5;       
       }
@@ -137,7 +140,7 @@ function tagChecked(tagId){
         calBurn = (newTime * 6 * bmr)/(24*3600);
         tempCal = calBurn.toFixed(2);
       }
-      console.log(calBurn);
+      //console.log(calBurn);
       var announce =  parseInt(userData.lastRunningTime/60)+':'+(userData.lastRunningTime%60) + ' minute(s) => Burned : ' + tempCal + ' kcal. | Speed: '+ tempSpeed + 'km/hr' ;
      if(userData.lastRunningTime<=0){
        announce = 'Start Running at Round: '+ userData.runningDistance;
@@ -154,13 +157,17 @@ function tagChecked(tagId){
           document.getElementById('localAnnounce-bar'+i).innerText = name + " - Round: "+userData.runningDistance;
           var oldSpeed = localStorage.getItem("oldSpeed");
           var arrow = document.getElementById('arrow');
+          var bar = document.getElementById('localAnnounce-bar'+i);
           if (oldTime < 0){
-            arrow.innerHTML = ("<img src = " + "images/play-button.png" + ">" );
+           // arrow.innerHTML = ("<img src = " + "images/play-button.png" + ">" );
+           arrow.innerHTML = ("<img src = " + "'images/play-button.png' height='100' width='100' " + ">" );
           }else if(oldTime > newTime||oldTime==0){
-            arrow.innerHTML = ("<img src = " + "images/arrow-up-on-a-black-circle-background.png" + ">" );
+            //arrow.innerHTML = ("<img src = " + "images/arrow-up-on-a-black-circle-background.png" + ">" );
+            arrow.innerHTML = ("<img src = " + "'images/arrow-up-on-a-black-circle-background.png' height='100' width='100' s" + ">" );
           }
           else if(oldTime < newTime){
-            arrow.innerHTML = ("<img src = " + "images/arrow-down-on-black-circular-background.png" + ">" );
+            //arrow.innerHTML = ("<img src = " + "images/arrow-down-on-black-circular-background.png" + ">" );
+            arrow.innerHTML = ("<img src = " + "'images/arrow-down-on-black-circular-background.png' height='100' width='100' " + ">" );
           }
           document.getElementById('localAnnounceDetail-bar'+i).innerText = announce;
         }
@@ -195,10 +202,11 @@ function tagChecked(tagId){
 
     var dailyDB = firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel);
     dailyDB.once('value',function(snapshot){
-    console.log(snapshot.val());
+    console.log('DB ::> dailyUsersRecords/'+dayMonthYear+'/'+tel+'  == Next line');
+    //console.log(snapshot.val());
     if(snapshot.val()==null){
         // Tag is Inactivated.
-        console.log('-- YOU !! have not activated your TAG in yet xx');
+        console.log('- TAG is Inactivated .. XXX');
     }else{
 
         //var prevClock = userData.lastCheck;
@@ -206,7 +214,7 @@ function tagChecked(tagId){
         var oldTime = snapshot.val().lastRunningTime;
         var oldSpeed = (0.5*3600)/oldTime;
         localStorage.setItem("oldSpeed", oldSpeed);
-        console.log("OldTime:" + oldTime);
+        //console.log("OldTime:" + oldTime);
         var newDistance = 1;
         //var newTime = parseInt((newDate-prevClock)/1000);
         var lastRunningTime = userLocal.lastRunningTime;
@@ -263,7 +271,7 @@ function tagChecked(tagId){
   */ 
 
 function updateUsersDB(id,newTime){
-    console.log(" * updateUsersDB(id,newTime) * called * ");
+    console.log(" ** CALLED ==> updateUserDB("+id+","+newTime+"sec)");
 
     var userDB = firebase.database().ref('users/'+ id);
     userDB.once('value',function(snapshot){
@@ -351,8 +359,9 @@ dailyUsersList.on('child_added', function(snapshot){
    }
   });
   var userInfo = JSON.parse(localStorage.getItem(snapshot.key+'Info'));
-  console.log('Local ADD - (userInfo) as '+snapshot.key+'Info')
-  console.log(userInfo);
+  console.log('Local ADD (INFO) -> ID: '+snapshot.key+'Info');
+  console.log('-------------------------');
+  //console.log(userInfo);
   //height = userInfo.height;
   //weight = userInfo.weight;
   //birthday = userInfo.birthday;
@@ -375,8 +384,9 @@ dailyUsersList.on('child_removed', function(snapshot){
 
 
 function setLocalTag(key,data){
-  console.log(newDate);
-  console.log("Local ADD (Tag) -> Tag: "+key+" , userID: "+data.userID);
+ // console.log(newDate);
+  console.log("Activate Tag: "+key+" to userID: "+data.userID);
+  console.log("------------------------------------------------");
   localStorage.setItem(key, data.userID);
   //console.log(data.runningDistance);
 }
@@ -384,7 +394,7 @@ function setLocalTag(key,data){
 
 
 function setLocalUser(key,data){
-  console.log(newDate);
+  //console.log(newDate);
   var userData = {lastCheck:data.lastCheck, lastRunningTime:data.lastRunningTime, runningDistance:data.runningDistance, runningTime:data.runningTime, displayName:data.displayName, gender:data.gender, faculty:data.faculty};
   localStorage.setItem(key, JSON.stringify(userData));
   console.log("Local ADD (User) -> ID: "+key);

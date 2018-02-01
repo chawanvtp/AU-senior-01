@@ -27,7 +27,7 @@ function loginButtonClicked (){
     password = $('#passwordLogin').val();
 
     username = username.Uncapitalize();
-    alert(username);
+    //alert(username);
     //console.log(username+' - '+password);
     //if(username == "" || password == ""){ alert("Empty username OR password !!"); return; }
     if(username == ""){ alert("Empty username OR password !!"); return; }

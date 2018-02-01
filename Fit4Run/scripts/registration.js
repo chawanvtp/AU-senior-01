@@ -74,8 +74,13 @@ var config = {
       }
      */
       usernameCheckInput = usernameCheckInput.Uncapitalize();
-      alert(usernameCheckInput);
+      //alert(usernameCheckInput);
      // CHECK - is Student ? | IF "Yes" then require 8char(s).
+     if(facultyCheckInput=="Department / Position"){
+        alert("Please, choose Department/Position !!");
+        return;
+     }
+
      if(["Science and Technology","Management and Economics","Engineering","Arts","Communication Arts","Architecture and Design","Music"].indexOf(facultyCheckInput)>-1){
          if(usernameCheckInput.substr(0,1)!="u"||usernameCheckInput.length!=8){
              alert("Invalid ID XXX - Ex. u5737444");
@@ -99,8 +104,8 @@ var config = {
         alert("Invalid Birthday XXX - requires 1994 A.D");
         return;
       }
-      alert("KK");
-      return;
+     // alert("KK");
+      //return;
     var userDB = firebase.database().ref('users/'+document.getElementById('usernameReg').value);
     userDB.once('value',function(udb){
         /*
@@ -119,7 +124,7 @@ var config = {
 
         var displaynameReg = document.getElementById('displayNameReg').value;
         var facultyReg = document.getElementById('facultyReg').value;   
-        var usernameReg = document.getElementById('usernameReg').value;
+        var usernameReg = usernameCheckInput;
         var heightReg = document.getElementById('heightReg').value;
         var weightReg = document.getElementById('weightReg').value;
         var bdReg = document.getElementById('bdReg').value;

@@ -14,7 +14,7 @@
   var database = firebase.database();
 
   var queue = 1;
-  var runnerToday = 0;
+  var roundToday = 0;
   //var runnerAllday = 0;
 
   /*    ------------------------------------------------------------------
@@ -32,6 +32,16 @@
   var limit = 10;
   var total = limit;
 
+  /*
+  var todayRec = database.ref('dailyUsersRecords/'+dayMonthYear);
+  todayRec.once('value',function(snapshot){
+    //roundToday = snapshot.numChildren();
+    snapshot.forEach(function(item){
+      roundToday += item.val().runningDistance;
+    });
+  });
+*/
+
   function rewriteTable(dbRef, tableName, rankRange){
      // console.log(dbRef);
 
@@ -47,7 +57,7 @@
           
       var recTab = document.getElementById(tableName);
     //    if(tableName=='users-table'){
-            console.log("xxx "+tableName+" table xxx");
+            //console.log("xxx "+tableName+" table xxx");
             recTab.rows[rankRange].cells[1].innerHTML = item.val().displayName;
     //    }else{
     //       recTab.rows[rankRange].cells[1].innerHTML = item.val().id;
@@ -63,8 +73,8 @@
             }
             
     rankRange--;
-    console.log("REWRITE !!!");
-    console.log(rankRange);
+    //console.log("REWRITE !!!");
+    //console.log(rankRange);
        // if(total<1){    total = limit};
 
         
@@ -80,9 +90,9 @@
 
   recordsRef.on('child_added', function(snapshot){
      
-        console.log("recordsRef - on - child_ADDED");
+        //console.log("recordsRef - on - child_ADDED");
         rewriteTable(recordsRef, "daily-table", 10);
-        runnerToday++;
+        
   });
 
   //var am = runner+" : Runners TODAY.";
@@ -91,47 +101,41 @@
 
   recordsRef.on('child_changed', function(snapshot){
       
-        console.log("child_CHANGED");
+       // console.log("child_CHANGED");
         rewriteTable(recordsRef, "daily-table", 10);
-        //console.log(snapshot.val());
-        //var rec = snapshot.val();
-        //var announceMessage = rec.displayName + ' take ' + rec.lastRunningTime + ' for round : '+ rec.runningDistance +' - Today Avg.time = '+ parseInt(rec.runningTime/rec.runningDistance);
-        //document.getElementById("indexBarText"+queue).innerHTML = announceMessage;
-        //queue++;
-        //if(queue>2){queue=1;}
-       // else{queue=1;}
-        //document.getElementById('announce-bar').innerHTML = announceMessage;
       });
       recordsRef.on('child_removed', function(snapshot){
-            console.log("child_REMOVED");
+            //console.log("child_REMOVED");
             rewriteTable(recordsRef, "daily-table", 10);
           });
 
  
 
-  var totalUser = 0;
+  var totalRound = 0;
   var usersRef = database.ref().child('users').orderByChild('totalDistance').limitToLast(10);
   var usersDB = database.ref().child('users');
   usersDB.once('value', function(snapshot){
-      var announceMessage = "Runners - All : "+snapshot.numChildren()+" | ";
+
+    snapshot.forEach(function(item){
+      totalRound += item.val().totalDistance;
+    });
+
+      var announceMessage = "Runners - All : "+snapshot.numChildren()+" | already reached "+totalRound+" rounds ";
       document.getElementById("indexBarText1").innerHTML = announceMessage;
   });
  
   usersRef.on('child_added', function(snapshot){
-    console.log("child_ADDED");
+    //console.log("child_ADDED");
     rewriteTable(usersRef, "users-table", 10);
-    //runnerAllday++;
-    var announceMessage = " Today : "+runnerToday+" runners.";
-    document.getElementById("indexBarText2").innerHTML = announceMessage;
   });
 
   usersRef.on('child_changed', function(snapshot){
       
-        console.log("child_CHANGED");
+       // console.log("child_CHANGED");
         rewriteTable(usersRef, "users-table", 10);
       });
       usersRef.on('child_removed', function(snapshot){
-            console.log("child_REMOVED");
+           // console.log("child_REMOVED");
             rewriteTable(usersRef, "users-table", 10);
           });
 
