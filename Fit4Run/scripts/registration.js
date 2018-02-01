@@ -104,8 +104,13 @@ var config = {
         alert("Invalid Birthday XXX - requires 1994 A.D");
         return;
       }
+<<<<<<< HEAD
      // alert("KK");
       //return;
+=======
+    //  alert("KK");
+     // return;
+>>>>>>> fa601a2ae718f1cff0c76fc15ec6dfec556b9b4b
     var userDB = firebase.database().ref('users/'+document.getElementById('usernameReg').value);
     userDB.once('value',function(udb){
         /*
