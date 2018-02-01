@@ -13,14 +13,28 @@ var config = {
   var database = firebase.database();
 
 
+window.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode === 13) {
+        
+        //console.log(document.getElementById("tagReturn").value);
+        var username = document.getElementById('usernameLogin').value;
+        var password = document.getElementById('passwordLogin').value;
+        
+        
+        loginButtonClicked(username,password);
+      }
+    });
+
+  
   /*    ----------------------------------------------------------------------
   *     ---------------------- Login Button Clicked !! -----------------------
   *     ----------------------------------------------------------------------
   */
 
-function loginButtonClicked (){
-    username = $('#usernameLogin').val();
-    password = $('#passwordLogin').val();
+function loginButtonClicked(username,password){
+    //username = $('#usernameLogin').val();
+    //password = $('#passwordLogin').val();
     //console.log(username+' - '+password);
     //if(username == "" || password == ""){ alert("Empty username OR password !!"); return; }
     if(username == ""){ alert("Empty username OR password !!"); return; }
@@ -59,7 +73,7 @@ function adminLogin(username,password){
         //var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
         //console.log(userPassword);
         
-        if(password != snapshot.val().password){ alert("Hacker ? Incorrect password !!"); return;}
+        //if(password != snapshot.val().password){ alert("Hacker ? Incorrect password !!"); return;}
 
         window.location.replace("admin.html");
         
@@ -67,16 +81,6 @@ function adminLogin(username,password){
 
 }
 
-
-
-window.addEventListener("keyup", function(event) {
-    event.preventDefault();
-    if (event.keyCode === 13) {
-        loginButtonClicked();
-        alert("Please Click !!, DON'T use Enter !!.");
-        
-    }
-  });
 
   window.addEventListener('load', function() {
     console.log("Visitor ++");
