@@ -6,10 +6,11 @@
 -->
 <html>
 	<head>
-		<title>Generic - Road Trip by TEMPLATED</title>
+		<title>AU - [Fit 4 Run]</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="icon" type="image/png" href="images/icons/sport_5ep_icon.ico"/>
 		<!--===============================================================================================-->
 	<script src="https://code.jquery.com/jquery-latest.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
@@ -25,7 +26,7 @@
 
 		<!-- Header -->
 			<header style="font-family: Arial, Helvetica, sans-serif;" id="header" class="alt">
-				<div class="logo" ><a  href="ranking.html"> Ranking</a> | <a href="registration.html"><span> Sign up </span></a></div>
+				<div class="logo" ><a  href="index.html"> Home </a> | <a href="registration.html"><span> Sign up </span></a></div>
 				<a href="#menu"><span>Menu</span></a>
 			</header>
 
@@ -33,7 +34,7 @@
 			<nav id="menu">
 				<ul class="links">
 					<li><a href="index.html">Home</a></li>
-					<li><a href="ranking.html">Ranking</a></li>
+					<li><a href="#indexBar"  >Ranking</a></li>
 					<li><a href="registration.html">Sign - Up</a></li>
 				</ul>
 			</nav>
@@ -88,6 +89,10 @@
 								<li><input value="GET Results" class="button alt"  onclick="loginButtonClicked();"></li>
 						</ul>
 					</form>
+
+					   <!--<marquee scrollamount="10" id="indexBar"><b id="indexBarText1"></b><b id="indexBarText2"> - Let's run !!</b></marquee>-->
+					   <div id="indexBar" style="background-color:rgb(13, 58, 156); text-align: center; color: white; height: 30px;"><b id="indexBarText1"> - Let's run !!</b></div>
+					   
 					<br>
 					
 					<div align="center">
@@ -95,7 +100,198 @@
 							<img style="width:20%; height:auto;" src="images/Logo_Science_Big.png">
 							<img style="width:20%; height:auto;" src="images/Logo_au_gym.png">
 						</div>
-					<br><br>
+					
+					
+					<header style="background-color:rgb(13, 58, 156); text-align: center; color: white; height: 30px;">
+						</header>
+					 <header style="background-color:rgb(13, 58, 156); font-size: 2em; font-weight: bold; text-align: center; color: white; height: 50px;">
+					   Today Records
+					 </header>
+					 <br>
+					 <!-- Table ID = users-table -->
+					 <div class="datagrid"><table id="daily-table">
+					   <thead>
+						 <tr>
+						   <th>Rank</th>
+						   <th>Username</th>
+						   <th>Round</th>
+						   <th>minute(s)</th>
+						 </tr>
+					   </thead>
+					  <!-- <tfoot>
+						 <tr><td colspan="4">
+							 <div id="paging">
+							   <ul>
+								 <li><a href="#"><span>Previous</span></a></li>
+								 <li><a href="#" class="active"><span>1</span></a></li>
+								 <li><a href="#"><span>2</span></a></li>
+								 <li><a href="#"><span>3</span></a></li>
+								 <li><a href="#"><span>4</span></a></li>
+								 <li><a href="#"><span>5</span></a></li>
+								 <li><a href="#"><span>Next</span></a></li>
+							   </ul>
+							 </div>
+						   </tr>
+						 </tfoot>-->
+					   <tbody>
+						 <tr>
+						   <td>1</td>
+						   <td>xxx</td>
+						   <td>xxx</td>
+						   <td>xxx</td>
+						 </tr>
+					   <tr class="alt">
+						 <td>2</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+					   </tr>
+					   <tr>
+						 <td>3</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+					   </tr>
+					   <tr class="alt">
+						 <td>4</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+					   </tr>
+					   <tr>
+						 <td>5</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+					   </tr>
+					   <tr>
+						   <td>6</td>
+						   <td>xxx</td>
+						   <td>xxx</td>
+						   <td>xxx</td>
+						 </tr>
+					   <tr class="alt">
+						 <td>7</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+					   </tr>
+					   <tr>
+						 <td>8</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+					   </tr>
+					   <tr class="alt">
+						 <td>9</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+					   </tr>
+					   <tr>
+						 <td>10</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+						 <td>xxx</td>
+					   </tr>
+					   </tbody>
+					   </table></div>
+			   <br><br>
+			   
+				<!-- Table ID = daily-table -->
+				<header style="background-color:rgb(13, 58, 156); text-align: center; color: white; height: 30px;">
+				 </header>
+			   <header style="background-color:rgb(13, 58, 156); font-size: 2em; font-weight: bold; text-align: center; color: white; height: 60px;">
+				All-Time Records
+			   </header>
+			   <br>
+				<div class="datagrid"><table id="users-table">
+				   <thead>
+					 <tr>
+					   <th>Rank</th>
+					   <th>Username</th>
+					   <th>Round</th>
+					   <th>minute(s)</th>
+					 </tr>
+				   </thead>
+				<!--   <tfoot>
+					 <tr><td colspan="4">
+						 <div id="paging">
+						   <ul>
+							 <li><a href="#"><span>Previous</span></a></li>
+							 <li><a href="#" class="active"><span>1</span></a></li>
+							 <li><a href="#"><span>2</span></a></li>
+							 <li><a href="#"><span>3</span></a></li>
+							 <li><a href="#"><span>4</span></a></li>
+							 <li><a href="#"><span>5</span></a></li>
+							 <li><a href="#"><span>Next</span></a></li>
+						   </ul>
+						 </div>
+					   </tr>
+					 </tfoot>-->
+				   <tbody>
+					 <tr>
+					   <td>1</td>
+					   <td>xxx</td>
+					   <td>xxx</td>
+					   <td>xxx</td>
+					 </tr>
+				   <tr class="alt">
+					 <td>2</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+				   </tr>
+				   <tr>
+					 <td>3</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+				   </tr>
+				   <tr class="alt">
+					 <td>4</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+				   </tr>
+				   <tr>
+					 <td>5</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+				   </tr>
+				   <tr>
+					   <td>6</td>
+					   <td>xxx</td>
+					   <td>xxx</td>
+					   <td>xxx</td>
+					 </tr>
+				   <tr class="alt">
+					 <td>7</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+				   </tr>
+				   <tr>
+					 <td>8</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+				   </tr>
+				   <tr class="alt">
+					 <td>9</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+				   </tr>
+				   <tr>
+					 <td>10</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+					 <td>xxx</td>
+				   </tr>
+				   </tbody>
+				   </table></div>
 					<div class="copyright">
 						&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
 					</div>
