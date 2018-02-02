@@ -54,7 +54,6 @@ window.addEventListener('load', function() {
   var newDate = clock.getTime();
   console.log(dayMonthYear);
   
-  
   function returnButtonClicked(tagId){
       //alert(tagId);
      // alert(tel+" - "+tagId);
@@ -81,9 +80,15 @@ window.addEventListener('load', function() {
   }
 
 
+  function remove(id) {
+    var elem = document.getElementById(id);
+    return elem.parentNode.removeChild(elem);
+}
+
 // Display TagList
 var tagList = firebase.database().ref().child('dailyTagsMapUsers').child(dayMonthYear);
 
+/*
 tagList.once('value', function(snapshot){
   snapshot.forEach(function(item){
     var htmlMes = "<p>"+item.val().userID+"</p>";
@@ -91,19 +96,43 @@ tagList.once('value', function(snapshot){
   });
 });
 
+*/
+
+tagList.on('child_added', function(snapshot){
+  console.log(snapshot.val().userID+" is using a Tag + ADDED");
+  var htmlMes = "<p id="+snapshot.key+">"+snapshot.val().userID+"</p>";
+  $("#tagList").append(htmlMes);
+});
+tagList.on('child_changed', function(snapshot){
+  console.log(snapshot.val().userID+" is using a Tag = CHANGED");
+  //var target = document.getElementById(snapshot.key);
+  document.getElementById(snapshot.key).innerHTML = snapshot.val().userID;
+});
+tagList.on('child_removed', function(snapshot){
+  console.log(snapshot.val().userID+" has returned a TAG - REMOVED");
+  remove(snapshot.key);
+});
+
 /*
-tagList.on("child_ADDED", function(snapshot){
+tagList.on('child_added', function(snapshot){
+  
   snapshot.forEach(function(item){
     var a = item.val();
   console(a);
   });
+  
+  
+ // console.log(snapshot.val());
+  //var htmlMes = "<p id="+snapshot.key+">"+item.val().userID+"</p>";
+  //$("#tagList").append(htmlMes);
   //$("#tagList").append()
 });
 tagList.on("child_CHANGED", function(snapshot){
-  
+  var elem = document.getElementById(snapshot.key);
+  elem.innerHTML = snapshot.val().userID;
 });
 tagList.on("child_REMOVED", function(snapshot){
-    
+    remove(snapshot.key);
 });
 */
   /**
@@ -119,8 +148,9 @@ function deleteDailyTags(tagId,dayMonthYear){
         console.log(snapshot.val());
           //updateUsersDB(superSnapshot.val().id,newTime);
          // updateDailyDB(tel,tagId,dayMonthYear);
+         localStorage.removeItem(snapshot.val().userID+'Info');
          dailyTagDB.remove(function(error) {
-            alert(error ? "Failed XXX" : "Success !!");
+            alert(error ? "Failed XXX" : "Delete TAG Success !!");
           });
           
       }else{

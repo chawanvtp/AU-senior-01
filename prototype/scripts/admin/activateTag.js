@@ -60,12 +60,12 @@ window.addEventListener('load', function() {
     var userDB = firebase.database().ref('users/'+username);
     userDB.once('value',function(udb){
         if(udb.val()==null){    console.log("Incorrect Username XXX"); return;}
-        
+
         console.log(udb.val());
         updateDailyTags(username,tagId,dayMonthYear);
         updateDailyRecords(username,dayMonthYear,newDate,udb.val());
         //udbUsername = udb.val().username;
-        alert("Success !!");
+        alert(username+"\nActivate Success !!");
     });
    // console.log("DBBB");
     
@@ -195,3 +195,30 @@ function updateDailyTags(username,tagId,dayMonthYear){
   *     ---------------------- XXXXXX !! -----------------------
   *     ----------------------------------------------------------------------
   */ 
+
+
+  // interval delay for 10 second(s)
+  //var delay = 1000*10;
+  var clock = new Date();
+  var month = clock.getUTCMonth() + 1; //months from 1-12
+  var day = clock.getUTCDate();
+  var year = clock.getUTCFullYear();
+  var dayMonthYear = day+'d'+month+'m'+year+'y';
+  var newDate = clock.getTime();
+  console.log(dayMonthYear);
+  var tagActList = firebase.database().ref().child('dailyTagsMapUsers').child(dayMonthYear);
+
+tagActList.on('child_added', function(snapshot){
+    console.log(snapshot.val().userID+" is using a Tag + ADDED");
+    var htmlMes = "<p id="+snapshot.key+">"+snapshot.val().userID+"</p>";
+    $("#tagActList").append(htmlMes);
+  });
+  tagActList.on('child_changed', function(snapshot){
+    console.log(snapshot.val().userID+" is using a Tag = CHANGED");
+    //var target = document.getElementById(snapshot.key);
+    document.getElementById(snapshot.key).innerHTML = snapshot.val().userID;
+  });
+  tagActList.on('child_removed', function(snapshot){
+    console.log(snapshot.val().userID+" has returned a TAG - REMOVED");
+    remove(snapshot.key);
+  });

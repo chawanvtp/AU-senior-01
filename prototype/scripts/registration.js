@@ -1,4 +1,5 @@
 
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyAXcnK39RpWb-_MokDsGudxyBnmF2tUXYo",
@@ -17,12 +18,35 @@ var config = {
   *     ---------------------- Events TO-DO on LOAD !! -----------------------
   *     ----------------------------------------------------------------------
   */   
-window.addEventListener('load', function() {
-    // TO trigger the input box
-   // document.getElementById("telAct").focus();
 
-})
+
+  window.addEventListener('load', function() {
+    console.log("Visitor ++");
+    var clock = new Date();
+    var month = clock.getUTCMonth() + 1; //months from 1-12
+    var day = clock.getUTCDate();
+    var year = clock.getUTCFullYear();
+    var dayMonthYear = day+'d'+month+'m'+year+'y';
+    var activityLogsRef = firebase.database().ref('activityLogs/visitRegistration/'+dayMonthYear);
+    activityLogsRef.once('value',function(data){
+      if(data.val()==null){
+        firebase.database().ref('activityLogs/visitRegistration/'+dayMonthYear).set({
+          visitor: 1
+        });
+      }else{
+        firebase.database().ref('activityLogs/visitRegistration/'+dayMonthYear).set({
+          visitor: data.val().visitor+1
+        });
+      }
   
+    });
+  
+  });
+
+  String.prototype.Uncapitalize = function() {
+    return this.charAt(0).toLowerCase() + this.slice(1);
+}
+
   
   function signUpButtonClicked(){
       //alert(tagId);
@@ -37,6 +61,58 @@ window.addEventListener('load', function() {
       console.log(dayMonthYear);
       */
       //var udbUsername = "";
+      var birthdayCheckInput = document.getElementById('bdReg').value;
+      var heightCheckInput = document.getElementById('heightReg').value;
+      var weightCheckInput = document.getElementById('weightReg').value;
+      var usernameCheckInput = document.getElementById('usernameReg').value;
+      var facultyCheckInput = document.getElementById('facultyReg').value;
+     
+/*
+      if(bd.substr(0,4)>2017){
+        alert("Invalid Birthday XXX - requires 1994 A.D");
+        return;
+      }
+     */
+      usernameCheckInput = usernameCheckInput.Uncapitalize();
+      //alert(usernameCheckInput);
+     // CHECK - is Student ? | IF "Yes" then require 8char(s).
+     if(facultyCheckInput=="Department / Position"){
+        alert("Please, choose Department/Position !!");
+        return;
+     }
+
+     if(["Science and Technology","Management and Economics","Engineering","Arts","Communication Arts","Architecture and Design","Music"].indexOf(facultyCheckInput)>-1){
+         if(usernameCheckInput.substr(0,1)!="u"||usernameCheckInput.length!=8){
+             alert("Invalid ID XXX - Ex. u5737444");
+             return;
+         }
+     }
+
+
+     // CHECK - HeightReg | 140 < x < 250
+    if(heightCheckInput>250&&heightCheckInput<140){
+        alert("Invalid Height XXX - Ex. 170 (cm)");
+    }
+
+    // CHECK - WeightReg | x < 450
+    if(weightCheckInput>450){
+        alert("Invalid Height XXX - Ex. 60 (kg)");
+    }
+
+    // CHECK - WeightReg | x < 2018
+      if(birthdayCheckInput.substr(0,4)>2017){
+        alert("Invalid Birthday XXX - requires 1994 A.D");
+        return;
+      }
+
+    // CHECK - WeightReg | IF x < 1500 then +543
+    if(birthdayCheckInput.substr(0,4)<1500){
+      console.log("Birthday LESS than 1500 +++++");
+      var temp = parseInt(birthdayCheckInput.substr(0,4))+543;
+      birthdayCheckInput = temp + birthdayCheckInput.substr(4,6);
+    }
+    
+
     var userDB = firebase.database().ref('users/'+document.getElementById('usernameReg').value);
     userDB.once('value',function(udb){
         /*
@@ -55,7 +131,7 @@ window.addEventListener('load', function() {
 
         var displaynameReg = document.getElementById('displayNameReg').value;
         var facultyReg = document.getElementById('facultyReg').value;   
-        var usernameReg = document.getElementById('usernameReg').value;
+        var usernameReg = usernameCheckInput;
         var heightReg = document.getElementById('heightReg').value;
         var weightReg = document.getElementById('weightReg').value;
         var bdReg = document.getElementById('bdReg').value;
@@ -72,12 +148,15 @@ window.addEventListener('load', function() {
             weight: weightReg,
             birthday: bdReg
         });
-        window.location.replace("login.html");
+        alert("Registration Success !!");
+        window.location.replace("registration.html");
     });
     
     
     
   }
+
+
 
 
 
