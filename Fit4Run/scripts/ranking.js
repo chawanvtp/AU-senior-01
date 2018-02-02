@@ -120,8 +120,10 @@
       totalRound += item.val().totalDistance;
     });
 
-      var announceMessage = "Runners - All : "+snapshot.numChildren()+" | already reached "+totalRound+" rounds ";
-      document.getElementById("indexBarText1").innerHTML = announceMessage;
+      var announceMessage = "Runners - All : "+snapshot.numChildren()+" | ";
+      var announceMessage2 = " reached "+totalRound+" rounds "; 
+      document.getElementById("indexBarText1").innerHTML = announceMessage + announceMessage2;
+      //document.getElementById("indexBarText2").innerHTML = announceMessage2;
   });
  
   usersRef.on('child_added', function(snapshot){

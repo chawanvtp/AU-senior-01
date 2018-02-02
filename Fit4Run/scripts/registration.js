@@ -104,13 +104,15 @@ var config = {
         alert("Invalid Birthday XXX - requires 1994 A.D");
         return;
       }
-<<<<<<< HEAD
-     // alert("KK");
-      //return;
-=======
-    //  alert("KK");
-     // return;
->>>>>>> fa601a2ae718f1cff0c76fc15ec6dfec556b9b4b
+
+    // CHECK - WeightReg | IF x < 1500 then +543
+    if(birthdayCheckInput.substr(0,4)<1500){
+      console.log("Birthday LESS than 1500 +++++");
+      var temp = parseInt(birthdayCheckInput.substr(0,4))+543;
+      birthdayCheckInput = temp + birthdayCheckInput.substr(4,6);
+    }
+    
+
     var userDB = firebase.database().ref('users/'+document.getElementById('usernameReg').value);
     userDB.once('value',function(udb){
         /*
