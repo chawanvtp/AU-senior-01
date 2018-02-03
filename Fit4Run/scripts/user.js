@@ -142,4 +142,31 @@ function dispInfo(){
 
 
 }
-window.onload = function(){dispInfo()};
+window.onload = function(){
+    dispInfo();
+    updateVisitUser();
+};
+
+
+
+function updateVisitUser(){
+    var clock = new Date();
+    var month = clock.getUTCMonth() + 1; //months from 1-12
+    var day = clock.getUTCDate();
+    var year = clock.getUTCFullYear();
+    var dayMonthYear = day+'d'+month+'m'+year+'y';
+    var activityLogsRef = firebase.database().ref('activityLogs/visitedUserInformation/'+dayMonthYear);
+    activityLogsRef.once('value',function(data){
+      if(data.val()==null){
+        firebase.database().ref('activityLogs/visitedUserInformation/'+dayMonthYear).set({
+          visitor: 1
+        });
+      }else{
+        firebase.database().ref('activityLogs/visitedUserInformation/'+dayMonthYear).set({
+          visitor: data.val().visitor+1
+        });
+      }
+      console.log("UserInformation - Visitor(s) ++");
+    });
+    return;
+  }

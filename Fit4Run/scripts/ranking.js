@@ -41,6 +41,34 @@
     });
   });
 */
+/*
+
+$("#rankNav").on('click', function() {
+  alert("inside onclick");
+  window.location = "http://www.google.com";
+});
+*/
+/*
+  function indexClickRanking(){
+
+    var activityLogsRef = firebase.database().ref('activityLogs/indexClickRanking/'+dayMonthYear);
+    activityLogsRef.once('value',function(data){
+      if(data.val()==null){
+        firebase.database().ref('activityLogs/indexClickRanking/'+dayMonthYear).set({
+          visitor: 1
+        });
+      }else{
+        firebase.database().ref('activityLogs/indexClickRanking/'+dayMonthYear).set({
+          visitor: data.val().visitor+1
+        });
+      }
+      
+    });
+      alert("Ranking Click");
+      return false;
+  }
+*/
+
 
   function rewriteTable(dbRef, tableName, rankRange){
      // console.log(dbRef);
@@ -144,23 +172,7 @@
 
   
 
-          window.addEventListener('load', function() {
-            console.log("Visitor ++");
-            var activityLogsRef = firebase.database().ref('activityLogs/visitRanking/'+dayMonthYear);
-            activityLogsRef.once('value',function(data){
-              if(data.val()==null){
-                firebase.database().ref('activityLogs/visitRanking/'+dayMonthYear).set({
-                  visitor: 1
-                });
-              }else{
-                firebase.database().ref('activityLogs/visitRanking/'+dayMonthYear).set({
-                  visitor: data.val().visitor+1
-                });
-              }
           
-            });
-          
-          });
 
           
 

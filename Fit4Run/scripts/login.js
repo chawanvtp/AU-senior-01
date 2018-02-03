@@ -17,12 +17,15 @@ var config = {
     return this.charAt(0).toLowerCase() + this.slice(1);
 }
 
+
   /*    ----------------------------------------------------------------------
   *     ---------------------- Login Button Clicked !! -----------------------
   *     ----------------------------------------------------------------------
   */
 
 function loginButtonClicked (){
+  
+
     username = $('#usernameLogin').val();
     password = $('#passwordLogin').val();
 
@@ -30,7 +33,7 @@ function loginButtonClicked (){
     //alert(username);
     //console.log(username+' - '+password);
     //if(username == "" || password == ""){ alert("Empty username OR password !!"); return; }
-    if(username == ""){ alert("Empty username OR password !!"); return; }
+    if(username == ""){ alert("Empty username OR password !!");  getResultFailed(); return; }
 
     if(username.substr(0,5)!="admin"){
         userLogin(username,password);
@@ -45,11 +48,12 @@ function userLogin(username,password){
     var userDB = firebase.database().ref("users/"+username);
     userDB.once('value', function(snapshot){
         
-        if(snapshot.val()==null){ alert("Username is NOT found. XXX"); return; }
+        if(snapshot.val()==null){ alert("Username is NOT found. XXX"); getResultFailed(); return; }
         var userBirthday = snapshot.val().birthday;
         var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
         
         //if(password != userPassword){ alert("Incorrect password XXX"); return;}
+        getResultSuccess();
         window.location.replace("user.html");
         alert("Welcome to Fit 4 Run ..");
         
@@ -61,13 +65,14 @@ function adminLogin(username,password){
     var adminDB = firebase.database().ref("admin/"+username);
     adminDB.once('value', function(snapshot){
         
-        if(snapshot.val()==null){ alert("Username is NOT found. XXX"); return; }
+        if(snapshot.val()==null){ alert("Username is NOT found. XXX"); getResultFailed(); return; }
         //var userBirthday = snapshot.val().birthday;
         //var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
         //console.log(userPassword);
         
-        if(password != snapshot.val().password){ alert("Hacker ? Incorrect password !!"); return;}
+        if(password != snapshot.val().password){ alert("Hacker ? Incorrect password !!");  getResultFailed(); return;}
 
+        getResultSuccess();
         window.location.replace("admin.html");
         
     });
@@ -85,29 +90,6 @@ window.addEventListener("keyup", function(event) {
     }
   });
 
-  window.addEventListener('load', function() {
-    console.log("Visitor ++");
-    var clock = new Date();
-    var month = clock.getUTCMonth()+1; //months from 1-12
-    var day = clock.getUTCDate();
-    var year = clock.getUTCFullYear();
-    var dayMonthYear = day+'d'+month+'m'+year+'y';
-
-    var activityLogsRef = firebase.database().ref('activityLogs/visitLogin/'+dayMonthYear);
-    activityLogsRef.once('value',function(data){
-      if(data.val()==null){
-        firebase.database().ref('activityLogs/visitLogin/'+dayMonthYear).set({
-          visitor: 1
-        });
-      }else{
-        firebase.database().ref('activityLogs/visitLogin/'+dayMonthYear).set({
-          visitor: data.val().visitor+1
-        });
-      }
-      
-    });
-  
-  });
 
 
 
@@ -244,24 +226,87 @@ window.addEventListener("keyup", function(event) {
 
 
   
-
           window.addEventListener('load', function() {
-            console.log("Visitor ++");
-            var activityLogsRef = firebase.database().ref('activityLogs/visitRanking/'+dayMonthYear);
+
+            // Kepp log IF - ranking clicked 
+            var tempHref = ""+window.location;
+            tempHref = tempHref.substr(tempHref.length-9);
+            if(tempHref=="#indexBar"){
+              rankingClicked();
+            }
+            
+            updateVisitIndex();
+          });
+
+
+          function updateVisitIndex(){
+            
+            var activityLogsRef = firebase.database().ref('activityLogs/visitedIndex/'+dayMonthYear);
             activityLogsRef.once('value',function(data){
               if(data.val()==null){
-                firebase.database().ref('activityLogs/visitRanking/'+dayMonthYear).set({
+                firebase.database().ref('activityLogs/visitedIndex/'+dayMonthYear).set({
                   visitor: 1
                 });
               }else{
-                firebase.database().ref('activityLogs/visitRanking/'+dayMonthYear).set({
+                firebase.database().ref('activityLogs/visitedIndex/'+dayMonthYear).set({
                   visitor: data.val().visitor+1
                 });
               }
-          
+              console.log("Index - Visitor(s) ++");
             });
+            return;
+          }
+
+          function rankingClicked(){
+            
+            var activityLogsRef = firebase.database().ref('activityLogs/rankingClick/'+dayMonthYear);
+            activityLogsRef.once('value',function(data){
+              if(data.val()==null){
+                firebase.database().ref('activityLogs/rankingClick/'+dayMonthYear).set({
+                  visitor: 1
+                });
+              }else{
+                firebase.database().ref('activityLogs/rankingClick/'+dayMonthYear).set({
+                  visitor: data.val().visitor+1
+                });
+              }
+              console.log("Ranking - Click(s) ++");
+            });
+            return;
+          }
+
           
+
+          function getResultFailed(){
+            
+  var activityLogsRef = firebase.database().ref('activityLogs/UserGETresultFailed/'+dayMonthYear);
+  activityLogsRef.once('value',function(data){
+    if(data.val()==null){
+      firebase.database().ref('activityLogs/UserGETresultFailed/'+dayMonthYear).set({
+        visitor: 1
+      });
+    }else{
+      firebase.database().ref('activityLogs/UserGETresultFailed/'+dayMonthYear).set({
+        visitor: data.val().visitor+1
+      });
+    }
+    console.log("XXX - GET Results - Failure(s) ++");
+  });
+
+          }
+
+          function getResultSuccess(){
+            var activityLogsRef = firebase.database().ref('activityLogs/UserGETresultSuccess/'+dayMonthYear);
+            activityLogsRef.once('value',function(data){
+              if(data.val()==null){
+                firebase.database().ref('activityLogs/UserGETresultSuccess/'+dayMonthYear).set({
+                  visitor: 1
+                });
+              }else{
+                firebase.database().ref('activityLogs/UserGETresultSuccess/'+dayMonthYear).set({
+                  visitor: data.val().visitor+1
+                });
+              }
+              console.log("OOO - GET Results - Success(s) ++");
           });
-
-          
-
+        }

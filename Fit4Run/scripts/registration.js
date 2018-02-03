@@ -21,20 +21,20 @@ var config = {
 
 
   window.addEventListener('load', function() {
-    console.log("Visitor ++");
+    console.log("Registration - Visitor ++");
     var clock = new Date();
     var month = clock.getUTCMonth() + 1; //months from 1-12
     var day = clock.getUTCDate();
     var year = clock.getUTCFullYear();
     var dayMonthYear = day+'d'+month+'m'+year+'y';
-    var activityLogsRef = firebase.database().ref('activityLogs/visitRegistration/'+dayMonthYear);
+    var activityLogsRef = firebase.database().ref('activityLogs/visitedRegistration/'+dayMonthYear);
     activityLogsRef.once('value',function(data){
       if(data.val()==null){
-        firebase.database().ref('activityLogs/visitRegistration/'+dayMonthYear).set({
+        firebase.database().ref('activityLogs/visitedRegistration/'+dayMonthYear).set({
           visitor: 1
         });
       }else{
-        firebase.database().ref('activityLogs/visitRegistration/'+dayMonthYear).set({
+        firebase.database().ref('activityLogs/visitedRegistration/'+dayMonthYear).set({
           visitor: data.val().visitor+1
         });
       }
