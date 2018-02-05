@@ -99,19 +99,28 @@ var config = {
         alert("Invalid Height XXX - Ex. 60 (kg)");
     }
 
-    // CHECK - WeightReg | x < 2018
+    // CHECK - bdReg | x < 2018
+    /*
       if(birthdayCheckInput.substr(0,4)>2017){
         alert("Invalid Birthday XXX - requires 1994 A.D");
         return;
       }
-
-    // CHECK - WeightReg | IF x < 1500 then +543
+*/
+    // CHECK - bdReg | IF x < 1500 then +543
     if(birthdayCheckInput.substr(0,4)<1500){
       console.log("Birthday LESS than 1500 +++++");
       var temp = parseInt(birthdayCheckInput.substr(0,4))+543;
       birthdayCheckInput = temp + birthdayCheckInput.substr(4,6);
     }
-    
+
+    // CHECK - bdReg | IF x > 2450 then -543
+    if(birthdayCheckInput.substr(0,4)>2450){
+      console.log("Birthday LESS than 1500 +++++");
+      var temp = parseInt(birthdayCheckInput.substr(0,4))-543;
+      birthdayCheckInput = temp + birthdayCheckInput.substr(4,6);
+    }
+    //alert(birthdayCheckInput);
+    //return;
 
     var userDB = firebase.database().ref('users/'+document.getElementById('usernameReg').value);
     userDB.once('value',function(udb){

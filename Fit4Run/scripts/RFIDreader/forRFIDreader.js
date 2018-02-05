@@ -141,7 +141,7 @@ function tagChecked(tagId){
         tempCal = calBurn.toFixed(2);
       }
       //console.log(calBurn);
-      var announce =  parseInt(userData.lastRunningTime/60)+':'+(userData.lastRunningTime%60) + ' minute(s) => Burned : ' + tempCal + ' kcal. | Speed: '+ tempSpeed + 'km/hr' ;
+      var announce =  parseInt(userData.lastRunningTime/60)+':'+(userData.lastRunningTime%60) + ' minute(s) => Burned : ' + tempCal + ' kcal. | Speed: '+ tempSpeed + 'km/hr  ' ;
      if(userData.lastRunningTime<=0){
        announce = 'Start Running at Round: '+ userData.runningDistance;
        localStorage.setItem("calBurn", tempCal); //////////////////////////////////////
@@ -156,8 +156,10 @@ function tagChecked(tagId){
         }else{
           document.getElementById('localAnnounce-bar'+i).innerText = name + " - Round: "+userData.runningDistance;
           var oldSpeed = localStorage.getItem("oldSpeed");
-          var arrow = document.getElementById('arrow');
+          //var arrow = document.getElementById('arrow');
+          var detail = document.getElementById('localAnnounceDetail-bar'+i);
           var bar = document.getElementById('localAnnounce-bar'+i);
+          /*
           if (oldTime < 0){
            // arrow.innerHTML = ("<img src = " + "images/play-button.png" + ">" );
            arrow.innerHTML = ("<img src = " + "'images/play-button.png' height='100' width='100' " + ">" );
@@ -169,7 +171,21 @@ function tagChecked(tagId){
             //arrow.innerHTML = ("<img src = " + "images/arrow-down-on-black-circular-background.png" + ">" );
             arrow.innerHTML = ("<img src = " + "'images/arrow-down-on-black-circular-background.png' height='100' width='100' " + ">" );
           }
+          */
           document.getElementById('localAnnounceDetail-bar'+i).innerText = announce;
+
+          if (oldTime < 0){
+            // arrow.innerHTML = ("<img src = " + "images/play-button.png" + ">" );
+            detail.innerHTML += (" | <img src = " + "'images/play-button.png' height='80' width='80' " + ">" );
+           }else if(oldTime > newTime||oldTime==0){
+             //arrow.innerHTML = ("<img src = " + "images/arrow-up-on-a-black-circle-background.png" + ">" );
+             detail.innerHTML += (" | <img src = " + "'images/arrow-up-on-a-black-circle-background.png' height='80' width='80' s" + ">" );
+           }
+           else if(oldTime < newTime){
+             //arrow.innerHTML = ("<img src = " + "images/arrow-down-on-black-circular-background.png" + ">" );
+             detail.innerHTML += (" | <img src = " + "'images/arrow-down-on-black-circular-background.png' height='80' width='80' " + ">" );
+           }
+
         }
 
       }

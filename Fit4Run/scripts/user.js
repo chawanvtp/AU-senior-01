@@ -59,37 +59,44 @@ function dispInfo(){
                     runningSpeedTemp = runningSpeed.toFixed(2);
                     runningTimeTemp = runningTime.toFixed(2);
 
-                    var userInfo = JSON.parse(localStorage.getItem(username+'Info'));
+                    /*var userInfo = localStorage.getItem(username+'Info');
                     //console.log(userInfo);
                     console.log(userInfo.gender);
                     console.log(userInfo.height);
                     console.log(userInfo.weight);
-                    console.log(userInfo.birthday);
+                    console.log(userInfo.birthday);*/
 
-                    var gender = userInfo.gender;
-                    var height = userInfo.height;
-                    var weight = userInfo.weight;
-                    var age = (2018 - userInfo.birthday.substr(0,4));
-                    var bmr = 0;
-                    var calBurn = 0;
-                    var tempCal = 0;
+                    uDB.on('value', function(snapshot){
+                        var gender = snapshot.val().gender;
+                        var height = snapshot.val().height;
+                        var weight = snapshot.val().weight;
+                        var age = (2018 - snapshot.val().birthday.substr(0,4));
+                        var bmr = 0;
+                        var calBurn = 0;
+                        var tempCal = 0;
+                        //var tempAge = age.substr(0,4);
+                        //console.log(age);
 
-                    if(gender == "male"){
-                        bmr = 10 * weight + 6.25 * height - 5 * age + 5;       
-                    }
-                    if(gender == 'female'){
-                        bmr = 10 * weight + 6.25 * height - 5 * age -161;
-                    }
-                    if (runningSpeed >= 10){       
-                        calBurn = (runningTime * 11 * bmr)/(24*60);
-                        tempCal = calBurn.toFixed(2);
-                        //console.log(calBurn);
-                    }
-                    if (runningSpeed < 10){
-                        calBurn = (runningTime * 6 * bmr)/(24*60);
-                        tempCal = calBurn.toFixed(2);
-                    }
-                    console.log(tempCal);
+                        if(gender == "male"){
+                            bmr = 10 * weight + 6.25 * height - 5 * age + 5;       
+                        }
+                        if(gender == 'female'){
+                            bmr = 10 * weight + 6.25 * height - 5 * age -161;
+                        }
+                        if (runningSpeed >= 10){       
+                            calBurn = (runningTime * 11 * bmr)/(24*60);
+                            tempCal = calBurn.toFixed(2);
+                            //console.log(calBurn);
+                        }
+                        if (runningSpeed < 10){
+                            calBurn = (runningTime * 6 * bmr)/(24*60);
+                            tempCal = calBurn.toFixed(2);
+                        }
+                        //console.log(tempCal);
+                        $("#runnerRecTab").append('<tr><td>' + date.key + '</td><td>' + runningTimeTemp + '</td><td>' + runningDist + '</td><td>' + runningSpeedTemp + '</td><td>' + tempCal + '</td></tr>');
+                        });
+
+                    
                     /*
                     var temp = date.key;
                     var timeData = {
@@ -132,7 +139,7 @@ function dispInfo(){
                     var distChart = Chartist.Bar('#distChart', distData, options, responsiveOptions);
                     var speedChart = Chartist.Bar('#speedChart', speedData, options, responsiveOptions); */
 
-                    $("#runnerRecTab").append('<tr><td>' + date.key + '</td><td>' + runningTimeTemp + '</td><td>' + runningDist + '</td><td>' + runningSpeedTemp + '</td><td>' + tempCal + '</td></tr>');
+                    
                     
                 }        
             })
