@@ -143,7 +143,7 @@ var config = {
         var usernameReg = usernameCheckInput;
         var heightReg = document.getElementById('heightReg').value;
         var weightReg = document.getElementById('weightReg').value;
-        var bdReg = document.getElementById('bdReg').value;
+        var bdReg = birthdayCheckInput;
         
         
 
