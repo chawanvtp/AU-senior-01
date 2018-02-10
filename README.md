@@ -1,7 +1,7 @@
 
 # AU-senior-01 [ Fit4Run ]
--	This project is contributed for Assumption University's course. <br/>
-[CS3200] - Senior Project I" to be used in "AU Running Campaign [Fit4Run] 
+This project is contributed for Assumption University's course. <br/>
+-	[CS3200] - Senior Project I" to be used in "AU Running Campaign [Fit4Run] 
 
 ##	Primary functions
 -	Runner (client) :
