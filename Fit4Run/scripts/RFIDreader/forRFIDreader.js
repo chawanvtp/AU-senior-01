@@ -1,10 +1,6 @@
 
 
-<<<<<<< HEAD
-  // Initialize Firebase
-=======
  // Initialize Firebase
->>>>>>> demo
 var config = {
   apiKey: "AIzaSyAXcnK39RpWb-_MokDsGudxyBnmF2tUXYo",
   authDomain: "fit4run-4d4c5.firebaseapp.com",
@@ -30,11 +26,7 @@ window.addEventListener('load', function() {
   });
 
   /*    ----------------------------------------------------------------------
-<<<<<<< HEAD
-  *     ---------------------- Events TO-DO on LOAD !! -----------------------
-=======
   *     ---------------------- Events TO-DO on ENTER !! -----------------------
->>>>>>> demo
   *     ----------------------------------------------------------------------
   */ 
 
@@ -55,11 +47,7 @@ var delay = 1000*10;
 
 
 function tagChecked(tagId){
-<<<<<<< HEAD
-    console.log(" * tagChecked(tagId) * called * ");
-=======
     console.log(" ** CALLED ==> tagChecked("+tagId+")");
->>>>>>> demo
     var clock = new Date();
     var month = clock.getUTCMonth()+1; //months from 1-12
     var day = clock.getUTCDate();
@@ -67,28 +55,17 @@ function tagChecked(tagId){
     var dayMonthYear = day+'d'+month+'m'+year+'y';
     var newDate = clock.getTime();
 
-<<<<<<< HEAD
-    console.log(dayMonthYear);
-    console.log(tagId);
-=======
     //console.log(newDate);
     //console.log(tagId);
   console.log("CHECKING ... - TAG: "+tagId);
->>>>>>> demo
   var dailyTagDB = firebase.database().ref('dailyTagsMapUsers/'+dayMonthYear+'/'+ tagId);
   dailyTagDB.once('value',function(superSnapshot){
       if(superSnapshot.val()!=null)
       {
           updateDailyDB(superSnapshot.val().userID,tagId,newDate,dayMonthYear);
-<<<<<<< HEAD
-          console.log("Tag is found..");
-      }else{
-        console.log("Tag is NOT found..");console.log("Tag is NOT found..");
-=======
           console.log("Tag is Activated - OOO");
       }else{
           console.log("Tag is Inactivated - XXX");
->>>>>>> demo
           // console.log("Tag is NOT activated !!");
         }
 
@@ -104,31 +81,6 @@ function tagChecked(tagId){
 
   
   function updateDailyDB(tel,tagId,newDate,dayMonthYear){
-<<<<<<< HEAD
-    console.log(" * updateDailyDB(tagId) * called * ");
-    
-    var dailyDB = firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel);
-
-
-    dailyDB.once('value',function(snapshot){
-    console.log(snapshot.val());
-    if(snapshot.val()==null){
-        // Tag is Inactivated.
-        console.log('-- YOU !! have not activated your TAG in yet xx');
-    }else{
-
-        var prevClock = snapshot.val().lastCheck;
-        if((prevClock+delay)>newDate){  console.log("$$ Delaying .. "); return;   }
-        
-        var newTime = parseInt((newDate-prevClock)/1000);
-        var runningDistance = snapshot.val().runningDistance;
-          if(runningDistance<0)
-            {  
-              newTime = 0; 
-              console.log("Start Running - CHECKED");  
-              
-            }else{
-=======
     console.log(" ** CALLED ==> updateDailyDB("+tel+","+tagId+","+newDate+","+dayMonthYear+")");
     
     var userID = localStorage.getItem(tagId);
@@ -306,25 +258,12 @@ function tagChecked(tagId){
                 gender: snapshot.val().gender,
                 faculty: snapshot.val().faculty
             });
->>>>>>> demo
               updateUsersDB(tel,newTime);
             }
 
         console.log('Daily is updating...');
         
-<<<<<<< HEAD
-        firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).set({
-        displayName: snapshot.val().displayName,
-        lastCheck: newDate,
-        runningDistance: snapshot.val().runningDistance+1,
-        runningTime: snapshot.val().runningTime+newTime,
-        lastRunningTime: newTime,
-        gender: snapshot.val().gender,
-        faculty: snapshot.val().faculty
-    });
-=======
         
->>>>>>> demo
 
     /*
     firebase.database().ref('dailyUsersRecords/'+ dayMonthYear +'/'+ tel).update({
@@ -348,11 +287,7 @@ function tagChecked(tagId){
   */ 
 
 function updateUsersDB(id,newTime){
-<<<<<<< HEAD
-    console.log(" * updateUsersDB(id,newTime) * called * ");
-=======
     console.log(" ** CALLED ==> updateUserDB("+id+","+newTime+"sec)");
->>>>>>> demo
 
     var userDB = firebase.database().ref('users/'+ id);
     userDB.once('value',function(snapshot){
@@ -380,19 +315,11 @@ function updateUsersDB(id,newTime){
           });
         }
         **/
-<<<<<<< HEAD
-=======
       
->>>>>>> demo
       }
       });
 }
 
-<<<<<<< HEAD
-
-
-
-=======
 var clock = new Date();
 var month = clock.getUTCMonth()+1; //months from 1-12
 var day = clock.getUTCDate();
@@ -492,4 +419,3 @@ function setLocalUser(key,data){
 
 
 //
->>>>>>> demo

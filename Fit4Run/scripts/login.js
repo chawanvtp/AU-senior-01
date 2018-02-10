@@ -13,49 +13,17 @@ var config = {
   var database = firebase.database();
 
 
-<<<<<<< HEAD
-=======
   String.prototype.Uncapitalize = function() {
     return this.charAt(0).toLowerCase() + this.slice(1);
 }
 
 
->>>>>>> demo
   /*    ----------------------------------------------------------------------
   *     ---------------------- Login Button Clicked !! -----------------------
   *     ----------------------------------------------------------------------
   */
 
 function loginButtonClicked (){
-<<<<<<< HEAD
-    username = document.getElementById("usernameLogin").value;
-    password = document.getElementById("passwordLogin").value;
-    console.log(username+' - '+password);
-    if(username == "" || password == ""){ alert("Empty username OR password !!"); return; }
-    
-    var userDB = firebase.database().ref("users/"+username);
-    userDB.once('value', function(snapshot){
-        
-        if(snapshot.val()==null){ alert("Tel. Number is NOT found. XXX"); return; }
-        var userBirthday = snapshot.val().birthday;
-        var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
-        console.log(userPassword);
-        if(password == userPassword){
-            alert("Correct Password !!");
-        }
-        
-    });
-
-
-    //alert(username+" : "+password);
-}
-
-/*    ----------------------------------------------------------------------
-  *     ---------------------- Login Button Clicked !! -----------------------
-  *     ----------------------------------------------------------------------
-  */
-  
-=======
   
 
     username = $('#usernameLogin').val();
@@ -342,4 +310,3 @@ window.addEventListener("keyup", function(event) {
               console.log("OOO - GET Results - Success(s) ++");
           });
         }
->>>>>>> demo

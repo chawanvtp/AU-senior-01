@@ -1,8 +1,5 @@
 
-<<<<<<< HEAD
-=======
 
->>>>>>> demo
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyAXcnK39RpWb-_MokDsGudxyBnmF2tUXYo",
@@ -21,14 +18,6 @@ var config = {
   *     ---------------------- Events TO-DO on LOAD !! -----------------------
   *     ----------------------------------------------------------------------
   */   
-<<<<<<< HEAD
-window.addEventListener('load', function() {
-    // TO trigger the input box
-   // document.getElementById("telAct").focus();
-
-})
-  
-=======
 
 
   window.addEventListener('load', function() {
@@ -58,7 +47,6 @@ window.addEventListener('load', function() {
     return this.charAt(0).toLowerCase() + this.slice(1);
 }
 
->>>>>>> demo
   
   function signUpButtonClicked(){
       //alert(tagId);
@@ -73,9 +61,6 @@ window.addEventListener('load', function() {
       console.log(dayMonthYear);
       */
       //var udbUsername = "";
-<<<<<<< HEAD
-    var userDB = firebase.database().ref('users/'+document.getElementById('telReg').value);
-=======
       var birthdayCheckInput = document.getElementById('bdReg').value;
       var heightCheckInput = document.getElementById('heightReg').value;
       var weightCheckInput = document.getElementById('weightReg').value;
@@ -138,7 +123,6 @@ window.addEventListener('load', function() {
     //return;
 
     var userDB = firebase.database().ref('users/'+document.getElementById('usernameReg').value);
->>>>>>> demo
     userDB.once('value',function(udb){
         /*
         if(udb.val()==null){    console.log("Wrong Telephone Number XXX"); return;}
@@ -148,11 +132,7 @@ window.addEventListener('load', function() {
         //udbUsername = udb.val().username;
         */
 
-<<<<<<< HEAD
-        if(udb.val()!=null){ alert("Telephone No. is already used. !!"); return; }
-=======
         if(udb.val()!=null){ alert("Username is already used / Invalid. !!"); return; }
->>>>>>> demo
 
 
         var genderReg = "male";
@@ -160,16 +140,6 @@ window.addEventListener('load', function() {
 
         var displaynameReg = document.getElementById('displayNameReg').value;
         var facultyReg = document.getElementById('facultyReg').value;   
-<<<<<<< HEAD
-        var telReg = document.getElementById('telReg').value;
-        var heightReg = document.getElementById('heightReg').value;
-        var weightReg = document.getElementById('weightReg').value;
-        var bdReg = document.getElementById('bdReg').value;
-        
-        
-
-        firebase.database().ref('users/'+ telReg).set({
-=======
         var usernameReg = usernameCheckInput;
         var heightReg = document.getElementById('heightReg').value;
         var weightReg = document.getElementById('weightReg').value;
@@ -178,7 +148,6 @@ window.addEventListener('load', function() {
         
 
         firebase.database().ref('users/'+ usernameReg).set({
->>>>>>> demo
             displayName: displaynameReg,
             totalDistance: 0,
             gender: genderReg,
@@ -188,16 +157,10 @@ window.addEventListener('load', function() {
             weight: weightReg,
             birthday: bdReg
         });
-<<<<<<< HEAD
-        window.location.replace("login.html");
-    });
-    console.log("DBBB");
-=======
         alert("Registration Success !!");
         window.location.replace("registration.html");
     });
     
->>>>>>> demo
     
     
   }
@@ -205,11 +168,8 @@ window.addEventListener('load', function() {
 
 
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> demo
   window.addEventListener("keyup", function(event) {
     event.preventDefault();
     if (event.keyCode === 13) {
