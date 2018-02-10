@@ -7,7 +7,7 @@ This project is contributed for Assumption University's course. <br/>
 -	Runner (client) :
 	```
 		-	Registeration at "registration.html".
-		<br />
+		__
 		-	Display client's information / running results.
 	```
 -	Adminstartor (admin)	:	
