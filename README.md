@@ -6,17 +6,14 @@ This project is contributed for Assumption University's course. <br/>
 ##	Primary functions
 -	Runner (client) :
 	```
-		-	Registeration at "registration.html".
-		__
-		-	Display client's information / running results.
+		-	Registeration at "registration.html".  
+		-	Display client's information / running results.  
 	```
 -	Adminstartor (admin)	:	
 	```
-		-	Activate(map) tag to client at "activate.html".
-		<br/>
-		-	Inactivate(Un-map) tag at "returnTag.html".
-		<br/>
-		-	Receive (Tag's input) by RFID reader at "forRFIDreader.html".
+		-	Activate(map) tag to client at "activate.html".  
+		-	Inactivate(Un-map) tag at "returnTag.html".  
+		-	Receive (Tag's input) by RFID reader at "forRFIDreader.html".  
 	```
 	
 ## Getting Started
@@ -37,20 +34,13 @@ Give examples
 
 ### Installing
 ```
-[1] Let's users(runners) register their account at "registration.html".
-<br/>
-[2] Admin(agent) map a tag to user at "activate.html".
-<br/>
-[3] Admin(agent) open "forRFIDreader.html" on the devices that connecting to "RFID readers".
-<br/>
-	(3.1) click / press TAB on "forRFIDreader.html" to focus on input text box.
-	<br/>
-	(3.2) Now, it's ready for runners to use - "TAG" touch on "RFID reader".
-	<br/>
-[4] Client(runner) touch the "RFID reader" with their "TAG" before start running and everytime they reached a round.
-<br/>
-[5] Admin(agent) inactivate/returned "TAG" for Clients at "returnTag.html"  (**Optional).
-
+[1] Let's users(runners) register their account at "registration.html".  
+[2] Admin(agent) map a tag to user at "activate.html".  
+[3] Admin(agent) open "forRFIDreader.html" on the devices that connecting to "RFID readers".  
+	(3.1) click / press TAB on "forRFIDreader.html" to focus on input text box.  
+	(3.2) Now, it's ready for runners to use - "TAG" touch on "RFID reader".  
+[4] Client(runner) touch the "RFID reader" with their "TAG" before start running and everytime they reached a round.  
+[5] Admin(agent) inactivate/returned "TAG" for Clients at "returnTag.html"  (**Optional).  
 ```
 
 ## Running the tests
