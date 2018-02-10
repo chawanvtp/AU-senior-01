@@ -6,103 +6,65 @@ This project is contributed for Assumption University's course "[CS3200] - Senio
 ##	Primary functions
 -	Runner (client) :
 	```
-		-	Registeration by "Google Auth, and etc..".
-		-	Activate(bind) tag to client's DB.
-		-	Update part of DB.
-		-	Display client's information.
+		-	Registeration at "registration.html"
+		-	Display client's information / running results
 	```
 -	Adminstartor (admin)	:	
 	```
-		-	All as client but "Less condition".
+		-	Activate(map) tag to client at "activate.html"
+		-	Inactivate(Un-map) tag at "returnTag.html"
+		-	Receive (Tag's input) by RFID reader at "forRFIDreader.html"
 	```
--	Public (everyone) : 
-	```
-		-	Display records.
-	```
+	
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+-	No installation is required
+-	Register an account for accessing "Google firebase"
+-	Configure your Firebase's config at "Javascript file(s)"
 
 ### Prerequisites
-
-What things you need to install the software and how to install them
+-	Firebase account/tools
+-	Browser
+-	Text / Web editor - (For Developer)
+-	Node.js	- (For Developer)
 
 ```
 Give examples
 ```
 
 ### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
 ```
-Give the example
+[1] Let's users(runners) register their account at "registration.html"
+[2] Admin(agent) map a tag to user at "activate.html"
+[3] Admin(agent) open "forRFIDreader.html" on the devices that connecting to "RFID readers"
+	(3.1) click / press TAB on "forRFIDreader.html" to focus on input text box
+	(3.2) Now, it's ready for runners to use - "TAG" touch on "RFID reader"
+[4] Client(runner) touch the "RFID reader" with their "TAG" before start running and everytime they reached a round
+*(Optional)
+[5] Admin(agent) inactivate/returned "TAG" for Clients at "returnTag.html"
 ```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+[1] Register an account.
+[2] Activate(map) tag to your account
+[3] Enter your tag code into textbox at "forRFIDreader.html"
+[4] Enter your tag code into textbox at "returnTag.html"
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Using "cmd" command at folder directory.
+	```
+	- firebase deploy
+	```
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* [Visual Studio Code]
+* [Node.js]
+* [Google Firebase]
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
-=======
-* AU-senior-01 
-     This
->>>>>>> 1da1ac3dbc5e43b9f91602d4b6a88bf5c41fb0c6
+* **Chawan V. 5737444** - *Initial work* - [Seaweeds](https://github.com/chawanvtp/AU-senior-01)
+* **Arthisd ** - *Initial work* - [xxx](https://github.com/chawanvtp/AU-senior-01)
