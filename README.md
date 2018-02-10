@@ -45,12 +45,9 @@ Give examples
 
 ## Running the tests
 ```
-[1] Register an account.
-<br/>
-[2] Activate(map) tag to your account.
-<br/>
-[3] Enter your tag code into textbox at "forRFIDreader.html".
-<br/>
+[1] Register an account.  
+[2] Activate(map) tag to your account.  
+[3] Enter your tag code into textbox at "forRFIDreader.html".  
 [4] Enter your tag code into textbox at "returnTag.html".
 ```
 ## Deployment
