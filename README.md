@@ -1,9 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Project Title
 
 One Paragraph of project description goes here
 
 =======
+=======
+>>>>>>> demo
 
 # AU-senior-01
 
@@ -25,6 +28,9 @@ This project is contributed for Assumption University's course "[CS3200] - Senio
 	```
 		-	Display records.
 	```
+<<<<<<< HEAD
+>>>>>>> demo
+=======
 >>>>>>> demo
 ## Getting Started
 
@@ -110,9 +116,15 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Inspiration
 * etc
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> demo
 =======
 * AU-senior-01 
      This
 >>>>>>> 1da1ac3dbc5e43b9f91602d4b6a88bf5c41fb0c6
+<<<<<<< HEAD
+>>>>>>> demo
+=======
 >>>>>>> demo

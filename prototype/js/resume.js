@@ -1,3 +1,49 @@
+<<<<<<< HEAD
+=======
+/* 
+document.querySelector('.editButt').addEventListener("click", function(event) { 
+    event.preventDefault();
+
+    var database = firebase.database().ref('user/');
+    var tel = document.getElementById('telNo');
+    
+    var postData = {
+      name: document.getElementById('name').value,
+      height: document.getElementById('height').value,
+      weight: document.getElementById('weight').value,
+      faculty: document.getElementById('faculty').value
+    };
+    
+    var updates = {};
+    updates['user/' + tel] = postData;
+    var name = document.getElementById('name').value;
+    var height = document.getElementById('height').value;
+    var weight = document.getElementById('weight').value;
+    var faculty = document.getElementById('faculty').value;
+
+    
+    database.set({
+      name: name,
+      height: height,
+      weight: weight,
+      faculty: faculty
+      name = document.getElementById('name').value;
+      height = document.getElementById('height').value;
+      weight = document.getElementById('weight').value;
+      faculty = document.getElementById('faculty').value;
+    });
+    
+    
+    displayName: document.getElementById('name').value;
+    height: document.getElementById('height').value;
+    weight: document.getElementById('weight').value;
+    faculty: document.getElementById('faculty').value;
+    
+});
+    */
+  
+
+>>>>>>> demo
 (function($) {
   "use strict"; // Start of use strict
 
