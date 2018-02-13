@@ -58,8 +58,8 @@ window.addEventListener('load', function() {
       //alert(tagId);
      // alert(tel+" - "+tagId);
      // console.log(" * activateButtonClicked !! ");
-
-      
+      if(tagId==""){alert("Empty TagID XXX "); return;}
+    
       //var udbUsername = "";
       /*
     var userDB = firebase.database().ref('users/'+tel);
@@ -100,8 +100,14 @@ tagList.once('value', function(snapshot){
 
 tagList.on('child_added', function(snapshot){
   console.log(snapshot.val().userID+" is using a Tag + ADDED");
-  var htmlMes = "<p id="+snapshot.key+">"+snapshot.val().userID+"</p>";
-  $("#tagList").append(htmlMes);
+  var userDB = firebase.database().ref('users/'+snapshot.val().userID);
+  userDB.once('value',function(udb){
+      var temp = udb.val().displayName+" : "+udb.val().totalDistance+" rounds";
+      var htmlMes = "<p id="+snapshot.key+">"+snapshot.val().userID+" - "+temp+"</p>";
+      $("#tagList").append(htmlMes);
+  });
+ // var htmlMes = "<p id="+snapshot.key+">"+snapshot.val().userID+"</p>";
+  //$("#tagList").append(htmlMes);
 });
 tagList.on('child_changed', function(snapshot){
   console.log(snapshot.val().userID+" is using a Tag = CHANGED");
@@ -110,7 +116,7 @@ tagList.on('child_changed', function(snapshot){
 });
 tagList.on('child_removed', function(snapshot){
   console.log(snapshot.val().userID+" has returned a TAG - REMOVED");
-  remove(snapshot.key);
+  $("#tagList").remove(snapshot.key);
 });
 
 /*

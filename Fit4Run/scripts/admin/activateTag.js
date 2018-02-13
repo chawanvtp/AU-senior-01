@@ -55,17 +55,17 @@ window.addEventListener('load', function() {
       var dayMonthYear = day+'d'+month+'m'+year+'y';
       var newDate = clock.getTime();
       console.log(dayMonthYear);
-      
+      if(username==""){ alert("Empty username XXX"); return;}
+      if(tagId==""){ alert("Empty tagID XXX"); return;}
       //var udbUsername = "";
     var userDB = firebase.database().ref('users/'+username);
     userDB.once('value',function(udb){
-        if(udb.val()==null){    console.log("Incorrect Username XXX"); return;}
+        if(udb.val()==null){    console.log("Incorrect Username XXX"); alert("Incorrect Username XXX"); return;}
 
         console.log(udb.val());
         updateDailyTags(username,tagId,dayMonthYear);
         updateDailyRecords(username,dayMonthYear,newDate,udb.val());
         //udbUsername = udb.val().username;
-        alert(username+"\nActivate Success !!");
     });
    // console.log("DBBB");
     
@@ -183,7 +183,7 @@ function updateDailyTags(username,tagId,dayMonthYear){
                  
               
               }
-      
+              alert(username+"\nActivate Success !!");
         });
 
 
@@ -210,8 +210,15 @@ function updateDailyTags(username,tagId,dayMonthYear){
 
 tagActList.on('child_added', function(snapshot){
     console.log(snapshot.val().userID+" is using a Tag + ADDED");
-    var htmlMes = "<p id="+snapshot.key+">"+snapshot.val().userID+"</p>";
-    $("#tagActList").append(htmlMes);
+    //var temp = "";
+    var userDB = firebase.database().ref('users/'+snapshot.val().userID);
+    userDB.once('value',function(udb){
+        var temp = udb.val().displayName+" : "+udb.val().totalDistance+" rounds";
+        var htmlMes = "<p id="+snapshot.key+">"+snapshot.val().userID+" - "+temp+"</p>";
+        $("#tagActList").append(htmlMes);
+    });
+    //var htmlMes = "<p id="+snapshot.key+">"+snapshot.val().userID+" - "+temp+"</p>";
+    //$("#tagActList").append(htmlMes);
   });
   tagActList.on('child_changed', function(snapshot){
     console.log(snapshot.val().userID+" is using a Tag = CHANGED");
@@ -220,5 +227,5 @@ tagActList.on('child_added', function(snapshot){
   });
   tagActList.on('child_removed', function(snapshot){
     console.log(snapshot.val().userID+" has returned a TAG - REMOVED");
-    remove(snapshot.key);
+    $("#tagActList").remove(snapshot.key);
   });
