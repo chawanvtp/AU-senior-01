@@ -132,6 +132,8 @@ window.addEventListener("keyup", function(event) {
                 female += 1;
             }
 
+        
+
             round += res.runningDistance;
         });
 
@@ -227,19 +229,73 @@ window.addEventListener("keyup", function(event) {
  
 
   var totalRound = 0;
+  var faculty = ["Science and Technology","Management and Economics","Engineering","Arts","Communication Arts","Architecture and Design","Music","Lecturer","Staff","Other"];
+  var facultyNum = [0,0,0,0,0,0,0,0,0,0];
+  var maleNum = [0,0,0,0,0,0,0,0,0,0];
+  var femaleNum = [0,0,0,0,0,0,0,0,0,0];
   var usersRef = database.ref().child('users').orderByChild('totalDistance').limitToLast(10);
   var usersDB = database.ref().child('users');
   usersDB.once('value', function(snapshot){
 
     snapshot.forEach(function(item){
       totalRound += item.val().totalDistance;
+      countFaculty(item.val());
     });
-
+    
+        for(i = 1;i<10;i++){
+            var recTab = document.getElementById("runner-table");
+            recTab.rows[i].cells[1].innerHTML = maleNum[i-1];
+            recTab.rows[i].cells[2].innerHTML = femaleNum[i-1];
+            recTab.rows[i].cells[3].innerHTML = maleNum[i-1]+femaleNum[i-1];
+        }
       var announceMessage = "Runners - All : "+snapshot.numChildren()+" | ";
       var announceMessage2 = " reached "+totalRound+" rounds "; 
       document.getElementById("indexBarText1").innerHTML = announceMessage + announceMessage2;
       //document.getElementById("indexBarText2").innerHTML = announceMessage2;
   });
+
+  function countFaculty(item){
+    if(item.faculty=="Science and Technology"){
+        facultyNum[0] += 1;
+        countGender(item,0);
+    }else if(item.faculty=="Management and Economics"){
+        facultyNum[1] += 1;
+        countGender(item,1);
+    }else if(item.faculty=="Engineering"){
+        facultyNum[2] += 1;
+        countGender(item,2);
+    }else if(item.faculty=="Arts"){
+        facultyNum[3] += 1;
+        countGender(item,3);
+    }else if(item.faculty=="Communication Arts"){
+        facultyNum[4] += 1;
+        countGender(item,4);
+    }else if(item.faculty=="Architecture and Design"){
+        facultyNum[5] += 1;
+        countGender(item,5);
+    }else if(item.faculty=="Music"){
+        facultyNum[6] += 1;
+        countGender(item,6);
+    }else if(item.faculty=="Lecturer"){
+        facultyNum[7] += 1;
+        countGender(item,7);
+    }else if(item.faculty=="Staff"){
+        facultyNum[8] += 1;
+        countGender(item,8);
+    }else if(item.faculty=="Other"){
+        facultyNum[9] += 1;
+        countGender(item,9);
+    }
+  }
+
+  function countGender(item,index){
+    if(item.gender=="male"){
+        maleNum[index] += 1;
+    }else{
+        femaleNum[index] += 1;
+    }
+
+  }
  
   usersRef.on('child_added', function(snapshot){
     //console.log("child_ADDED");
