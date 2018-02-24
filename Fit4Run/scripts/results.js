@@ -65,7 +65,7 @@ function adminLogin(username,password){
     var adminDB = firebase.database().ref("admin/"+username);
     adminDB.once('value', function(snapshot){
         
-       /* if(snapshot.val()==null){ alert("Username is NOT found. XXX"); getResultFailed(); return; }
+        if(snapshot.val()==null){ alert("Username is NOT found. XXX"); getResultFailed(); return; }
         //var userBirthday = snapshot.val().birthday;
         //var userPassword = userBirthday.substr(-2) + userBirthday.substr(5,2) + userBirthday.substr(0,4);
         //console.log(userPassword);
@@ -74,10 +74,9 @@ function adminLogin(username,password){
 
         getResultSuccess();
         window.location.replace("admin.html");
-        */
+        
     });
 
-    window.location.href = "admin.html";
 }
 
 
@@ -112,10 +111,42 @@ window.addEventListener("keyup", function(event) {
   var year = clock.getUTCFullYear();
   var dayMonthYear = day+'d'+month+'m'+year+'y';
 
-  var recordsRef = database.ref('dailyUsersRecords/'+dayMonthYear).orderByChild('runningDistance').limitToLast(10);
+  var recordsRef = database.ref('dailyUsersRecords');
   var limit = 10;
   var total = limit;
+  
 
+  function writeResults(dbRef){
+      var i = 1;
+    dbRef.once('value', function(snapshot){
+    snapshot.forEach(function(item){
+        var male = 0;
+        var female = 0;
+        var round = 0;
+        var date = item.key;
+        item.forEach(function(data){
+            var res = data.val();
+            if(res.gender=="male"){
+                male += 1;
+            }else if(res.gender=="female"){
+                female += 1;
+            }
+
+            round += res.runningDistance;
+        });
+
+        var table = document.getElementById("summary-table");
+        table.rows[i].cells[0].innerHTML = date;
+        table.rows[i].cells[1].innerHTML = male;
+        table.rows[i].cells[2].innerHTML = female;
+        table.rows[i].cells[3].innerHTML = round;
+        i++;
+
+    });
+    
+});
+
+  }
   /*
   var todayRec = database.ref('dailyUsersRecords/'+dayMonthYear);
   todayRec.once('value',function(snapshot){
@@ -146,11 +177,11 @@ window.addEventListener("keyup", function(event) {
     //    }else{
     //       recTab.rows[rankRange].cells[1].innerHTML = item.val().id;
     //    }
-            if(tableName=="daily-table"){    
+           /** if(tableName=="daily-table"){    
             recTab.rows[rankRange].cells[2].innerHTML = item.val().runningDistance;
             //recTab.rows[rankRange].cells[3].innerHTML = parseInt((item.val().runningTime/item.val().runningDistance)/60)+':'+parseInt((item.val().runningTime/item.val().runningDistance)%60)+' min';
             recTab.rows[rankRange].cells[3].innerHTML = parseInt(item.val().runningTime/60);//+'.'+parseInt(item.val().runningTime%60);
-            }else if(tableName=="users-table"){
+            }else */if(tableName=="users-table"){
                 recTab.rows[rankRange].cells[2].innerHTML = item.val().totalDistance;
                 //recTab.rows[rankRange].cells[3].innerHTML = parseInt((item.val().totalTime/item.val().totalDistance)/60)+':'+parseInt((item.val().totalTime/item.val().totalDistance)%60)+' min';
                 recTab.rows[rankRange].cells[3].innerHTML = parseInt(item.val().totalTime/60);//+'.'+parseInt(item.val().totalTime%60);
@@ -175,7 +206,7 @@ window.addEventListener("keyup", function(event) {
   recordsRef.on('child_added', function(snapshot){
      
         //console.log("recordsRef - on - child_ADDED");
-        rewriteTable(recordsRef, "daily-table", 10);
+        writeResults(recordsRef);
         
   });
 
@@ -186,11 +217,11 @@ window.addEventListener("keyup", function(event) {
   recordsRef.on('child_changed', function(snapshot){
       
        // console.log("child_CHANGED");
-        rewriteTable(recordsRef, "daily-table", 10);
+       writeResults(recordsRef);
       });
       recordsRef.on('child_removed', function(snapshot){
             //console.log("child_REMOVED");
-            rewriteTable(recordsRef, "daily-table", 10);
+            writeResults(recordsRef);
           });
 
  
