@@ -91,6 +91,7 @@ window.addEventListener("keyup", function(event) {
   });
 
 
+  
 
 
 
@@ -163,32 +164,26 @@ window.addEventListener("keyup", function(event) {
      // console.log(dbRef);
 
   dbRef.once('value', function(snapshot){
-    
+    /*
     limit = snapshot.numChildren();
     if(limit>10){
         limit = 10;
-    }
+    }*/
    
     snapshot.forEach(function(item){
     
           
+       
       var recTab = document.getElementById(tableName);
-    //    if(tableName=='users-table'){
-            //console.log("xxx "+tableName+" table xxx");
-            recTab.rows[rankRange].cells[1].innerHTML = item.val().displayName;
-    //    }else{
-    //       recTab.rows[rankRange].cells[1].innerHTML = item.val().id;
-    //    }
-           /** if(tableName=="daily-table"){    
-            recTab.rows[rankRange].cells[2].innerHTML = item.val().runningDistance;
-            //recTab.rows[rankRange].cells[3].innerHTML = parseInt((item.val().runningTime/item.val().runningDistance)/60)+':'+parseInt((item.val().runningTime/item.val().runningDistance)%60)+' min';
-            recTab.rows[rankRange].cells[3].innerHTML = parseInt(item.val().runningTime/60);//+'.'+parseInt(item.val().runningTime%60);
-            }else */if(tableName=="users-table"){
-                recTab.rows[rankRange].cells[2].innerHTML = item.val().totalDistance;
-                //recTab.rows[rankRange].cells[3].innerHTML = parseInt((item.val().totalTime/item.val().totalDistance)/60)+':'+parseInt((item.val().totalTime/item.val().totalDistance)%60)+' min';
-                recTab.rows[rankRange].cells[3].innerHTML = parseInt(item.val().totalTime/60);//+'.'+parseInt(item.val().totalTime%60);
-            }
+        $('#users-table').append('<tr>'+'<td>'+item.val().displayName+'</td>'+'<td>'+item.val().totalDistance+'</td>'+'<td>'+parseInt(item.val().totalTime/60)+'</td>'+'<td>'+parseInt(item.val().totalTime/60)+'</td>'+'</tr>');
+   /*
+            recTab.rows[rankRange].cells[0].innerHTML = item.val().displayName;
+            if(tableName=="users-table"){
+                recTab.rows[rankRange].cells[1].innerHTML = item.val().totalDistance;
+                recTab.rows[rankRange].cells[2].innerHTML = parseInt(item.val().totalTime/60);//+'.'+parseInt(item.val().totalTime%60);
             
+            }
+            */
     rankRange--;
     //console.log("REWRITE !!!");
     //console.log(rankRange);
@@ -226,14 +221,25 @@ window.addEventListener("keyup", function(event) {
             writeResults(recordsRef);
           });
 
- 
+         
+//insertTable("rec-table",["AAA","B","RR","RRR"])
+
+function insertTable(tableName,cellArray){
+  var table = document.getElementById(tableName);
+  var row = table.insertRow(0);
+  for(i=0;i<cellArray.length();i++){
+    var cell = row.insertCell(i);
+    cell.innerHTML = ""+cellArray[i];
+  }
+
+}
 
   var totalRound = 0;
   var faculty = ["Science and Technology","Management and Economics","Engineering","Arts","Communication Arts","Architecture and Design","Music","Lecturer","Staff","Other"];
   var facultyNum = [0,0,0,0,0,0,0,0,0,0];
   var maleNum = [0,0,0,0,0,0,0,0,0,0];
   var femaleNum = [0,0,0,0,0,0,0,0,0,0];
-  var usersRef = database.ref().child('users').orderByChild('totalDistance').limitToLast(10);
+  var usersRef = database.ref().child('users').orderByChild('totalDistance');
   var usersDB = database.ref().child('users');
   usersDB.once('value', function(snapshot){
 
@@ -299,7 +305,12 @@ window.addEventListener("keyup", function(event) {
  
   usersRef.on('child_added', function(snapshot){
     //console.log("child_ADDED");
-    rewriteTable(usersRef, "users-table", 10);
+    //rewriteTable(usersRef, "users-table", 10);
+    var caloriesBurnedPerHour = 0.175*8*snapshot.val().weight;
+    var caloriesBurned = caloriesBurnedPerHour*parseInt(snapshot.val().totalTime);
+    caloriesBurned = caloriesBurned/1000;
+    $('#users-table').append('<tr>'+'<td>'+snapshot.val().displayName+'</td>'+'<td>'+snapshot.val().totalDistance+'</td>'+'<td>'+parseInt(snapshot.val().totalTime/60)+'</td>'+'<td>'+parseInt(caloriesBurned)+'</td>'+'</tr>');
+    
   });
 
   usersRef.on('child_changed', function(snapshot){
