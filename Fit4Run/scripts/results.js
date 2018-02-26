@@ -309,7 +309,7 @@ function insertTable(tableName,cellArray){
     var caloriesBurnedPerHour = 0.175*8*snapshot.val().weight;
     var caloriesBurned = caloriesBurnedPerHour*parseInt(snapshot.val().totalTime);
     caloriesBurned = caloriesBurned/1000;
-    $('#users-table').append('<tr>'+'<td>'+snapshot.val().displayName+'</td>'+'<td>'+snapshot.val().totalDistance+'</td>'+'<td>'+parseInt(snapshot.val().totalTime/60)+'</td>'+'<td>'+parseInt(caloriesBurned)+'</td>'+'</tr>');
+    $('#users-table').append('<tr>'+'<td>'+snapshot.val().displayName+' - ( '+snapshot.val().gender+' )</td>'+'<td>'+snapshot.val().totalDistance+'</td>'+'<td>'+parseInt(snapshot.val().totalTime/60)+'</td>'+'<td>'+parseInt(caloriesBurned)+'</td>'+'</tr>');
     
   });
 
