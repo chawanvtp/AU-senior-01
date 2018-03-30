@@ -1,6 +1,7 @@
 
 # AU-senior-01 [ Fit4Run ]
 This project is contributed for Assumption University's course. <br/>
+Publishing at https://fit4run-4d4c5.firebaseapp.com/ for AU Personels
 -	[CS3200] - Senior Project I" to be used in "AU Running Campaign [Fit4Run] 
 
 ##	Primary functions
